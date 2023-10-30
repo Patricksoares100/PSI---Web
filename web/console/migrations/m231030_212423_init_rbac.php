@@ -18,6 +18,9 @@ class m231030_212423_init_rbac extends Migration
         // Criar os roles
         $role_admin = $auth->createRole('admin');
         $auth->add($role_admin);
+        
+        $role_cliente = $auth->createRole('cliente');
+        $auth->add($role_cliente);
     }
 
     /**
