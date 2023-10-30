@@ -15,7 +15,7 @@ class m231030_212423_init_rbac extends Migration
         // The authManager can now be accessed via \Yii::$app->authManager.
         $auth = Yii::$app->authManager;
 
-        // Criar os roles
+        // Criar os roles - $auth->createRole();
         $role_admin = $auth->createRole('admin');
         $auth->add($role_admin);
 
@@ -24,11 +24,14 @@ class m231030_212423_init_rbac extends Migration
 
         $role_cliente = $auth->createRole('cliente');
         $auth->add($role_cliente);
-        //Criar permissões
+        //Criar permissões - $auth->createPermission();
+
+        $permission_edit_roles = $auth->createPermission('editRoles');
+        $auth->add($permission_edit_roles);
 
         // dar heranças addChild
 
-        
+        $auth->addChild($role_admin, $permission_edit_roles);
     }
 
     /**
