@@ -24,13 +24,19 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'gerirProdutos'],
                         'allow' => true,
                     ],
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [   
+                        //PERGUNTAR AO PROF
+                        'actions' => ['gerirProdutos'],
+                        'allow' => true,
+                        'roles' => ['funcionario'], 
                     ],
                 ],
             ],
@@ -100,5 +106,14 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+
+    //PERGUNTAR AO PROF
+    public function actionGerirProdutos(){
+        if (Yii::$app->user->can('gerirProdutos')){
+            return $this->render('vistagestaoprodutos');
+        }
+        return $this->render('error_home');
     }
 }
