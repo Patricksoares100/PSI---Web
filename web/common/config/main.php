@@ -9,7 +9,8 @@ return [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
-        'authManager'=> [
+        //UTILIZANDO A CLASSE DB MANAGER AQUI ENCONTRA-SE A CONFIGURAÇÃO DO authManager
+        'authManager' => [
             'class' => \yii\rbac\DbManager::class,
         ],
     ],
