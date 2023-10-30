@@ -34,10 +34,10 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [   
-                        //PERGUNTAR AO PROF
+                        
                         'actions' => ['gerirProdutos'],
                         'allow' => true,
-                        'roles' => ['funcionario'], 
+                        'roles' => ['gerirProdutos'],//permission 
                     ],
                 ],
             ],
@@ -110,11 +110,13 @@ class SiteController extends Controller
     }
 
 
-    //PERGUNTAR AO PROF
+   
     public function actionGerirProdutos(){
-        if (Yii::$app->user->can('gerirProdutos')){
+        //O QUE ESTA COMENTADO É PARA MOSTRAR ALGO ESPECIFICO QUANDO TIPOS DE USERS
+        //DIFERENTES PODEM USAR A MESMA ACTION
+        //if (Yii::$app->user->can('gerirProdutos')){
             return $this->render('vistagestaoprodutos');
-        }
-        return $this->render('error_home');
+       // }
+       // return $this->render('error_home');
     }
 }
