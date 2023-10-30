@@ -29,17 +29,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup'],//tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?'],// qualquer utilizador
                     ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['@'],// utilizador logado
                     ],
                 ],
             ],
