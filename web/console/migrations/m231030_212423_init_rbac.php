@@ -13,6 +13,9 @@ class m231030_212423_init_rbac extends Migration
     public function safeUp()
     {
         $auth = Yii::$app->authManager;
+
+        $role_cliente = $auth->createRole('cliente');
+        $auth->add($role_cliente);
     }
 
     /**
