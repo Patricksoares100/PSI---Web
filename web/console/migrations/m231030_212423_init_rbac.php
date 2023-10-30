@@ -12,7 +12,12 @@ class m231030_212423_init_rbac extends Migration
      */
     public function safeUp()
     {
+        // The authManager can now be accessed via \Yii::$app->authManager.
         $auth = Yii::$app->authManager;
+
+        // Criar os roles
+        $role_admin = $auth->createRole('admin');
+        $auth->add($role_admin);
     }
 
     /**
