@@ -18,9 +18,17 @@ class m231030_212423_init_rbac extends Migration
         // Criar os roles
         $role_admin = $auth->createRole('admin');
         $auth->add($role_admin);
-        
+
+        $role_funcionrario = $auth->createRole("funcionario");
+        $auth->add($role_funcionrario);
+
         $role_cliente = $auth->createRole('cliente');
         $auth->add($role_cliente);
+        //Criar permissões
+
+        // dar heranças addChild
+
+        
     }
 
     /**
@@ -28,9 +36,9 @@ class m231030_212423_init_rbac extends Migration
      */
     public function safeDown()
     {
-        echo "m231030_212423_init_rbac cannot be reverted.\n";
+        $auth = Yii::$app->authManager;
 
-        return false;
+        $auth->removeAll();
     }
 
     /*
