@@ -24,14 +24,22 @@ class m231030_212423_init_rbac extends Migration
 
         $role_cliente = $auth->createRole('cliente');
         $auth->add($role_cliente);
+        
         //Criar permissões - $auth->createPermission();
-
         $permission_edit_roles = $auth->createPermission('editRoles');
         $auth->add($permission_edit_roles);
 
-        // dar heranças addChild
+        $permission_gerir_produtos = $auth->createPermission('gerirProdutos');
+        $auth->add($permission_gerir_produtos);
 
+        // dar heranças addChild
         $auth->addChild($role_admin, $permission_edit_roles);
+        $auth->addChild($role_funcionrario, $permission_gerir_produtos);
+        $auth->addChild($role_admin, $role_funcionrario);
+
+        // o primeiro utilizador vai ser ADMIN
+        $auth->assign($role_admin, 1);
+
     }
 
     /**
