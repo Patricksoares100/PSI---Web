@@ -22,13 +22,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                // como n esta o only aqui , quer dizer q tudo é proibido
                 'rules' => [
                     [
                         'actions' => ['login', 'error', 'gerirProdutos'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index'],// so tem acesso quem esta logado
                         'allow' => true,
                         'roles' => ['@'],
                     ],
