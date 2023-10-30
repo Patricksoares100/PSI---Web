@@ -27,9 +27,11 @@ class m231030_212423_init_rbac extends Migration
         
         //Criar permissões - $auth->createPermission();
         $permission_edit_roles = $auth->createPermission('editRoles');
+        $permission_edit_roles->description = 'Permissão para editar os roles';
         $auth->add($permission_edit_roles);
 
         $permission_gerir_produtos = $auth->createPermission('gerirProdutos');
+        $permission_gerir_produtos = 'Permissão para gerir produtos';
         $auth->add($permission_gerir_produtos);
 
         // dar heranças addChild
