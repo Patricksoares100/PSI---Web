@@ -35,7 +35,14 @@ class m231031_210433_criar_bd_inicial extends Migration
             'localidade' =>$this->string()->notNull(),
         ]);
 
-
+        
+        $this->createTable('artigos',[
+            'id' =>$this->primaryKey(),
+            'nome' =>$this->string()->notNull(),
+            'descricao' =>$this->string()->notNull(),
+            'valor' =>$this->double()->notNull(),
+            'stockAtual' =>$this->integer()->notNull(),
+        ]);
 
     }
 
