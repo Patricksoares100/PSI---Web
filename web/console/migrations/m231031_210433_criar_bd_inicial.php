@@ -20,7 +20,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'telefone' => $this->integer(9)->notNull(),
             'nif' => $this->integer(9)->notNull(),
             'morada' => $this->string()->notNull(),
-            'codigoPostal' => $this->string()->notNull(),
+            'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ]);
 
@@ -31,7 +31,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'telefone' => $this->integer(9)->notNull(),
             'nif' => $this->integer(9)->notNull(),
             'morada' => $this->integer()->notNull(),
-            'codigoPostal' => $this->string()->notNull(),
+            'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ]);
         
@@ -40,7 +40,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'nome' =>$this->string()->notNull(),
             'descricao' =>$this->string()->notNull(),
             'valor' =>$this->double()->notNull(),
-            'stockAtual' =>$this->integer()->notNull(),
+            'stock_atual' =>$this->integer()->notNull(),
         ]);
 
         $this->createTable('fornecedores',[
@@ -55,12 +55,12 @@ class m231031_210433_criar_bd_inicial extends Migration
             'id' => $this->primaryKey(),
             'quantidade' => $this->integer()->notNull(),
             'valor' => $this->double()->notNull(),
-            'valorIva' => $this->double()->notNull(),
+            'valor_iva' => $this->double()->notNull(),
         ]);
 
         $this->createTable('ivas', [
             'id' =>$this->primaryKey(),
-            'emVigor' =>"ENUM('sim', 'nao')",
+            'em_vigor' =>"ENUM('sim', 'nao')",
             'descricao' =>$this->string()->notNull(),
             'percentagem' =>$this->double()->notNull(),
         ]);
