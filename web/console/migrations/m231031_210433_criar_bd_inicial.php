@@ -34,7 +34,6 @@ class m231031_210433_criar_bd_inicial extends Migration
             'codigoPostal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ]);
-
         
         $this->createTable('artigos',[
             'id' =>$this->primaryKey(),
@@ -43,6 +42,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'valor' =>$this->double()->notNull(),
             'stockAtual' =>$this->integer()->notNull(),
         ]);
+
         $this->createTable('fornecedor',[
             'id' => $this->primaryKey(),
             'nome' => $this->string(),
@@ -51,8 +51,15 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->createTable('carrinho_items', [
             'id' => $this->primaryKey(),
             'quantidade' => $this->integer()->notNull(),
-            'valor' => $this->integer()->notNull(),
+            'valor' => $this->double()->notNull(),
             'valorIva' => $this->double()->notNull(),
+        ]);
+
+        $this->createTable('ivas', [
+            'id' =>$this->primaryKey(),
+            'emVigor' =>"ENUM('sim', 'nao')",
+            'descricao' =>$this->string()->notNull(),
+            'percentagem' =>$this->double()->notNull(),
         ]);
     }
 
