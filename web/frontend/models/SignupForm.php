@@ -56,7 +56,19 @@ class SignupForm extends Model
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
 
-        return $user->save() && $this->sendEmail($user);
+        $user->save() && $this->sendEmail($user);
+
+        //Guardar os novos utilizadores com o role de cliente
+        //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin
+        $contadorUsers = User::find()->count();     
+        $auth = \Yii::$app->authManager;
+        if($contadorUsers !=1){
+        $authorRole = $auth->getRole('cliente');
+        $auth->assign($authorRole, $user->getId());
+        }
+        
+
+        return $user;
     }
 
     /**
