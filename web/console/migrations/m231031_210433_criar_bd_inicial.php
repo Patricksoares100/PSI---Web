@@ -24,15 +24,15 @@ class m231031_210433_criar_bd_inicial extends Migration
             'localidade' => $this->string()->notNull(),
         ]);
 
-        $this->createTable('empresas',[
-            'id' =>$this->primaryKey(),
-            'nome' =>$this->string()->notNull(),
-            'email' =>$this->string()->notNull(),
-            'telefone' =>$this->integer(9)->notNull(),
-            'nif' =>$this->integer(9)->notNull(),
-            'morada'=>$this->integer()->notNull(),
-            'codigoPostal'=>$this->string()->notNull(),
-            'localidade' =>$this->string()->notNull(),
+        $this->createTable('empresas', [
+            'id' => $this->primaryKey(),
+            'nome' => $this->string()->notNull(),
+            'email' => $this->string()->notNull(),
+            'telefone' => $this->integer(9)->notNull(),
+            'nif' => $this->integer(9)->notNull(),
+            'morada' => $this->integer()->notNull(),
+            'codigoPostal' => $this->string()->notNull(),
+            'localidade' => $this->string()->notNull(),
         ]);
 
         
@@ -43,7 +43,15 @@ class m231031_210433_criar_bd_inicial extends Migration
             'valor' =>$this->double()->notNull(),
             'stockAtual' =>$this->integer()->notNull(),
         ]);
+        
+        
 
+        $this->createTable('carrinho_items', [
+            'id' => $this->primaryKey(),
+            'quantidade' => $this->integer()->notNull(),
+            'valor' => $this->integer()->notNull(),
+            'valorIva' => $this->double()->notNull(),
+        ]);
     }
 
     /**
