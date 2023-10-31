@@ -115,7 +115,7 @@ class SiteController extends Controller
         //O QUE ESTA COMENTADO É PARA MOSTRAR ALGO ESPECIFICO QUANDO TIPOS DE USERS
         //DIFERENTES PODEM USAR A MESMA ACTION
         //if (Yii::$app->user->can('gerirProdutos')){
-            return $this->render('vistagestaoprodutos');
+            return $this->render('gerirprodutos');
        // }
        // return $this->render('error_home');
     }

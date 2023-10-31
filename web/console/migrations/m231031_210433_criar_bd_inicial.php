@@ -43,8 +43,10 @@ class m231031_210433_criar_bd_inicial extends Migration
             'valor' =>$this->double()->notNull(),
             'stockAtual' =>$this->integer()->notNull(),
         ]);
-        
-        
+        $this->createTable('fornecedor',[
+            'id' => $this->primaryKey(),
+            'nome' => $this->string(),
+        ]);
 
         $this->createTable('carrinho_items', [
             'id' => $this->primaryKey(),
@@ -61,6 +63,7 @@ class m231031_210433_criar_bd_inicial extends Migration
     {
         $this->dropTable('pessoas');
         $this->dropTable('empresas');
+        $this->dropTable('fornecedor');
     }
 
     /*
