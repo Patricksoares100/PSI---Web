@@ -31,7 +31,7 @@ class m231030_212423_init_rbac extends Migration
         $auth->add($permission_edit_roles);
 
         $permission_gerir_produtos = $auth->createPermission('gerirProdutos');
-        $permission_gerir_produtos = 'Permissão para gerir produtos';
+        $permission_gerir_produtos->description = 'Permissão para gerir produtos';
         $auth->add($permission_gerir_produtos);
 
         // dar heranças addChild
