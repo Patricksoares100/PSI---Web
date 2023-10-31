@@ -42,10 +42,17 @@ class m231031_210433_criar_bd_inicial extends Migration
             'valor' =>$this->double()->notNull(),
             'stockAtual' =>$this->integer()->notNull(),
         ]);
+<<<<<<< Updated upstream
 
         $this->createTable('fornecedor',[
+=======
+        $this->createTable('fornecedores',[
+>>>>>>> Stashed changes
             'id' => $this->primaryKey(),
             'nome' => $this->string(),
+            'telefone' => $this->integer(9),
+            'nif' => $this->integer(9),
+            'morada' => $this->string(),
         ]);
 
         $this->createTable('carrinho_items', [
