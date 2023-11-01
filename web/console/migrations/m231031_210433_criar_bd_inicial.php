@@ -98,6 +98,9 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->dropTable('artigos');
         $this->dropTable('carrinho_items');
         $this->dropTable('ivas');
+        $this->dropTable('carrinho_compras');
+        $this->dropTable('faturas');
+        $this->dropTable('avaliacaos');
     }
 
     /*
