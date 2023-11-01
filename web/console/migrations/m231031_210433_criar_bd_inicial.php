@@ -64,6 +64,27 @@ class m231031_210433_criar_bd_inicial extends Migration
             'descricao' =>$this->string()->notNull(),
             'percentagem' =>$this->double()->notNull(),
         ]);
+
+        $this->createTable('carrinho_compras', [
+            'id' =>$this->primaryKey(),
+            'data' =>$this->dateTime()->notNull(),
+            'valor_total' =>$this->double()->notNull(),
+            'iva_total' =>$this->integer()->notNull(),
+            'estado' =>"ENUM('activo', 'inactivo')",
+        ]);
+
+        $this->createTable('faturas', [
+            'id' =>$this->primaryKey(),
+            'data' =>$this->dateTime()->notNull(),
+            'valor_fatura' =>$this->double()->notNull(),
+            'estado' =>"ENUM('emitida', 'paga', 'cancelada')",
+        ]);
+
+        $this->createTable('avaliacaos', [
+            'id' =>$this->primaryKey(),
+            'comentario' =>$this->string()->notNull(),
+            'classificacao' =>"ENUM('1', '2', '3', '4', '5')",
+        ]);
     }
 
     /**
@@ -73,7 +94,10 @@ class m231031_210433_criar_bd_inicial extends Migration
     {
         $this->dropTable('pessoas');
         $this->dropTable('empresas');
-        $this->dropTable('fornecedor');
+        $this->dropTable('fornecedores');
+        $this->dropTable('artigos');
+        $this->dropTable('carrinho_items');
+        $this->dropTable('ivas');
     }
 
     /*
