@@ -41,6 +41,9 @@ class m231031_210433_criar_bd_inicial extends Migration
             'descricao' =>$this->string()->notNull(),
             'valor' =>$this->double()->notNull(),
             'stock_atual' =>$this->integer()->notNull(),
+            'iva_id' =>$this->integer()->notNull(),
+            'fornecedor_id'=>$this->integer()->notNull(),
+            'categoria_id' =>$this->integer()->notNull(),
         ]);
 
         $this->createTable('fornecedores',[
@@ -56,6 +59,8 @@ class m231031_210433_criar_bd_inicial extends Migration
             'quantidade' => $this->integer()->notNull(),
             'valor' => $this->double()->notNull(),
             'valor_iva' => $this->double()->notNull(),
+            'artigo_id' =>$this->integer()->notNull(),
+            'carrinhocompras_id'=>$this->integer()->notNull(),
         ]);
 
         $this->createTable('ivas', [
@@ -70,6 +75,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'data' =>$this->dateTime()->notNull(),
             'valor_total' =>$this->double()->notNull(),
             'iva_total' =>$this->integer()->notNull(),
+            'user_id' =>$this->integer()->notNull(),
             'estado' =>"ENUM('activo', 'inactivo')",
         ]);
 
@@ -83,6 +89,8 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->createTable('avaliacaos', [
             'id' =>$this->primaryKey(),
             'comentario' =>$this->string()->notNull(),
+            'artigo_id' =>$this->integer()->notNull(),
+            'user_id' =>$this->integer()->notNull(),
             'classificacao' =>"ENUM('1', '2', '3', '4', '5')",
         ]);
     }
