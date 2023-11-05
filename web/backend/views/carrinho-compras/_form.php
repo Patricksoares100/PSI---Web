@@ -4,21 +4,23 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Avaliacaos $model */
+/** @var app\models\CarrinhoCompras $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="avaliacaos-form">
+<div class="carrinho-compras-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'comentario')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'data')->textInput() ?>
 
-    <?= $form->field($model, 'artigos_id')->textInput() ?>
+    <?= $form->field($model, 'valor_total')->textInput() ?>
+
+    <?= $form->field($model, 'iva_total')->textInput() ?>
 
     <?= $form->field($model, 'pessoas_id')->textInput() ?>
 
-    <?= $form->field($model, 'classificacao')->dropDownList([ 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'estado')->dropDownList([ 'activo' => 'Activo', 'inactivo' => 'Inactivo', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

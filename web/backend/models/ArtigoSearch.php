@@ -17,7 +17,7 @@ class ArtigoSearch extends Artigo
     public function rules()
     {
         return [
-            [['id', 'stock_atual'], 'integer'],
+            [['id', 'stock_atual', 'iva_id', 'fornecedores_id', 'categorias_id', 'pessoas_id'], 'integer'],
             [['nome', 'descricao'], 'safe'],
             [['valor'], 'number'],
         ];
@@ -62,6 +62,10 @@ class ArtigoSearch extends Artigo
             'id' => $this->id,
             'valor' => $this->valor,
             'stock_atual' => $this->stock_atual,
+            'iva_id' => $this->iva_id,
+            'fornecedores_id' => $this->fornecedores_id,
+            'categorias_id' => $this->categorias_id,
+            'pessoas_id' => $this->pessoas_id,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])

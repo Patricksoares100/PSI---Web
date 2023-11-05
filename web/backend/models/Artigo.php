@@ -12,6 +12,10 @@ use Yii;
  * @property string $descricao
  * @property float $valor
  * @property int $stock_atual
+ * @property int $iva_id
+ * @property int $fornecedores_id
+ * @property int $categorias_id
+ * @property int $pessoas_id
  */
 class Artigo extends \yii\db\ActiveRecord
 {
@@ -29,9 +33,9 @@ class Artigo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'descricao', 'valor', 'stock_atual'], 'required'],
+            [['nome', 'descricao', 'valor', 'stock_atual', 'iva_id', 'fornecedores_id', 'categorias_id', 'pessoas_id'], 'required'],
             [['valor'], 'number'],
-            [['stock_atual'], 'integer'],
+            [['stock_atual', 'iva_id', 'fornecedores_id', 'categorias_id', 'pessoas_id'], 'integer'],
             [['nome', 'descricao'], 'string', 'max' => 255],
         ];
     }
@@ -47,6 +51,10 @@ class Artigo extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'valor' => 'Valor',
             'stock_atual' => 'Stock Atual',
+            'iva_id' => 'Iva ID',
+            'fornecedores_id' => 'Fornecedores ID',
+            'categorias_id' => 'Categorias ID',
+            'pessoas_id' => 'Pessoas ID',
         ];
     }
 }

@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Avaliacoes;
+use app\models\CarrinhoItems;
 
 /**
- * AvaliacoesSearch represents the model behind the search form of `app\models\Avaliacoes`.
+ * CarrinhoItemsSearch represents the model behind the search form of `app\models\CarrinhoItems`.
  */
-class AvaliacoesSearch extends Avaliacoes
+class CarrinhoItemsSearch extends CarrinhoItems
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class AvaliacoesSearch extends Avaliacoes
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['comentario', 'classificacao'], 'safe'],
+            [['id', 'quantidade', 'artigos_id', 'carrinhocompras_id'], 'integer'],
+            [['valor', 'valor_iva'], 'number'],
         ];
     }
 
@@ -40,7 +40,7 @@ class AvaliacoesSearch extends Avaliacoes
      */
     public function search($params)
     {
-        $query = Avaliacoes::find();
+        $query = CarrinhoItems::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +59,12 @@ class AvaliacoesSearch extends Avaliacoes
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'quantidade' => $this->quantidade,
+            'valor' => $this->valor,
+            'valor_iva' => $this->valor_iva,
+            'artigos_id' => $this->artigos_id,
+            'carrinhocompras_id' => $this->carrinhocompras_id,
         ]);
-
-        $query->andFilterWhere(['like', 'comentario', $this->comentario])
-            ->andFilterWhere(['like', 'classificacao', $this->classificacao]);
 
         return $dataProvider;
     }

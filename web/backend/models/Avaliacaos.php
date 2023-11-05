@@ -5,20 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "avaliacoes".
+ * This is the model class for table "avaliacaos".
  *
  * @property int $id
  * @property string $comentario
+ * @property int $artigos_id
+ * @property int $pessoas_id
  * @property string|null $classificacao
  */
-class Avaliacoes extends \yii\db\ActiveRecord
+class Avaliacaos extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'avaliacoes';
+        return 'avaliacaos';
     }
 
     /**
@@ -27,7 +29,8 @@ class Avaliacoes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comentario'], 'required'],
+            [['comentario', 'artigos_id', 'pessoas_id'], 'required'],
+            [['artigos_id', 'pessoas_id'], 'integer'],
             [['classificacao'], 'string'],
             [['comentario'], 'string', 'max' => 255],
         ];
@@ -41,6 +44,8 @@ class Avaliacoes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'comentario' => 'Comentario',
+            'artigos_id' => 'Artigos ID',
+            'pessoas_id' => 'Pessoas ID',
             'classificacao' => 'Classificacao',
         ];
     }
