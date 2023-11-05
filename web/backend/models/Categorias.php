@@ -5,24 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "fornecedores".
+ * This is the model class for table "categorias".
  *
  * @property int $id
- * @property string|null $nome
- * @property int|null $telefone
- * @property int|null $nif
- * @property string|null $morada
+ * @property string $nome_categoria
  *
  * @property Artigos[] $artigos
  */
-class Fornecedores extends \yii\db\ActiveRecord
+class Categorias extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'fornecedores';
+        return 'categorias';
     }
 
     /**
@@ -31,8 +28,8 @@ class Fornecedores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['telefone', 'nif'], 'integer'],
-            [['nome', 'morada'], 'string', 'max' => 255],
+            [['nome_categoria'], 'required'],
+            [['nome_categoria'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,10 +40,7 @@ class Fornecedores extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
-            'telefone' => 'Telefone',
-            'nif' => 'NIF',
-            'morada' => 'Morada',
+            'nome_categoria' => 'Nome Categoria',
         ];
     }
 
@@ -57,6 +51,6 @@ class Fornecedores extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['fornecedores_id' => 'id']);
+        return $this->hasMany(Artigos::class, ['categorias_id' => 'id']);
     }
 }

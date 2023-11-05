@@ -59,13 +59,16 @@ class Artigos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
-            'valor' => 'Valor',
-            'stock_atual' => 'Stock Atual',
-            'iva_id' => 'Iva ID',
-            'fornecedores_id' => 'Fornecedores ID',
-            'categorias_id' => 'Categorias ID',
+            'descricao' => 'Descrição',
+            'valor' => 'Preço Un.',
+            'stock_atual' => 'Quantidade',
+            'iva_id' => 'IVA',
+            'fornecedores.nome' => 'Fornecedor',
+            'fornecedores_id' => 'Fornecedor',
+            'categorias.nome_categoria' => 'Categoria',
+            'categorias_id' => 'Categoria',
             'pessoas_id' => 'Pessoas ID',
+            'pessoas.nome' => 'Funcionário',
         ];
     }
 
