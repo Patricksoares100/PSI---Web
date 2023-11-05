@@ -1,46 +1,40 @@
 <?php
 
-use app\models\Artigo;
+use app\models\CarrinhoCompras;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\ArtigoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Artigos';
+$this->title = 'Carrinho Compras';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="artigo-index">
+<div class="carrinho-compras-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Artigo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Carrinho Compras', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'nome',
-            'descricao',
-            'valor',
-            'stock_atual',
-            //'iva_id',
-            //'fornecedores_id',
-            //'categorias_id',
-            //'pessoas_id',
+            'data',
+            'valor_total',
+            'iva_total',
+            'pessoas_id',
+            //'estado',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Artigo $model, $key, $index, $column) {
+                'urlCreator' => function ($action, CarrinhoCompras $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

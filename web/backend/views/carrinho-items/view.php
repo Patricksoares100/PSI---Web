@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Artigo $model */
+/** @var app\models\CarrinhoItems $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Artigos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Carrinho Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="artigo-view">
+<div class="carrinho-items-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,14 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'nome',
-            'descricao',
+            'quantidade',
             'valor',
-            'stock_atual',
-            'iva_id',
-            'fornecedores_id',
-            'categorias_id',
-            'pessoas_id',
+            'valor_iva',
+            'artigos_id',
+            'carrinhocompras_id',
         ],
     ]) ?>
 

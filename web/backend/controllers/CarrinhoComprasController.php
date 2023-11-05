@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Avaliacaos;
+use app\models\CarrinhoCompras;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AvaliacoesController implements the CRUD actions for Avaliacaos model.
+ * CarrinhoComprasController implements the CRUD actions for CarrinhoCompras model.
  */
-class AvaliacoesController extends Controller
+class CarrinhoComprasController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Lists all Avaliacaos models.
+     * Lists all CarrinhoCompras models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Avaliacaos::find(),
+            'query' => CarrinhoCompras::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Displays a single Avaliacaos model.
+     * Displays a single CarrinhoCompras model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Creates a new Avaliacaos model.
+     * Creates a new CarrinhoCompras model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Avaliacaos();
+        $model = new CarrinhoCompras();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Updates an existing Avaliacaos model.
+     * Updates an existing CarrinhoCompras model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Deletes an existing Avaliacaos model.
+     * Deletes an existing CarrinhoCompras model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class AvaliacoesController extends Controller
     }
 
     /**
-     * Finds the Avaliacaos model based on its primary key value.
+     * Finds the CarrinhoCompras model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Avaliacaos the loaded model
+     * @return CarrinhoCompras the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Avaliacaos::findOne(['id' => $id])) !== null) {
+        if (($model = CarrinhoCompras::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

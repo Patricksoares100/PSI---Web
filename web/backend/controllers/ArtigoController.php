@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace app\controllers;
 
 use app\models\Artigo;
 use app\models\ArtigoSearch;

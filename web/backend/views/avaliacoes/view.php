@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Avaliacoes $model */
+/** @var app\models\Avaliacaos $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Avaliacoes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Avaliacaos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="avaliacoes-view">
+<div class="avaliacaos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'comentario',
+            'artigos_id',
+            'pessoas_id',
             'classificacao',
         ],
     ]) ?>
