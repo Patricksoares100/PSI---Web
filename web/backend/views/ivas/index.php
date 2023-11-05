@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Ivas';
+$this->title = 'IVA\'s';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ivas-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Ivas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar nova taxa de IVA', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'em_vigor',
             'descricao',
             'percentagem',

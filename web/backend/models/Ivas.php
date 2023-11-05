@@ -45,7 +45,7 @@ class Ivas extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'em_vigor' => 'Em Vigor',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'percentagem' => 'Percentagem',
         ];
     }
