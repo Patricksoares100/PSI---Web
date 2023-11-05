@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "empresas".
+ * This is the model class for table "empresa".
  *
  * @property int $id
  * @property string $nome
@@ -23,7 +23,7 @@ class Empresa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'empresas';
+        return 'empresa';
     }
 
     /**

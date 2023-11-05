@@ -11,8 +11,11 @@ use Yii;
  * @property string $data
  * @property float $valor_total
  * @property int $iva_total
- * @property int $pessoas_id
  * @property string|null $estado
+ * @property int $pessoas_id
+ *
+ * @property CarrinhoItems[] $carrinhoItems
+ * @property Pessoas $pessoas
  */
 class CarrinhoCompras extends \yii\db\ActiveRecord
 {
@@ -35,6 +38,7 @@ class CarrinhoCompras extends \yii\db\ActiveRecord
             [['valor_total'], 'number'],
             [['iva_total', 'pessoas_id'], 'integer'],
             [['estado'], 'string'],
+            [['pessoas_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pessoas::class, 'targetAttribute' => ['pessoas_id' => 'id']],
         ];
     }
 
@@ -48,8 +52,28 @@ class CarrinhoCompras extends \yii\db\ActiveRecord
             'data' => 'Data',
             'valor_total' => 'Valor Total',
             'iva_total' => 'Iva Total',
-            'pessoas_id' => 'Pessoas ID',
             'estado' => 'Estado',
+            'pessoas_id' => 'Pessoas ID',
         ];
+    }
+
+    /**
+     * Gets query for [[CarrinhoItems]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCarrinhoItems()
+    {
+        return $this->hasMany(CarrinhoItems::class, ['carrinhocompras_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Pessoas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPessoas()
+    {
+        return $this->hasOne(Pessoas::class, ['id' => 'pessoas_id']);
     }
 }

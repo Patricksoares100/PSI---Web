@@ -14,6 +14,10 @@ use Yii;
  * @property string $morada
  * @property string $codigo_postal
  * @property string $localidade
+ *
+ * @property Artigos[] $artigos
+ * @property Avaliacaos[] $avaliacaos
+ * @property CarrinhoCompras[] $carrinhoCompras
  */
 class Pessoas extends \yii\db\ActiveRecord
 {
@@ -51,5 +55,35 @@ class Pessoas extends \yii\db\ActiveRecord
             'codigo_postal' => 'Codigo Postal',
             'localidade' => 'Localidade',
         ];
+    }
+
+    /**
+     * Gets query for [[Artigos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArtigos()
+    {
+        return $this->hasMany(Artigos::class, ['pessoas_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Avaliacaos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAvaliacaos()
+    {
+        return $this->hasMany(Avaliacaos::class, ['pessoas_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CarrinhoCompras]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCarrinhoCompras()
+    {
+        return $this->hasMany(CarrinhoCompras::class, ['pessoas_id' => 'id']);
     }
 }
