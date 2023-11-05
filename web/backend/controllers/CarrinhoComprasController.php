@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
 use app\models\CarrinhoCompras;
 use yii\data\ActiveDataProvider;
