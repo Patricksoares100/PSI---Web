@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Avaliacaos $model */
 
-$this->title = 'Update Avaliacaos: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Avaliacaos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Atualizar Avaliação: ' . $model->artigos->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Avaliações', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->artigos->nome, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Atualizar';
 ?>
 <div class="avaliacaos-update">
 

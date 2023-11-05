@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Avaliacaos $model */
 
-$this->title = 'Create Avaliacaos';
-$this->params['breadcrumbs'][] = ['label' => 'Avaliacaos', 'url' => ['index']];
+$this->title = 'Registar Avaliação';
+$this->params['breadcrumbs'][] = ['label' => 'Avaliações', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="avaliacaos-create">

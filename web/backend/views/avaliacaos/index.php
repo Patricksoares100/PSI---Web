@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Avaliacaos';
+$this->title = 'Avaliações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="avaliacaos-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Avaliacaos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Registar Avaliação', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'comentario',
+            //'id',
+            //'comentario',
             'classificacao',
-            'artigos_id',
-            'pessoas_id',
+            'artigos.nome',
+            //'pessoas.nome',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Avaliacaos $model, $key, $index, $column) {
