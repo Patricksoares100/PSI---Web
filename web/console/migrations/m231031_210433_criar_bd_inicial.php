@@ -34,16 +34,16 @@ class m231031_210433_criar_bd_inicial extends Migration
             'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ]);
-        
-        $this->createTable('artigos',[
-            'id' =>$this->primaryKey(),
-            'nome' =>$this->string()->notNull(),
-            'descricao' =>$this->string()->notNull(),
-            'valor' =>$this->double()->notNull(),
-            'stock_atual' =>$this->integer()->notNull(),
+
+        $this->createTable('artigos', [
+            'id' => $this->primaryKey(),
+            'nome' => $this->string()->notNull(),
+            'descricao' => $this->string()->notNull(),
+            'valor' => $this->double()->notNull(),
+            'stock_atual' => $this->integer()->notNull(),
         ]);
 
-        $this->createTable('fornecedores',[
+        $this->createTable('fornecedores', [
             'id' => $this->primaryKey(),
             'nome' => $this->string(),
             'telefone' => $this->integer(9),
@@ -59,31 +59,31 @@ class m231031_210433_criar_bd_inicial extends Migration
         ]);
 
         $this->createTable('ivas', [
-            'id' =>$this->primaryKey(),
-            'em_vigor' =>"ENUM('sim', 'nao')",
-            'descricao' =>$this->string()->notNull(),
-            'percentagem' =>$this->double()->notNull(),
+            'id' => $this->primaryKey(),
+            'em_vigor' => "ENUM('sim', 'nao')",
+            'descricao' => $this->string()->notNull(),
+            'percentagem' => $this->double()->notNull(),
         ]);
 
         $this->createTable('carrinho_compras', [
-            'id' =>$this->primaryKey(),
-            'data' =>$this->dateTime()->notNull(),
-            'valor_total' =>$this->double()->notNull(),
-            'iva_total' =>$this->integer()->notNull(),
-            'estado' =>"ENUM('activo', 'inactivo')",
+            'id' => $this->primaryKey(),
+            'data' => $this->dateTime()->notNull(),
+            'valor_total' => $this->double()->notNull(),
+            'iva_total' => $this->integer()->notNull(),
+            'estado' => "ENUM('activo', 'inactivo')",
         ]);
 
         $this->createTable('faturas', [
-            'id' =>$this->primaryKey(),
-            'data' =>$this->dateTime()->notNull(),
-            'valor_fatura' =>$this->double()->notNull(),
-            'estado' =>"ENUM('emitida', 'paga', 'cancelada')",
+            'id' => $this->primaryKey(),
+            'data' => $this->dateTime()->notNull(),
+            'valor_fatura' => $this->double()->notNull(),
+            'estado' => "ENUM('emitida', 'paga', 'cancelada')",
         ]);
 
-        $this->createTable('avaliacaos', [
-            'id' =>$this->primaryKey(),
-            'comentario' =>$this->string()->notNull(),
-            'classificacao' =>"ENUM('1', '2', '3', '4', '5')",
+        $this->createTable('avaliacoes', [
+            'id' => $this->primaryKey(),
+            'comentario' => $this->string()->notNull(),
+            'classificacao' => "ENUM('1', '2', '3', '4', '5')",
         ]);
     }
 
@@ -100,7 +100,7 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->dropTable('ivas');
         $this->dropTable('carrinho_compras');
         $this->dropTable('faturas');
-        $this->dropTable('avaliacaos');
+        $this->dropTable('avaliacoes');
     }
 
     /*
