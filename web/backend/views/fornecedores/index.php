@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Fornecedores', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Registar Fornecedor', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'nome',
             'telefone',
             'nif',
-            'morada',
+            //'morada',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Fornecedores $model, $key, $index, $column) {
