@@ -11,8 +11,10 @@ use Yii;
  * @property string|null $em_vigor
  * @property string $descricao
  * @property float $percentagem
+ *
+ * @property Artigos[] $artigos
  */
-class Iva extends \yii\db\ActiveRecord
+class Ivas extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -46,5 +48,15 @@ class Iva extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'percentagem' => 'Percentagem',
         ];
+    }
+
+    /**
+     * Gets query for [[Artigos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArtigos()
+    {
+        return $this->hasMany(Artigos::class, ['iva_id' => 'id']);
     }
 }
