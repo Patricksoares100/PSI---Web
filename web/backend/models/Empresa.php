@@ -46,11 +46,11 @@ class Empresa extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'email' => 'Email',
+            'email' => 'E-mail',
             'telefone' => 'Telefone',
-            'nif' => 'Nif',
+            'nif' => 'NIF',
             'morada' => 'Morada',
-            'codigo_postal' => 'Codigo Postal',
+            'codigo_postal' => 'Código Postal',
             'localidade' => 'Localidade',
         ];
     }

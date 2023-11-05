@@ -12,22 +12,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true,'placeholder' => 'Nomenclatura da empresa']) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'E-mail oficial']) ?>
 
-    <?= $form->field($model, 'telefone')->textInput() ?>
+    <?= $form->field($model, 'telefone')->textInput(['placeholder' => 'Telefone da central']) ?>
 
-    <?= $form->field($model, 'nif')->textInput() ?>
+    <?= $form->field($model, 'nif')->textInput(['placeholder' => 'Número de Identificação Fiscal "6000xxxxx"']) ?>
 
-    <?= $form->field($model, 'morada')->textInput() ?>
+    <?= $form->field($model, 'morada')->textInput(['placeholder' => 'Morada Fiscal']) ?>
 
-    <?= $form->field($model, 'codigo_postal')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'codigo_postal')->textInput(['maxlength' => true,'placeholder' => '1234-567']) ?>
 
-    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true,'placeholder' => 'Leiria']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

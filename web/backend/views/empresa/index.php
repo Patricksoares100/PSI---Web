@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Empresa';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="empresa-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Empresa', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Registar Empresa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'nome',
             'email:email',
             'telefone',
