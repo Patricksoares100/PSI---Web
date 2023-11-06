@@ -13,10 +13,10 @@ use Yii;
  * @property int $artigos_id
  * @property int $pessoas_id
  *
- * @property Artigos $artigos
- * @property Pessoas $pessoas
+ * @property Artigo $artigos
+ * @property Pessoa $pessoas
  */
-class Avaliacaos extends \yii\db\ActiveRecord
+class Avaliacao extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,8 +36,8 @@ class Avaliacaos extends \yii\db\ActiveRecord
             [['classificacao'], 'string'],
             [['artigos_id', 'pessoas_id'], 'integer'],
             [['comentario'], 'string', 'max' => 255],
-            [['artigos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['artigos_id' => 'id']],
-            [['pessoas_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pessoas::class, 'targetAttribute' => ['pessoas_id' => 'id']],
+            [['artigos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['artigos_id' => 'id']],
+            [['pessoas_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pessoa::class, 'targetAttribute' => ['pessoas_id' => 'id']],
         ];
     }
 
@@ -57,22 +57,22 @@ class Avaliacaos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getArtigos()
     {
-        return $this->hasOne(Artigos::class, ['id' => 'artigos_id']);
+        return $this->hasOne(Artigo::class, ['id' => 'artigos_id']);
     }
 
     /**
-     * Gets query for [[Pessoas]].
+     * Gets query for [[Pessoa]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getPessoas()
     {
-        return $this->hasOne(Pessoas::class, ['id' => 'pessoas_id']);
+        return $this->hasOne(Pessoa::class, ['id' => 'pessoas_id']);
     }
 }

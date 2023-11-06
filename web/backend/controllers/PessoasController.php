@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use app\models\Pessoas;
+use app\models\Pessoa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PessoasController implements the CRUD actions for Pessoas model.
+ * PessoasController implements the CRUD actions for Pessoa model.
  */
 class PessoasController extends Controller
 {
@@ -32,14 +32,14 @@ class PessoasController extends Controller
     }
 
     /**
-     * Lists all Pessoas models.
+     * Lists all Pessoa models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Pessoas::find(),
+            'query' => Pessoa::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Displays a single Pessoas model.
+     * Displays a single Pessoa model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class PessoasController extends Controller
     }
 
     /**
-     * Creates a new Pessoas model.
+     * Creates a new Pessoa model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Pessoas();
+        $model = new Pessoa();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Updates an existing Pessoas model.
+     * Updates an existing Pessoa model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Deletes an existing Pessoas model.
+     * Deletes an existing Pessoa model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class PessoasController extends Controller
     }
 
     /**
-     * Finds the Pessoas model based on its primary key value.
+     * Finds the Pessoa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Pessoas the loaded model
+     * @return Pessoa the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Pessoas::findOne(['id' => $id])) !== null) {
+        if (($model = Pessoa::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\models\Avaliacaos $model */
+/** @var app\models\Avaliacao $model */
 
 $this->title = 'Atualizar Avaliação: ' . $model->artigos->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Avaliações', 'url' => ['index']];

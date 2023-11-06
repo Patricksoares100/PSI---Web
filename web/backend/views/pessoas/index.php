@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Pessoas;
+use app\models\Pessoa;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pessoas';
+$this->title = 'Pessoa';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pessoas-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Pessoas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Pessoa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'localidade',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Pessoas $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Pessoa $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

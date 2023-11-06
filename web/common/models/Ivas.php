@@ -51,7 +51,7 @@ class Ivas extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */

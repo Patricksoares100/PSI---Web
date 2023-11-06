@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Artigos $model */
+/** @var app\models\Artigo $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -21,16 +21,16 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'stock_atual')->textInput(['placeholder' => 'Quantidade do artigo disponível']) ?>
 
     <?= $form->field($model, 'iva_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(\app\models\Ivas::find()->where(['em_vigor' => 'sim'])->all(), 'id', 'percentagem'),
+        \yii\helpers\ArrayHelper::map(\app\models\Iva::find()->where(['em_vigor' => 'sim'])->all(), 'id', 'percentagem'),
         ['prompt' => 'Selecione o IVA']
     ) ?>
     <?= $form->field($model, 'fornecedores_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(\app\models\Fornecedores::find()->all(), 'id', 'nome'),
+        \yii\helpers\ArrayHelper::map(\app\models\Fornecedor::find()->all(), 'id', 'nome'),
         ['prompt' => 'Selecione o Fornecedor']
     ) ?>
 
     <?= $form->field($model, 'categorias_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(\app\models\Categorias::find()->all(), 'id', 'nome_categoria'),
+        \yii\helpers\ArrayHelper::map(\app\models\Categoria::find()->all(), 'id', 'nome_categoria'),
         ['prompt' => 'Selecione a Categoria']
     ) ?>
 

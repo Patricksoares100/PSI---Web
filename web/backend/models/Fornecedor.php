@@ -13,9 +13,9 @@ use Yii;
  * @property int|null $nif
  * @property string|null $morada
  *
- * @property Artigos[] $artigos
+ * @property Artigo[] $artigos
  */
-class Fornecedores extends \yii\db\ActiveRecord
+class Fornecedor extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -51,12 +51,12 @@ class Fornecedores extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['fornecedores_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['fornecedores_id' => 'id']);
     }
 }

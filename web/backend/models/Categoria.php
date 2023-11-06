@@ -10,9 +10,9 @@ use Yii;
  * @property int $id
  * @property string $nome_categoria
  *
- * @property Artigos[] $artigos
+ * @property Artigo[] $artigos
  */
-class Categorias extends \yii\db\ActiveRecord
+class Categoria extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -45,12 +45,12 @@ class Categorias extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['categorias_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['categorias_id' => 'id']);
     }
 }

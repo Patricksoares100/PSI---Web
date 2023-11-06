@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use app\models\CarrinhoItems;
+use app\models\CarrinhoItem;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CarrinhoItemsController implements the CRUD actions for CarrinhoItems model.
+ * CarrinhoItemsController implements the CRUD actions for CarrinhoItem model.
  */
 class CarrinhoItemsController extends Controller
 {
@@ -32,14 +32,14 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Lists all CarrinhoItems models.
+     * Lists all CarrinhoItem models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => CarrinhoItems::find(),
+            'query' => CarrinhoItem::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Displays a single CarrinhoItems model.
+     * Displays a single CarrinhoItem model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Creates a new CarrinhoItems model.
+     * Creates a new CarrinhoItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new CarrinhoItems();
+        $model = new CarrinhoItem();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Updates an existing CarrinhoItems model.
+     * Updates an existing CarrinhoItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Deletes an existing CarrinhoItems model.
+     * Deletes an existing CarrinhoItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class CarrinhoItemsController extends Controller
     }
 
     /**
-     * Finds the CarrinhoItems model based on its primary key value.
+     * Finds the CarrinhoItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return CarrinhoItems the loaded model
+     * @return CarrinhoItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CarrinhoItems::findOne(['id' => $id])) !== null) {
+        if (($model = CarrinhoItem::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

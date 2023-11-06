@@ -14,10 +14,10 @@ use Yii;
  * @property int $artigos_id
  * @property int $carrinhocompras_id
  *
- * @property Artigos $artigos
- * @property CarrinhoCompras $carrinhocompras
+ * @property Artigo $artigos
+ * @property CarrinhoCompra $carrinhocompras
  */
-class CarrinhoItems extends \yii\db\ActiveRecord
+class CarrinhoItem extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,8 +36,8 @@ class CarrinhoItems extends \yii\db\ActiveRecord
             [['quantidade', 'valor', 'valor_iva', 'artigos_id', 'carrinhocompras_id'], 'required'],
             [['quantidade', 'artigos_id', 'carrinhocompras_id'], 'integer'],
             [['valor', 'valor_iva'], 'number'],
-            [['artigos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['artigos_id' => 'id']],
-            [['carrinhocompras_id'], 'exist', 'skipOnError' => true, 'targetClass' => CarrinhoCompras::class, 'targetAttribute' => ['carrinhocompras_id' => 'id']],
+            [['artigos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['artigos_id' => 'id']],
+            [['carrinhocompras_id'], 'exist', 'skipOnError' => true, 'targetClass' => CarrinhoCompra::class, 'targetAttribute' => ['carrinhocompras_id' => 'id']],
         ];
     }
 
@@ -51,19 +51,19 @@ class CarrinhoItems extends \yii\db\ActiveRecord
             'quantidade' => 'Quantidade',
             'valor' => 'Valor',
             'valor_iva' => 'Valor Iva',
-            'artigos_id' => 'Artigos ID',
+            'artigos_id' => 'Artigo ID',
             'carrinhocompras_id' => 'Carrinhocompras ID',
         ];
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getArtigos()
     {
-        return $this->hasOne(Artigos::class, ['id' => 'artigos_id']);
+        return $this->hasOne(Artigo::class, ['id' => 'artigos_id']);
     }
 
     /**
@@ -73,6 +73,6 @@ class CarrinhoItems extends \yii\db\ActiveRecord
      */
     public function getCarrinhocompras()
     {
-        return $this->hasOne(CarrinhoCompras::class, ['id' => 'carrinhocompras_id']);
+        return $this->hasOne(CarrinhoCompra::class, ['id' => 'carrinhocompras_id']);
     }
 }

@@ -15,11 +15,11 @@ use Yii;
  * @property string $codigo_postal
  * @property string $localidade
  *
- * @property Artigos[] $artigos
- * @property Avaliacaos[] $avaliacaos
- * @property CarrinhoCompras[] $carrinhoCompras
+ * @property Artigo[] $artigos
+ * @property Avaliacao[] $avaliacaos
+ * @property CarrinhoCompra[] $carrinhoCompras
  */
-class Pessoas extends \yii\db\ActiveRecord
+class Pessoa extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -58,32 +58,32 @@ class Pessoas extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Artigos]].
+     * Gets query for [[Artigo]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['pessoas_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['pessoas_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Avaliacaos]].
+     * Gets query for [[Avaliacao]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getAvaliacaos()
     {
-        return $this->hasMany(Avaliacaos::class, ['pessoas_id' => 'id']);
+        return $this->hasMany(Avaliacao::class, ['pessoas_id' => 'id']);
     }
 
     /**
-     * Gets query for [[CarrinhoCompras]].
+     * Gets query for [[CarrinhoCompra]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getCarrinhoCompras()
     {
-        return $this->hasMany(CarrinhoCompras::class, ['pessoas_id' => 'id']);
+        return $this->hasMany(CarrinhoCompra::class, ['pessoas_id' => 'id']);
     }
 }

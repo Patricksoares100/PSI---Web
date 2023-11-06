@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Avaliacaos $model */
+/** @var app\models\Avaliacao $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'artigos_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(\app\models\Artigos::find()->all(), 'id', 'nome'),
+        \yii\helpers\ArrayHelper::map(\app\models\Artigo::find()->all(), 'id', 'nome'),
         ['prompt' => 'Selecione um artigo']) ?>
 
     <?=//tem que se fazer isto automatico com o gajo que estiver logado 

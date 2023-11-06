@@ -12,7 +12,7 @@ use Yii;
  * @property float $valor_fatura
  * @property string|null $estado
  */
-class Faturas extends \yii\db\ActiveRecord
+class Fatura extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

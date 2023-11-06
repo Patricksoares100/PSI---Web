@@ -17,14 +17,14 @@ use Yii;
  * @property int $categorias_id
  * @property int $pessoas_id
  *
- * @property Avaliacaos[] $avaliacaos
- * @property CarrinhoItems[] $carrinhoItems
- * @property Categorias $categorias
- * @property Fornecedores $fornecedores
- * @property Ivas $iva
- * @property Pessoas $pessoas
+ * @property Avaliacao[] $avaliacaos
+ * @property CarrinhoItem[] $carrinhoItems
+ * @property Categoria $categorias
+ * @property Fornecedor $fornecedores
+ * @property Iva $iva
+ * @property Pessoa $pessoas
  */
-class Artigos extends \yii\db\ActiveRecord
+class Artigo extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -44,10 +44,10 @@ class Artigos extends \yii\db\ActiveRecord
             [['valor'], 'number'],
             [['stock_atual', 'iva_id', 'fornecedores_id', 'categorias_id', 'pessoas_id'], 'integer'],
             [['nome', 'descricao'], 'string', 'max' => 255],
-            [['categorias_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::class, 'targetAttribute' => ['categorias_id' => 'id']],
-            [['fornecedores_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedores::class, 'targetAttribute' => ['fornecedores_id' => 'id']],
-            [['iva_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ivas::class, 'targetAttribute' => ['iva_id' => 'id']],
-            [['pessoas_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pessoas::class, 'targetAttribute' => ['pessoas_id' => 'id']],
+            [['categorias_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['categorias_id' => 'id']],
+            [['fornecedores_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedores_id' => 'id']],
+            [['iva_id'], 'exist', 'skipOnError' => true, 'targetClass' => Iva::class, 'targetAttribute' => ['iva_id' => 'id']],
+            [['pessoas_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pessoa::class, 'targetAttribute' => ['pessoas_id' => 'id']],
         ];
     }
 
@@ -67,49 +67,49 @@ class Artigos extends \yii\db\ActiveRecord
             'fornecedores_id' => 'Fornecedor',
             'categorias.nome_categoria' => 'Categoria',
             'categorias_id' => 'Categoria',
-            'pessoas_id' => 'Pessoas ID',
+            'pessoas_id' => 'Pessoa ID',
             'pessoas.nome' => 'Funcionário',
         ];
     }
 
     /**
-     * Gets query for [[Avaliacaos]].
+     * Gets query for [[Avaliacao]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getAvaliacaos()
     {
-        return $this->hasMany(Avaliacaos::class, ['artigos_id' => 'id']);
+        return $this->hasMany(Avaliacao::class, ['artigos_id' => 'id']);
     }
 
     /**
-     * Gets query for [[CarrinhoItems]].
+     * Gets query for [[CarrinhoItem]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getCarrinhoItems()
     {
-        return $this->hasMany(CarrinhoItems::class, ['artigos_id' => 'id']);
+        return $this->hasMany(CarrinhoItem::class, ['artigos_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Categorias]].
+     * Gets query for [[Categoria]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getCategorias()
     {
-        return $this->hasOne(Categorias::class, ['id' => 'categorias_id']);
+        return $this->hasOne(Categoria::class, ['id' => 'categorias_id']);
     }
 
     /**
-     * Gets query for [[Fornecedores]].
+     * Gets query for [[Fornecedor]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getFornecedores()
     {
-        return $this->hasOne(Fornecedores::class, ['id' => 'fornecedores_id']);
+        return $this->hasOne(Fornecedor::class, ['id' => 'fornecedores_id']);
     }
 
     /**
@@ -119,16 +119,16 @@ class Artigos extends \yii\db\ActiveRecord
      */
     public function getIva()
     {
-        return $this->hasOne(Ivas::class, ['id' => 'iva_id']);
+        return $this->hasOne(Iva::class, ['id' => 'iva_id']);
     }
 
     /**
-     * Gets query for [[Pessoas]].
+     * Gets query for [[Pessoa]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getPessoas()
     {
-        return $this->hasOne(Pessoas::class, ['id' => 'pessoas_id']);
+        return $this->hasOne(Pessoa::class, ['id' => 'pessoas_id']);
     }
 }

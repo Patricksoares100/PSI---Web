@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Ivas $model */
+/** @var app\models\Iva $model */
 
 $this->title = $model->descricao;
 $this->params['breadcrumbs'][] = ['label' => 'IVA\'s', 'url' => ['index']];

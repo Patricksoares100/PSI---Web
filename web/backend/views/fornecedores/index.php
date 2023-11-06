@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Fornecedores;
+use app\models\Fornecedor;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Fornecedores';
+$this->title = 'Fornecedor';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="fornecedores-index">
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'morada',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Fornecedores $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Fornecedor $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

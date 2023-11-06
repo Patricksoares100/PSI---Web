@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use app\models\Fornecedores;
+use app\models\Fornecedor;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FornecedoresController implements the CRUD actions for Fornecedores model.
+ * FornecedoresController implements the CRUD actions for Fornecedor model.
  */
 class FornecedoresController extends Controller
 {
@@ -32,14 +32,14 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Lists all Fornecedores models.
+     * Lists all Fornecedor models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Fornecedores::find(),
+            'query' => Fornecedor::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Displays a single Fornecedores model.
+     * Displays a single Fornecedor model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Creates a new Fornecedores model.
+     * Creates a new Fornecedor model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Fornecedores();
+        $model = new Fornecedor();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Updates an existing Fornecedores model.
+     * Updates an existing Fornecedor model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Deletes an existing Fornecedores model.
+     * Deletes an existing Fornecedor model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Finds the Fornecedores model based on its primary key value.
+     * Finds the Fornecedor model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Fornecedores the loaded model
+     * @return Fornecedor the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fornecedores::findOne(['id' => $id])) !== null) {
+        if (($model = Fornecedor::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

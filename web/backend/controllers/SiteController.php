@@ -29,15 +29,15 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],// so tem acesso quem esta logado
+                        'actions' => ['logout', 'index'], // so tem acesso quem esta logado
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [   
-                        
+                    [
+
                         'actions' => ['gerirProdutos'],
                         'allow' => true,
-                        'roles' => ['gerirProdutos'],//permission 
+                        'roles' => ['gerirProdutos'], //permission 
                     ],
                 ],
             ],
@@ -108,15 +108,19 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    public function actionEmpresa()
+    {
+        return $this->render('admin');
+    }
 
 
-   
-    public function actionGerirProdutos(){
+    public function actionGerirProdutos()
+    {
         //O QUE ESTA COMENTADO É PARA MOSTRAR ALGO ESPECIFICO QUANDO TIPOS DE USERS
         //DIFERENTES PODEM USAR A MESMA ACTION
         //if (Yii::$app->user->can('gerirProdutos')){
-            return $this->render('gerirprodutos');
-       // }
-       // return $this->render('error_home');
+        return $this->render('gerirprodutos');
+        // }
+        // return $this->render('error_home');
     }
 }

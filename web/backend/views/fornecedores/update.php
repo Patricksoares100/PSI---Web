@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\models\Fornecedores $model */
+/** @var app\models\Fornecedor $model */
 
 $this->title = 'Atualizar Fornecedor: ' . $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Fornecedores', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Fornecedor', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->nome, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Atualizar';
 ?>

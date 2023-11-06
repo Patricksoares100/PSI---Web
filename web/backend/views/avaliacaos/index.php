@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Avaliacaos;
+use app\models\Avaliacao;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'pessoas.nome',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Avaliacaos $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Avaliacao $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use app\models\Artigos;
+use app\models\Artigo;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArtigosController implements the CRUD actions for Artigos model.
+ * ArtigosController implements the CRUD actions for Artigo model.
  */
 class ArtigosController extends Controller
 {
@@ -32,14 +32,14 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Lists all Artigos models.
+     * Lists all Artigo models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Artigos::find(),
+            'query' => Artigo::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Displays a single Artigos model.
+     * Displays a single Artigo model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Creates a new Artigos model.
+     * Creates a new Artigo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Artigos();
+        $model = new Artigo();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Updates an existing Artigos model.
+     * Updates an existing Artigo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Deletes an existing Artigos model.
+     * Deletes an existing Artigo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Finds the Artigos model based on its primary key value.
+     * Finds the Artigo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Artigos the loaded model
+     * @return Artigo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Artigos::findOne(['id' => $id])) !== null) {
+        if (($model = Artigo::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
