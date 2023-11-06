@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use app\models\Fornecedor;
+use app\models\Artigo;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FornecedoresController implements the CRUD actions for Fornecedor model.
+ * ArtigoController implements the CRUD actions for Artigo model.
  */
-class FornecedoresController extends Controller
+class ArtigoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Lists all Fornecedor models.
+     * Lists all Artigo models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Fornecedor::find(),
+            'query' => Artigo::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Displays a single Fornecedor model.
+     * Displays a single Artigo model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Creates a new Fornecedor model.
+     * Creates a new Artigo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Fornecedor();
+        $model = new Artigo();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Updates an existing Fornecedor model.
+     * Updates an existing Artigo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Deletes an existing Fornecedor model.
+     * Deletes an existing Artigo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class FornecedoresController extends Controller
     }
 
     /**
-     * Finds the Fornecedor model based on its primary key value.
+     * Finds the Artigo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Fornecedor the loaded model
+     * @return Artigo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fornecedor::findOne(['id' => $id])) !== null) {
+        if (($model = Artigo::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

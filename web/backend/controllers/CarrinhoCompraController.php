@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use app\models\Artigo;
+use app\models\CarrinhoCompra;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArtigosController implements the CRUD actions for Artigo model.
+ * CarrinhoCompraController implements the CRUD actions for CarrinhoCompra model.
  */
-class ArtigosController extends Controller
+class CarrinhoCompraController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Lists all Artigo models.
+     * Lists all CarrinhoCompra models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Artigo::find(),
+            'query' => CarrinhoCompra::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Displays a single Artigo model.
+     * Displays a single CarrinhoCompra model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Creates a new Artigo model.
+     * Creates a new CarrinhoCompra model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Artigo();
+        $model = new CarrinhoCompra();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Updates an existing Artigo model.
+     * Updates an existing CarrinhoCompra model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Deletes an existing Artigo model.
+     * Deletes an existing CarrinhoCompra model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class ArtigosController extends Controller
     }
 
     /**
-     * Finds the Artigo model based on its primary key value.
+     * Finds the CarrinhoCompra model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Artigo the loaded model
+     * @return CarrinhoCompra the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Artigo::findOne(['id' => $id])) !== null) {
+        if (($model = CarrinhoCompra::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

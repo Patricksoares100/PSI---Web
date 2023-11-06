@@ -1,6 +1,6 @@
 <?php
 
-namespace app\common\models;
+namespace common\models;
 
 use Yii;
 
@@ -12,9 +12,9 @@ use Yii;
  * @property string $descricao
  * @property float $percentagem
  *
- * @property Artigos[] $artigos
+ * @property Artigo[] $artigos
  */
-class Ivas extends \yii\db\ActiveRecord
+class Iva extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -45,7 +45,7 @@ class Ivas extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'em_vigor' => 'Em Vigor',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'percentagem' => 'Percentagem',
         ];
     }
@@ -57,6 +57,6 @@ class Ivas extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['iva_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['iva_id' => 'id']);
     }
 }

@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use app\models\Fatura;
+use app\models\Iva;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FaturasController implements the CRUD actions for Fatura model.
+ * IvaController implements the CRUD actions for Iva model.
  */
-class FaturasController extends Controller
+class IvaController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class FaturasController extends Controller
     }
 
     /**
-     * Lists all Fatura models.
+     * Lists all Iva models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Fatura::find(),
+            'query' => Iva::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class FaturasController extends Controller
     }
 
     /**
-     * Displays a single Fatura model.
+     * Displays a single Iva model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class FaturasController extends Controller
     }
 
     /**
-     * Creates a new Fatura model.
+     * Creates a new Iva model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Fatura();
+        $model = new Iva();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class FaturasController extends Controller
     }
 
     /**
-     * Updates an existing Fatura model.
+     * Updates an existing Iva model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class FaturasController extends Controller
     }
 
     /**
-     * Deletes an existing Fatura model.
+     * Deletes an existing Iva model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class FaturasController extends Controller
     }
 
     /**
-     * Finds the Fatura model based on its primary key value.
+     * Finds the Iva model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Fatura the loaded model
+     * @return Iva the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fatura::findOne(['id' => $id])) !== null) {
+        if (($model = Iva::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

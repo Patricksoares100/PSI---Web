@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use app\models\CarrinhoCompra;
+use app\models\Pessoa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CarrinhoComprasController implements the CRUD actions for CarrinhoCompra model.
+ * PessoaController implements the CRUD actions for Pessoa model.
  */
-class CarrinhoComprasController extends Controller
+class PessoaController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Lists all CarrinhoCompra models.
+     * Lists all Pessoa models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => CarrinhoCompra::find(),
+            'query' => Pessoa::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Displays a single CarrinhoCompra model.
+     * Displays a single Pessoa model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Creates a new CarrinhoCompra model.
+     * Creates a new Pessoa model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new CarrinhoCompra();
+        $model = new Pessoa();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Updates an existing CarrinhoCompra model.
+     * Updates an existing Pessoa model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Deletes an existing CarrinhoCompra model.
+     * Deletes an existing Pessoa model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class CarrinhoComprasController extends Controller
     }
 
     /**
-     * Finds the CarrinhoCompra model based on its primary key value.
+     * Finds the Pessoa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return CarrinhoCompra the loaded model
+     * @return Pessoa the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CarrinhoCompra::findOne(['id' => $id])) !== null) {
+        if (($model = Pessoa::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

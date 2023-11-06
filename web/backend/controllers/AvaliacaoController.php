@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use app\models\Pessoa;
+use app\models\Avaliacao;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PessoasController implements the CRUD actions for Pessoa model.
+ * AvaliacaoController implements the CRUD actions for Avaliacao model.
  */
-class PessoasController extends Controller
+class AvaliacaoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,14 +32,14 @@ class PessoasController extends Controller
     }
 
     /**
-     * Lists all Pessoa models.
+     * Lists all Avaliacao models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Pessoa::find(),
+            'query' => Avaliacao::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +58,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Displays a single Pessoa model.
+     * Displays a single Avaliacao model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,13 +71,13 @@ class PessoasController extends Controller
     }
 
     /**
-     * Creates a new Pessoa model.
+     * Creates a new Avaliacao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Pessoa();
+        $model = new Avaliacao();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +93,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Updates an existing Pessoa model.
+     * Updates an existing Avaliacao model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -113,7 +113,7 @@ class PessoasController extends Controller
     }
 
     /**
-     * Deletes an existing Pessoa model.
+     * Deletes an existing Avaliacao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -127,15 +127,15 @@ class PessoasController extends Controller
     }
 
     /**
-     * Finds the Pessoa model based on its primary key value.
+     * Finds the Avaliacao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Pessoa the loaded model
+     * @return Avaliacao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Pessoa::findOne(['id' => $id])) !== null) {
+        if (($model = Avaliacao::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
