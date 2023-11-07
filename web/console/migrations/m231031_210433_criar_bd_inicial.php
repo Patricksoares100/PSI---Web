@@ -14,7 +14,7 @@ class m231031_210433_criar_bd_inicial extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('pessoas', [
+        $this->createTable('perfis', [
             'id' => $this->primaryKey(), //PRIMARY LEY INDICA QUE JÁ É INT, NOT NULL E CHAVE PRIMÁRIA COM AUTOINCREMENTO
             'nome' => $this->string()->notNull(),
             'telefone' => $this->integer(9)->notNull(),
@@ -22,11 +22,13 @@ class m231031_210433_criar_bd_inicial extends Migration
             'morada' => $this->string()->notNull(),
             'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
+            'user_id' =>  $this->integer()->notNull(),// confirmar q esta relacao esta feita
         ], 'ENGINE=InnoDB');
 
         $this->createTable('categorias', [
             'id' => $this->primaryKey(), 
-            'nome_categoria' => $this->string()->notNull(),
+            'nome' => $this->string()->notNull(),
+            'descricao' => $this->string()->notNull(),
             //subcategoria id null
         ], 'ENGINE=InnoDB');
 
@@ -45,12 +47,13 @@ class m231031_210433_criar_bd_inicial extends Migration
             'id' => $this->primaryKey(),
             'nome' => $this->string()->notNull(),
             'descricao' => $this->string()->notNull(),
-            'valor' => $this->double()->notNull(),
+            'referencia' => $this->string()->notNull(),
+            'preco' => $this->double()->notNull(),
             'stock_atual' => $this->integer()->notNull(),
             'iva_id' => $this->integer()->notNull(),
-            'fornecedores_id' => $this->integer()->notNull(),
-            'categorias_id' => $this->integer()->notNull(),
-            'pessoas_id' => $this->integer()->notNull(),
+            'fornecedor_id' => $this->integer()->notNull(),
+            'categoria_id' => $this->integer()->notNull(),
+            'perfil_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
 
         $this->createTable('fornecedores', [
@@ -61,44 +64,44 @@ class m231031_210433_criar_bd_inicial extends Migration
             'morada' => $this->string(),
         ], 'ENGINE=InnoDB');
 
-        $this->createTable('carrinho_items', [
+        $this->createTable('linha_carrinho', [
             'id' => $this->primaryKey(),
             'quantidade' => $this->integer()->notNull(),
             'valor' => $this->double()->notNull(),
             'valor_iva' => $this->double()->notNull(),
-            'artigos_id' => $this->integer()->notNull(),
-            'carrinhocompras_id' => $this->integer()->notNull(),
+            'artigo_id' => $this->integer()->notNull(),
+            'carrinho_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
 
         $this->createTable('ivas', [
             'id' => $this->primaryKey(),
-            'em_vigor' => "ENUM('sim', 'nao')",
+            'em_vigor' => "ENUM('Sim', 'Não')",
             'descricao' => $this->string()->notNull(),
             'percentagem' => $this->double()->notNull(),
         ], 'ENGINE=InnoDB');
 
-        $this->createTable('carrinho_compras', [
+        $this->createTable('carrinhos', [
             'id' => $this->primaryKey(),
             'data' => $this->dateTime()->notNull(),
             'valor_total' => $this->double()->notNull(),
             'iva_total' => $this->integer()->notNull(),           
-            'estado' => "ENUM('activo', 'inactivo')",
-            'pessoas_id' => $this->integer()->notNull(),
+            'estado' => "ENUM('activo', 'inactivo')",//rever os estados
+            'perfil_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
 
-        $this->createTable('faturas', [
+        /*$this->createTable('faturas', [
             'id' => $this->primaryKey(),
             'data' => $this->dateTime()->notNull(),
             'valor_fatura' => $this->double()->notNull(),
             'estado' => "ENUM('emitida', 'paga', 'cancelada')",
-        ], 'ENGINE=InnoDB');
+        ], 'ENGINE=InnoDB');*/
 
         $this->createTable('avaliacaos', [
             'id' => $this->primaryKey(),
             'comentario' => $this->string()->notNull(),
             'classificacao' => "ENUM('1', '2', '3', '4', '5')",
-            'artigos_id' => $this->integer()->notNull(),
-            'pessoas_id' => $this->integer()->notNull(),
+            'artigo_id' => $this->integer()->notNull(),
+            'perfil_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
         //CHAVES ESTRANGEIRAS https://www.yiiframework.com/doc/guide/2.0/en/db-migrations
         //atenção aos comentarios que não estao no manual do yii
@@ -117,17 +120,17 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->addForeignKey(
             'fk-artigos-fornecedores_id',
             'artigos',
-            'fornecedores_id',
+            'fornecedor_id',
             'fornecedores',
             'id',
             'CASCADE',
             'CASCADE'
         );
         $this->addForeignKey(
-            'fk-artigos-pessoas_id',
+            'fk-artigos-perfil_id',
             'artigos',
-            'pessoas_id',
-            'pessoas',
+            'perfil_id',
+            'perfis',
             'id',
             'CASCADE',
             'CASCADE'
@@ -135,7 +138,7 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->addForeignKey(
             'fk-artigos-categoria_id',
             'artigos',
-            'categorias_id',
+            'categoria_id',
             'categorias',
             'id',
             'CASCADE',
@@ -146,19 +149,19 @@ class m231031_210433_criar_bd_inicial extends Migration
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA CARRINHO_ITEMS */
 
         $this->addForeignKey(
-            'fk-carrinhoitems-artigos_id', 
-            'carrinho_items', 
-            'artigos_id', 
+            'fk-linhacarrinho-artigos_id', 
+            'linha_carrinho', 
+            'artigo_id', 
             'artigos', 
             'id', 
             'CASCADE', 
             'CASCADE' 
         );
         $this->addForeignKey(
-            'fk-carrinhoitems-carrinhocompras_id', 
-            'carrinho_items', 
-            'carrinhocompras_id', 
-            'carrinho_compras', 
+            'fk-linhacarrinho-carrinho_id', 
+            'linha_carrinho', 
+            'carrinho_id', 
+            'carrinhos', 
             'id', 
             'CASCADE', 
             'CASCADE' 
@@ -167,10 +170,10 @@ class m231031_210433_criar_bd_inicial extends Migration
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA  CARRINHO_COMPRAS*/
         $this->addForeignKey(
-            'fk-carrinhocompras-pessoas_id',
-            'carrinho_compras',
-            'pessoas_id',
-            'pessoas',
+            'fk-carrinho-perfil_id',
+            'carrinhos',
+            'perfil_id',
+            'perfis',
             'id',
             'CASCADE',
             'CASCADE'
@@ -181,22 +184,34 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->addForeignKey(
             'fk-avaliacaos-artigos_id', 
             'avaliacaos', 
-            'artigos_id', 
+            'artigo_id', 
             'artigos', 
             'id', 
             'CASCADE', 
             'CASCADE' 
         );
         $this->addForeignKey(
-            'fk-avaliacaos-pessoas_id',
+            'fk-avaliacaos-perfil_id',
             'avaliacaos',
-            'pessoas_id',
-            'pessoas',
+            'perfil_id',
+            'perfis',
             'id',
             'CASCADE',
             'CASCADE'
         );
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  avaliacaos*/
+
+        /*INICIO CHAVES ESTRANGEIRAS DA TABELA PERFIS */
+        /*$this->addForeignKey(
+            'fk-perfis-user_id', 
+            'perfis', 
+            'user_id', 
+            'users', 
+            'id', 
+            'CASCADE', 
+            'CASCADE' 
+        );*/
+        /*FIM CHAVES ESTRANGEIRAS DA TABELA  perfis*/
     }
 
     /**
@@ -204,13 +219,13 @@ class m231031_210433_criar_bd_inicial extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('pessoas');
+        $this->dropTable('perfis');
         $this->dropTable('empresa');
         $this->dropTable('fornecedores');
         $this->dropTable('artigos');
-        $this->dropTable('carrinho_items');
+        $this->dropTable('linha_carrinho');
         $this->dropTable('ivas');
-        $this->dropTable('carrinho_compras');
+        $this->dropTable('carrinhos');
         $this->dropTable('faturas');
         $this->dropTable('avaliacoes');
         $this->dropTable('categorias');
