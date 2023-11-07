@@ -15,21 +15,21 @@ class m231031_210433_criar_bd_inicial extends Migration
     public function safeUp()
     {
         $this->createTable('perfis', [
-            'id' => $this->primaryKey(), //PRIMARY LEY INDICA QUE JÁ É INT, NOT NULL E CHAVE PRIMÁRIA COM AUTOINCREMENTO
+            'id' => $this->primaryKey(), //PRIMARY KEY INDICA QUE JÁ É INT, NOT NULL E CHAVE PRIMÁRIA COM AUTOINCREMENTO
             'nome' => $this->string()->notNull(),
             'telefone' => $this->integer(9)->notNull(),
             'nif' => $this->integer(9)->notNull(),
             'morada' => $this->string()->notNull(),
             'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
-            'user_id' =>  $this->integer()->notNull(),// confirmar q esta relacao esta feita
+            'carrinho_id' =>  $this->integer()->notNull(),
+
         ], 'ENGINE=InnoDB');
 
         $this->createTable('categorias', [
             'id' => $this->primaryKey(), 
             'nome' => $this->string()->notNull(),
-            'descricao' => $this->string()->notNull(),
-            //subcategoria id null
+            //'descricao' => $this->string()->notNull(),
         ], 'ENGINE=InnoDB');
 
         $this->createTable('empresa', [
@@ -64,13 +64,22 @@ class m231031_210433_criar_bd_inicial extends Migration
             'morada' => $this->string(),
         ], 'ENGINE=InnoDB');
 
-        $this->createTable('linha_carrinho', [
+        $this->createTable('linhas_carrinho', [
             'id' => $this->primaryKey(),
             'quantidade' => $this->integer()->notNull(),
             'valor' => $this->double()->notNull(),
             'valor_iva' => $this->double()->notNull(),
             'artigo_id' => $this->integer()->notNull(),
             'carrinho_id' => $this->integer()->notNull(),
+        ], 'ENGINE=InnoDB');
+
+        $this->createTable('linhas_faturas', [
+            'id' => $this->primaryKey(),
+            'quantidade' => $this->integer()->notNull(),
+            'valor' => $this->double()->notNull(),
+            'valor_iva' => $this->double()->notNull(),
+            'artigo_id' => $this->integer()->notNull(),
+            'fatura_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
 
         $this->createTable('ivas', [
@@ -82,19 +91,20 @@ class m231031_210433_criar_bd_inicial extends Migration
 
         $this->createTable('carrinhos', [
             'id' => $this->primaryKey(),
-            'data' => $this->dateTime()->notNull(),
             'valor_total' => $this->double()->notNull(),
-            'iva_total' => $this->integer()->notNull(),           
-            'estado' => "ENUM('activo', 'inactivo')",//rever os estados
-            'perfil_id' => $this->integer()->notNull(),
+            'iva_total' => $this->integer()->notNull(),  
+            'data' => $this->dateTime()->notNull(),         
+            //'estado' => "ENUM('activo', 'inactivo')",//rever os estados
+            //'perfil_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
 
-        /*$this->createTable('faturas', [
+        $this->createTable('faturas', [
             'id' => $this->primaryKey(),
             'data' => $this->dateTime()->notNull(),
             'valor_fatura' => $this->double()->notNull(),
-            'estado' => "ENUM('emitida', 'paga', 'cancelada')",
-        ], 'ENGINE=InnoDB');*/
+            'estado' => "ENUM('Emitida', 'Paga')",
+            'perfil_id' => $this->integer()->notNull(),
+        ], 'ENGINE=InnoDB');
 
         $this->createTable('avaliacaos', [
             'id' => $this->primaryKey(),
@@ -149,8 +159,8 @@ class m231031_210433_criar_bd_inicial extends Migration
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA CARRINHO_ITEMS */
 
         $this->addForeignKey(
-            'fk-linhacarrinho-artigos_id', 
-            'linha_carrinho', 
+            'fk-linhascarrinho-artigos_id', 
+            'linhas_carrinho', 
             'artigo_id', 
             'artigos', 
             'id', 
@@ -158,8 +168,8 @@ class m231031_210433_criar_bd_inicial extends Migration
             'CASCADE' 
         );
         $this->addForeignKey(
-            'fk-linhacarrinho-carrinho_id', 
-            'linha_carrinho', 
+            'fk-linhascarrinho-carrinho_id', 
+            'linhas_carrinho', 
             'carrinho_id', 
             'carrinhos', 
             'id', 
@@ -167,18 +177,27 @@ class m231031_210433_criar_bd_inicial extends Migration
             'CASCADE' 
         );
         /*FIM CHAVES ESTRANGEIRAS DA TABELA CARRINHO_ITEMS */
+        /*INICIO CHAVES ESTRANGEIRAS DA TABELA fatura_ITEMS */
 
-        /*INICIO CHAVES ESTRANGEIRAS DA TABELA  CARRINHO_COMPRAS*/
         $this->addForeignKey(
-            'fk-carrinho-perfil_id',
-            'carrinhos',
-            'perfil_id',
-            'perfis',
-            'id',
-            'CASCADE',
-            'CASCADE'
+            'fk-linhasfaturas-artigos_id', 
+            'linhas_faturas', 
+            'artigo_id', 
+            'artigos', 
+            'id', 
+            'CASCADE', 
+            'CASCADE' 
         );
-        /*FIM CHAVES ESTRANGEIRAS DA TABELA  CARRINHO_COMPRAS*/
+        $this->addForeignKey(
+            'fk-linhasfaturas-faturas_id', 
+            'linhas_faturas', 
+            'fatura_id', 
+            'faturas', 
+            'id', 
+            'CASCADE', 
+            'CASCADE' 
+        );
+        /*FIM CHAVES ESTRANGEIRAS DA TABELA fatura_ITEMS */
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA  avaliacaos*/
         $this->addForeignKey(
@@ -202,16 +221,28 @@ class m231031_210433_criar_bd_inicial extends Migration
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  avaliacaos*/
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA PERFIS */
-        /*$this->addForeignKey(
-            'fk-perfis-user_id', 
+        
+        $this->addForeignKey(
+            'fk-perfis-carrinho_id', 
             'perfis', 
-            'user_id', 
-            'users', 
+            'carrinho_id', 
+            'carrinhos', 
             'id', 
             'CASCADE', 
             'CASCADE' 
-        );*/
+        );
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  perfis*/
+        /*INICIO CHAVES ESTRANGEIRAS DA TABELA faturas */
+        $this->addForeignKey(
+            'fk-faturas-perfil_id', 
+            'faturas', 
+            'perfil_id', 
+            'perfis', 
+            'id', 
+            'CASCADE', 
+            'CASCADE' 
+        );
+        /*FIM CHAVES ESTRANGEIRAS DA TABELA  faturas*/
     }
 
     /**
@@ -229,6 +260,7 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->dropTable('faturas');
         $this->dropTable('avaliacoes');
         $this->dropTable('categorias');
+        $this->dropTable('linhas_faturas');
     }
 
     /*
