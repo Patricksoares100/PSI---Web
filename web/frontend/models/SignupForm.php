@@ -96,7 +96,7 @@ class SignupForm extends Model
         $user->save() && $this->sendEmail($user);
         $carrinho->valor_total = 0;
         $carrinho->iva_total = 0;
-        $carrinho->data = (new DateTime())->format('Y-m-d');
+        $carrinho->data = (new DateTime())->format('d-m-Y');
         $carrinho->save();
 
         $perfil->nome = $this->nome;

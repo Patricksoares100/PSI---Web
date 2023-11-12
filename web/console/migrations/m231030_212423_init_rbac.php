@@ -19,8 +19,8 @@ class m231030_212423_init_rbac extends Migration
         $role_admin = $auth->createRole('admin');
         $auth->add($role_admin);
 
-        $role_funcionrario = $auth->createRole("funcionario");
-        $auth->add($role_funcionrario);
+        $role_funcionario = $auth->createRole("funcionario");
+        $auth->add($role_funcionario);
 
         $role_cliente = $auth->createRole('cliente');
         $auth->add($role_cliente);
@@ -34,10 +34,17 @@ class m231030_212423_init_rbac extends Migration
         $permission_gerir_produtos->description = 'Permissão para gerir produtos';
         $auth->add($permission_gerir_produtos);
 
+        $permission_backoffice = $auth->createPermission('permissionBackoffice');
+        $permission_backoffice->description = 'Permissão para entrar no backoffice';
+        $auth->add($permission_backoffice);
+
+
         // dar heranças addChild
+        $auth->addChild($role_funcionario, $permission_gerir_produtos);
+        $auth->addChild($role_funcionario, $permission_backoffice);
+
         $auth->addChild($role_admin, $permission_edit_roles);
-        $auth->addChild($role_funcionrario, $permission_gerir_produtos);
-        $auth->addChild($role_admin, $role_funcionrario);
+        $auth->addChild($role_admin, $role_funcionario);
 
         // o primeiro utilizador vai ser ADMIN
         $auth->assign($role_admin, 1);

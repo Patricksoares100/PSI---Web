@@ -25,19 +25,19 @@ class SiteController extends Controller
                 // como n esta o only aqui , quer dizer q tudo é proibido
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'gerirProdutos'],
+                        'actions' => ['login', 'error'],//visitante só pode login e pagina de erro
                         'allow' => true,
+                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'], // so tem acesso quem esta logado
+                        'actions' => ['logout'], // so tem acesso quem esta logado
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-
-                        'actions' => ['gerirProdutos'],
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['gerirProdutos'], //permission 
+                        'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
                     ],
                 ],
             ],
