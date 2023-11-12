@@ -16,13 +16,13 @@ class m231030_212423_init_rbac extends Migration
         $auth = Yii::$app->authManager;
 
         // Criar os roles - $auth->createRole();
-        $role_admin = $auth->createRole('admin');
+        $role_admin = $auth->createRole('Admin');
         $auth->add($role_admin);
 
-        $role_funcionario = $auth->createRole("funcionario");
+        $role_funcionario = $auth->createRole("Funcionario");
         $auth->add($role_funcionario);
 
-        $role_cliente = $auth->createRole('cliente');
+        $role_cliente = $auth->createRole('Cliente');
         $auth->add($role_cliente);
         
         //Criar permissões - $auth->createPermission();

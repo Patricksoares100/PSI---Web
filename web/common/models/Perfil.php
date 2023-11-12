@@ -57,7 +57,7 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'codigo_postal' => 'Código Postal',
             'localidade' => 'Localidade',
-            'carrinho_id' => 'Carrinho ID',
+            'carrinho_id' => 'Nº do Carrinho',
         ];
     }
 
