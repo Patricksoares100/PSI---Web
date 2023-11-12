@@ -92,12 +92,12 @@
                     ],
 
                     [
-                        'label' => 'Funcionário',
+                        'label' => 'Utilizadores',
                         'icon' => 'tachometer-alt',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver Funcionários', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Criar Novo', 'iconStyle' => 'far'],
+                            ['label' => 'Ver Utilizadores', 'url' => ['perfil/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Criar Novo', 'url' => ['perfil/create'], 'iconStyle' => 'far'],
                         ]
                     ],
                 ],
