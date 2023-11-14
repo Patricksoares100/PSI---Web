@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SignupForm;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -38,6 +39,11 @@ class SiteController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
+                    ],
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['editRoles'], //admin recebe as permissões de funcionario
                     ],
                 ],
             ],
@@ -122,5 +128,18 @@ class SiteController extends Controller
         return $this->render('gerirprodutos');
         // }
         // return $this->render('error_home');
+    }
+    public function actionSignup()
+    {
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->goHome();
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 }

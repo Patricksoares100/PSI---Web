@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Perfil;
+use common\models\Empresa;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Utilizadores';
+$this->title = 'Empresas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perfil-index">
+<div class="empresa-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Novo Utilizador', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Empresa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -28,16 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'nome',
+            'email:email',
             'telefone',
             'nif',
-            //'role',
             //'morada',
             //'codigo_postal',
             //'localidade',
-            //'carrinho_id',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Perfil $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Empresa $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
