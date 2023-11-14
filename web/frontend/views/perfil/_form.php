@@ -24,8 +24,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'carrinho_id')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

@@ -18,7 +18,7 @@ use Yii;
  *
  * @property Artigo[] $artigos
  * @property Avaliacao[] $avaliacaos
- * @property Carrinho $carrinho
+
  * @property Fatura[] $faturas
  */
 class Perfil extends \yii\db\ActiveRecord
@@ -37,10 +37,9 @@ class Perfil extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'telefone', 'nif', 'morada', 'codigo_postal', 'localidade', 'carrinho_id'], 'required'],
-            [['telefone', 'nif', 'carrinho_id'], 'integer'],
+            [['nome', 'telefone', 'nif', 'morada', 'codigo_postal', 'localidade'], 'required'],
+            [['telefone', 'nif', ], 'integer'],
             [['nome', 'morada', 'codigo_postal', 'localidade'], 'string', 'max' => 255],
-            [['carrinho_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrinho::class, 'targetAttribute' => ['carrinho_id' => 'id']],
         ];
     }
 
@@ -57,7 +56,7 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'codigo_postal' => 'Código Postal',
             'localidade' => 'Localidade',
-            'carrinho_id' => 'Nº do Carrinho',
+
         ];
     }
 
@@ -82,16 +81,6 @@ class Perfil extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Carrinho]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCarrinho()
-    {
-        return $this->hasOne(Carrinho::class, ['id' => 'carrinho_id']);
-    }
-
-    /**
      * Gets query for [[Faturas]].
      *
      * @return \yii\db\ActiveQuery
@@ -99,5 +88,14 @@ class Perfil extends \yii\db\ActiveRecord
     public function getFaturas()
     {
         return $this->hasMany(Fatura::class, ['perfil_id' => 'id']);
+    }
+     /**
+     * Gets query for [[LinhasCarrinhos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLinhasCarrinhos()
+    {
+        return $this->hasMany(LinhasCarrinho::class, ['perfil_id' => 'id']);
     }
 }

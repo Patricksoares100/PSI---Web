@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use common\models\Carrinho;
 use common\models\Perfil;
 use Yii;
 use yii\base\Model;
@@ -26,7 +25,7 @@ class SignupForm extends Model
     public $morada;
     public $codigo_postal;
     public $localidade;
-    public $carrinho_id; // ativar no fim
+
 
 
     /**
@@ -84,8 +83,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        $perfil = new Perfil(); //Instancia do perfil e fazer do carrinho
-        $carrinho = new Carrinho();
+        $perfil = new Perfil(); //Instancia do perfil
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
@@ -94,10 +92,6 @@ class SignupForm extends Model
         $user->generateEmailVerificationToken();
 
         $user->save() && $this->sendEmail($user);
-        $carrinho->valor_total = 0;
-        $carrinho->iva_total = 0;
-        $carrinho->data = (new DateTime())->format('d-m-Y');
-        $carrinho->save();
 
         $perfil->nome = $this->nome;
         $perfil->telefone = $this->telefone;
@@ -105,7 +99,6 @@ class SignupForm extends Model
         $perfil->morada = $this->morada;
         $perfil->codigo_postal = $this->codigo_postal;
         $perfil->localidade = $this->localidade;
-        $perfil->carrinho_id = $carrinho->id;///$this->carrinho_id;// tirar no fim
         $perfil->save();
 
         //Guardar os novos utilizadores com o role de cliente
@@ -116,8 +109,6 @@ class SignupForm extends Model
             $authorRole = $auth->getRole('cliente');
             $auth->assign($authorRole, $user->getId());
         }
-
-
         return $user;
     }
 
