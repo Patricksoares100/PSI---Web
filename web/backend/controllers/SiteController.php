@@ -45,6 +45,7 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['editRoles'], //admin recebe as permissões de funcionario
                     ],
+
                 ],
             ],
             'verbs' => [
@@ -93,6 +94,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if(!Yii::$app->user->can('permissionBackoffice')){
+                return $this->actionLogout();
+            }
             return $this->goBack();
         }
 
