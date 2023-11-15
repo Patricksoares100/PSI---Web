@@ -41,7 +41,7 @@
                         'icon' => 'th',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver todos', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Ver todos', 'url' => ['artigo/index'], 'iconStyle' => 'far'],
                             ['label' => 'Ver categorias', 'iconStyle' => 'far'],
                             ['label' => 'Criar Artigo', 'iconStyle' => 'far'],
                         ]
@@ -52,7 +52,7 @@
                         'icon' => 'file-code',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver Fornecedores', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Ver Fornecedores', 'url' => ['fornecedor/index'], 'iconStyle' => 'far'],
                             ['label' => 'Adicionar', 'iconStyle' => 'far'],
                         ]
                     ],
@@ -63,7 +63,7 @@
                         'icon' => 'th',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver todos', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Ver todos', 'url' => ['iva/index'], 'iconStyle' => 'far'],
                             ['label' => 'Editar Ivas', 'iconStyle' => 'far'],
                         ]
                     ],
@@ -73,7 +73,7 @@
                         'icon' => 'th',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver todas', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Ver todas', 'url' => ['fatura/index'], 'iconStyle' => 'far'],
                             ['label' => 'Editar Ivas', 'iconStyle' => 'far'],
                         ]
                     ],
@@ -86,8 +86,7 @@
                         'icon' => 'tachometer-alt',
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
-                            ['label' => 'Ver dados', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Editar Empresa', 'iconStyle' => 'far'],
+                            ['label' => 'Ver dados', 'url' => ['empresa/index'], 'iconStyle' => 'far'],
                         ]
                     ],
 
@@ -97,7 +96,7 @@
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
                             ['label' => 'Ver Utilizadores', 'url' => ['perfil/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Criar Novo', 'url' => ['perfil/create'], 'iconStyle' => 'far'],
+                            ['label' => 'Criar Novo', 'url' => ['site/signup'], 'iconStyle' => 'far'],
                         ]
                     ],
                 ],

@@ -2,8 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Perfil;
-use common\models\User;
+use common\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -11,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PerfilController implements the CRUD actions for Perfil model.
+ * EmpresaController implements the CRUD actions for Empresa model.
  */
-class PerfilController extends Controller
+class EmpresaController extends Controller
 {
     /**
      * @inheritDoc
@@ -29,17 +28,12 @@ class PerfilController extends Controller
                     [
                         'actions' => ['error'], // so tem acesso quem esta logado
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['permissionBackoffice'],
                     ],
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
-                    ],
-                    [
-                        'actions' => ['update', 'delete','create'],
-                        'allow' => true,
-                        'roles' => ['editRoles'], //admin recebe as permissões de funcionario
                     ],
 
                 ],
@@ -55,16 +49,14 @@ class PerfilController extends Controller
     }
 
     /**
-     * Lists all Perfil models.
+     * Lists all Empresa models.
      *
      * @return string
      */
     public function actionIndex()
     {
-
-        $auth = \Yii::$app->authManager;
         $dataProvider = new ActiveDataProvider([
-            'query' => Perfil::find(),
+            'query' => Empresa::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -77,17 +69,13 @@ class PerfilController extends Controller
             */
         ]);
 
-
-
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'auth' => $auth,
         ]);
     }
 
     /**
-     * Displays a single Perfil model.
+     * Displays a single Empresa model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -100,13 +88,14 @@ class PerfilController extends Controller
     }
 
     /**
-     * Creates a new Perfil model.
+     * Creates a new Empresa model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Perfil();
+        $model = new Empresa();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -121,7 +110,7 @@ class PerfilController extends Controller
     }
 
     /**
-     * Updates an existing Perfil model.
+     * Updates an existing Empresa model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -141,7 +130,7 @@ class PerfilController extends Controller
     }
 
     /**
-     * Deletes an existing Perfil model.
+     * Deletes an existing Empresa model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -155,15 +144,15 @@ class PerfilController extends Controller
     }
 
     /**
-     * Finds the Perfil model based on its primary key value.
+     * Finds the Empresa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Perfil the loaded model
+     * @return Empresa the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Perfil::findOne(['id' => $id])) !== null) {
+        if (($model = Empresa::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
