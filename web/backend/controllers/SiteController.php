@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SignupForm;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -39,6 +40,12 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
                     ],
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['editRoles'], //admin recebe as permissões de funcionario
+                    ],
+
                 ],
             ],
             'verbs' => [
@@ -87,6 +94,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if(!Yii::$app->user->can('permissionBackoffice')){
+                return $this->actionLogout();
+            }
             return $this->goBack();
         }
 
@@ -122,5 +132,18 @@ class SiteController extends Controller
         return $this->render('gerirprodutos');
         // }
         // return $this->render('error_home');
+    }
+    public function actionSignup()
+    {
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->goHome();
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 }
