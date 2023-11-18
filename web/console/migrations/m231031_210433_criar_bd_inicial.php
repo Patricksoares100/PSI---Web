@@ -36,7 +36,7 @@ class m231031_210433_criar_bd_inicial extends Migration
             'email' => $this->string()->notNull(),
             'telefone' => $this->integer(9)->notNull(),
             'nif' => $this->integer(9)->notNull(),
-            'morada' => $this->integer()->notNull(),
+            'morada' => $this->string()->notNull(),
             'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ], 'ENGINE=InnoDB');
