@@ -150,9 +150,8 @@ AppAsset::register($this);
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                         <div class="navbar-nav w-100">
                             <?php
-                            $categorias = Categoria::find()->all() ;
-                            // Supondo que você tenha uma variável $categorias contendo as categorias da base de dados
-                            foreach ($categorias as $categoria) {
+                            $categorias = Categoria::find()->all() ;// vai buscar todas as categorias
+                            foreach ($categorias as $categoria) {// mostra todas as categorias
                                 echo Html::a($categoria->nome, ['site/categoria', 'id' => $categoria->id], ['class' => 'nav-item nav-link']);
                             }
                             ?>
@@ -174,11 +173,11 @@ AppAsset::register($this);
                                 <a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="" class="btn px-0">
+                                <a href="<?= \yii\helpers\Url::to(['/site/index'])//favorito/algo ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                                 </a>
-                                <a href="" class="btn px-0 ml-3">
+                                <a href="<?= \yii\helpers\Url::to(['/site/index'])//carrinho/algo ?>" class="btn px-0 ml-3" >
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                                 </a>

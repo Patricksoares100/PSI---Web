@@ -67,6 +67,15 @@
                             ['label' => 'Editar Ivas', 'iconStyle' => 'far'],
                         ]
                     ],
+                    [
+                        'label' => 'Categorias',
+                        'icon' => 'file-code',
+                        'badge' => '<span class="right badge badge-info"></span>',
+                        'items' => [
+                            ['label' => 'Ver todas', 'url' => ['categoria/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Adicionar', 'url' => ['categoria/create'], 'iconStyle' => 'far'],
+                        ]
+                    ],
 
                     [
                         'label' => 'Faturas/Pedidos',
