@@ -22,28 +22,29 @@ class PerfilController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            ['access' => [
-                'class' => AccessControl::class,
-                // como n esta o only aqui , quer dizer q tudo é proibido
-                'rules' => [
-                    [
-                        'actions' => ['error'], // so tem acesso quem esta logado
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['index', 'view'],
-                        'allow' => true,
-                        'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
-                    ],
-                    [
-                        'actions' => ['update', 'delete','create'],
-                        'allow' => true,
-                        'roles' => ['editRoles'], //admin recebe as permissões de funcionario
-                    ],
+            [
+                'access' => [
+                    'class' => AccessControl::class,
+                    // como n esta o only aqui , quer dizer q tudo é proibido
+                    'rules' => [
+                        [
+                            'actions' => ['error'], // so tem acesso quem esta logado
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
+                        ],
+                        [
+                            'actions' => ['update', 'delete', 'create'], // update do proprio id ?--------
+                            'allow' => true,
+                            'roles' => ['editRoles'], //admin recebe as permissões de funcionario
+                        ],
 
+                    ],
                 ],
-            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

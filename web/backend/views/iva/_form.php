@@ -12,14 +12,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'em_vigor')->dropDownList([ 'Sim' => 'Sim', 'Não' => 'Não', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'em_vigor')->dropDownList(['Sim' => 'Sim', 'Não' => 'Não',], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'percentagem')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
