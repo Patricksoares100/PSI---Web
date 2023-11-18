@@ -38,6 +38,10 @@ class m231030_212423_init_rbac extends Migration
         $permission_backoffice->description = 'Permissão para entrar no backoffice';
         $auth->add($permission_backoffice);
 
+        $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
+        $permission_frontoffice->description = 'Permissão para entrar no front office';
+        $auth->add($permission_frontoffice);
+
 
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
@@ -49,6 +53,8 @@ class m231030_212423_init_rbac extends Migration
         // o primeiro utilizador vai ser ADMIN
         $auth->assign($role_admin, 1);
 
+        //permissao frontoffice
+        $auth->addChild($role_cliente, $permission_frontoffice);
     }
 
     /**

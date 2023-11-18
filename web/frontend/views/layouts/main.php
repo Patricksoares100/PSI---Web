@@ -3,12 +3,14 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
+use common\models\Empresa;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -65,36 +67,36 @@ AppAsset::register($this);
             <div class="row bg-secondary py-1 px-xl-5">
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center h-100">
-                        <a class="text-body mr-3" href="">About</a>
-                        <a class="text-body mr-3" href="">Contact</a>
+                        <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/about']) ?>">About</a>
+                        <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/contact']) ?>">Contato</a>
                         <a class="text-body mr-3" href="">Help</a>
-                        <a class="text-body mr-3" href="">FAQs</a>
+                        <?php
+                        if (Yii::$app->user->isGuest) {
+                            echo '<a class="text-body mr-3" href="' . \yii\helpers\Url::to(['/site/signup']) . '">Registar</a>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" type="button">Sign in</button>
-                                <button class="dropdown-item" type="button">Sign up</button>
-                            </div>
-                        </div>
-                        <div class="btn-group mx-2">
-                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" type="button">EUR</button>
-                                <button class="dropdown-item" type="button">GBP</button>
-                                <button class="dropdown-item" type="button">CAD</button>
-                            </div>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" type="button">FR</button>
-                                <button class="dropdown-item" type="button">AR</button>
-                                <button class="dropdown-item" type="button">RU</button>
-                            </div>
+
+
+                            <?php
+                            // Verifica se o usuário está logado
+                            if (Yii::$app->user->isGuest) {
+                                // Mostra o botão de login
+                                echo Html::a('Login', Url::to(['site/login']), ['class' => 'btn btn-primary']);
+                            } else {
+                                // Mostra o botão de logout
+                                echo Html::a(
+                                    '<i class="fas fa-sign-out-alt"> ' . Yii::$app->user->identity->username . ' (Logout)</i>',
+                                    ['/site/logout'],
+                                    ['data-method' => 'post', 'class' => 'nav-link']
+                                );
+                            }
+                            ?>
+
                         </div>
                     </div>
                     <div class="d-inline-flex align-items-center d-block d-lg-none">
@@ -129,8 +131,20 @@ AppAsset::register($this);
                     </form>
                 </div>
                 <div class="col-lg-4 col-6 text-right">
-                    <p class="m-0">Customer Service</p>
-                    <h5 class="m-0">+012 345 6789</h5>
+
+                    <?php
+                    // Recuperar a empresa da  bd 
+                    $empresa = Empresa::find()->one();
+
+                    // Verificar que a empresa foi encontrada antes de exibir o telefone
+                    if ($empresa) {
+                        echo '<p class="m-0">' . $empresa->nome . '</p>';
+                        echo '<h5 class="m-0">' . $empresa->telefone . '</h5>';
+                    } else {
+                        echo '<p class="m-0">Nome da empresa não disponível</p>';
+                        echo '<p class="m-0">Número de telefone não disponível</p>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -176,7 +190,7 @@ AppAsset::register($this);
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="index.html" class="nav-item nav-link active">Home</a>
+                                <a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
                                 <a href="shop.html" class="nav-item nav-link">Shop</a>
                                 <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                                 <div class="nav-item dropdown">
