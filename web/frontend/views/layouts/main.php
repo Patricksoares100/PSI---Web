@@ -3,6 +3,7 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
+use common\models\Categoria;
 use common\models\Empresa;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
@@ -68,8 +69,6 @@ AppAsset::register($this);
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center h-100">
                         <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/about']) ?>">About</a>
-                        <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/contact']) ?>">Contato</a>
-                        <a class="text-body mr-3" href="">Help</a>
                         <?php
                         if (Yii::$app->user->isGuest) {
                             echo '<a class="text-body mr-3" href="' . \yii\helpers\Url::to(['/site/signup']) . '">Registar</a>';
@@ -114,8 +113,8 @@ AppAsset::register($this);
             <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                 <div class="col-lg-4">
                     <a href="" class="text-decoration-none">
-                        <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
-                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+                        <?php $empresa = Empresa::find()->one(); ?>
+                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
                     </a>
                 </div>
                 <div class="col-lg-4 col-6 text-left">
@@ -154,30 +153,21 @@ AppAsset::register($this);
             <div class="row px-xl-5">
                 <div class="col-lg-3 d-none d-lg-block">
                     <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
-                        <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
+                        <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categorias</h6>
                         <i class="fa fa-angle-down text-dark"></i>
                     </a>
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                         <div class="navbar-nav w-100">
-                            <div class="nav-item dropdown dropright">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dresses <i class="fa fa-angle-right float-right mt-1"></i></a>
-                                <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                    <a href="" class="dropdown-item">Men's Dresses</a>
-                                    <a href="" class="dropdown-item">Women's Dresses</a>
-                                    <a href="" class="dropdown-item">Baby's Dresses</a>
-                                </div>
-                            </div>
-                            <a href="" class="nav-item nav-link">Shirts</a>
-                            <a href="" class="nav-item nav-link">Jeans</a>
-                            <a href="" class="nav-item nav-link">Swimwear</a>
-                            <a href="" class="nav-item nav-link">Sleepwear</a>
-                            <a href="" class="nav-item nav-link">Sportswear</a>
-                            <a href="" class="nav-item nav-link">Jumpsuits</a>
-                            <a href="" class="nav-item nav-link">Blazers</a>
-                            <a href="" class="nav-item nav-link">Jackets</a>
-                            <a href="" class="nav-item nav-link">Shoes</a>
+                            <?php
+                            $categorias = Categoria::find()->all() ;
+                            // Supondo que você tenha uma variável $categorias contendo as categorias da base de dados
+                            foreach ($categorias as $categoria) {
+                                echo Html::a($categoria->nome, ['site/categoria', 'id' => $categoria->id], ['class' => 'nav-item nav-link']);
+                            }
+                            ?>
                         </div>
                     </nav>
+
                 </div>
                 <div class="col-lg-9">
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
