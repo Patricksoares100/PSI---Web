@@ -42,19 +42,12 @@ class m231030_212423_init_rbac extends Migration
         $permission_frontoffice->description = 'Permissão para entrar no front office';
         $auth->add($permission_frontoffice);
 
-        $permission_edit_ivas = $auth->createPermission('editIvas');
-        $permission_edit_ivas->description = 'Permissão para editar os Ivas';
-        $auth->add($permission_edit_ivas);
-
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
-        $auth->addChild($role_funcionario, $permission_edit_ivas);
-
 
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $role_funcionario);
-        $auth->addChild($role_admin, $permission_edit_ivas);
 
         // o primeiro utilizador vai ser ADMIN
         $auth->assign($role_admin, 1);

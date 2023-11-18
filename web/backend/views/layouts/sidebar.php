@@ -55,7 +55,7 @@
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
                             ['label' => 'Ver Fornecedores', 'url' => ['fornecedor/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Adicionar', 'iconStyle' => 'far'],
+                            ['label' => 'Adicionar', 'url' => ['fornecedor/create'], 'iconStyle' => 'far'],
                         ]
                     ],
 
