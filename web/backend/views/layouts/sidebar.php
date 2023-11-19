@@ -44,8 +44,7 @@
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
                             ['label' => 'Ver todos', 'url' => ['artigo/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Ver categorias', 'iconStyle' => 'far'],
-                            ['label' => 'Criar Artigo', 'iconStyle' => 'far'],
+                            ['label' => 'Criar Artigo', 'url' => ['artigo/create'], 'iconStyle' => 'far'],
                         ]
                     ],
 
