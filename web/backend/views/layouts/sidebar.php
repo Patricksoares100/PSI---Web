@@ -14,7 +14,7 @@
                 <img src="<?= $assetDir ?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?= Yii::$app->user->identity->username ?></a>
+                <a href="http://brindeszorro-back.test/index.php?r=perfil%2Fview&id=<?= Yii::$app->user->identity->id?>" class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>
 
@@ -83,7 +83,6 @@
                         'badge' => '<span class="right badge badge-info"></span>',
                         'items' => [
                             ['label' => 'Ver todas', 'url' => ['fatura/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Editar Ivas', 'iconStyle' => 'far'],
                         ]
                     ],
 

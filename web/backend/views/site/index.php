@@ -1,40 +1,21 @@
 <?php
-$this->title = 'Starter Page';
+$empresa = \common\models\Empresa::find()->one();
+$this->title = $empresa->nome;
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 ?>
-
-<div class="row">
-    <div class="col-md-4 col-sm-6 col-12">
-        <?= \hail812\adminlte\widgets\InfoBox::widget([
-            'text' => 'Sem mensagens de alertas Novas!',
-            'number' => '410',
-            'theme' => 'success',
-            'icon' => 'far fa-flag',
-        ]) ?>
-    </div>
-    <div class="col-md-4 col-sm-6 col-12">
-        <?= \hail812\adminlte\widgets\InfoBox::widget([
-            'text' => 'Messages',
-            'number' => '1,410',
-            'icon' => 'far fa-envelope',
-        ]) ?>
-    </div>
-</div>
-
-
 
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
             'title' => '150',
-            'text' => 'New Orders',
+            'text' => 'Clientes Registados',
             'icon' => 'fas fa-shopping-cart',
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
             'title' => '150',
-            'text' => 'New Orders',
+            'text' => 'Funcionários Registados',
             'icon' => 'fas fa-shopping-cart',
             'theme' => 'success'
         ]) ?>
@@ -43,7 +24,7 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
             'title' => '44',
-            'text' => 'Utilizadores Registados',
+            'text' => 'Categorias Registadas',
             'icon' => 'fas fa-user-plus',
             'theme' => 'gradient-success'
         ]) ?>
@@ -51,14 +32,14 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
             'title' => '150',
-            'text' => 'New Orders',
+            'text' => 'Artigos Registados',
             'icon' => 'fas fa-shopping-cart',
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
             'title' => '150',
-            'text' => 'New Orders',
+            'text' => 'Fornecedores Registados',
             'icon' => 'fas fa-shopping-cart',
             'theme' => 'success'
         ]) ?>
@@ -67,7 +48,31 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
             'title' => '44',
-            'text' => 'Utilizadores Registados',
+            'text' => 'Total de encomendas anual',
+            'icon' => 'fas fa-user-plus',
+            'theme' => 'gradient-success'
+        ]) ?>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+        <?= \hail812\adminlte\widgets\SmallBox::widget([
+            'title' => '150',
+            'text' => 'Artigos em Carrinho',
+            'icon' => 'fas fa-shopping-cart',
+        ]) ?>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+        <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
+            'title' => '150',
+            'text' => 'Artigos nos favoritos',
+            'icon' => 'fas fa-shopping-cart',
+            'theme' => 'success'
+        ]) ?>
+        <?php \hail812\adminlte\widgets\SmallBox::end() ?>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+        <?= \hail812\adminlte\widgets\SmallBox::widget([
+            'title' => '44',
+            'text' => 'Artigo mais vendido',
             'icon' => 'fas fa-user-plus',
             'theme' => 'gradient-success'
         ]) ?>

@@ -31,7 +31,7 @@ class EmpresaController extends Controller
                         'roles' => ['permissionBackoffice'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index','view'],
                         'allow' => true,
                         'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
                     ],
