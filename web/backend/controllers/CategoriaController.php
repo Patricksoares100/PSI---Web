@@ -21,22 +21,23 @@ class CategoriaController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            [   'access' => [
-                'class' => AccessControl::class,
-                // como n esta o only aqui , quer dizer q tudo é proibido
-                'rules' => [
-                    [
-                        'actions' => ['error'], // so tem acesso quem esta logado
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['index', 'view','update', 'delete', 'create'],
-                        'allow' => true,
-                        'roles' => ['permissionBackoffice'],
+            [
+                'access' => [
+                    'class' => AccessControl::class,
+                    // como n esta o only aqui , quer dizer q tudo é proibido
+                    'rules' => [
+                        [
+                            'actions' => ['error'], // so tem acesso quem esta logado
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                        [
+                            'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                            'allow' => true,
+                            'roles' => ['permissionBackoffice'],
+                        ],
                     ],
                 ],
-            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -46,6 +47,7 @@ class CategoriaController extends Controller
             ]
         );
     }
+
 
     /**
      * Lists all Categoria models.
