@@ -49,6 +49,7 @@ class CategoriaController extends Controller
     }
 
 
+
     /**
      * Lists all Categoria models.
      *
