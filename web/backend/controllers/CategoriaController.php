@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Categoria;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,7 +21,22 @@ class CategoriaController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            [
+            [   'access' => [
+                'class' => AccessControl::class,
+                // como n esta o only aqui , quer dizer q tudo é proibido
+                'rules' => [
+                    [
+                        'actions' => ['error'], // so tem acesso quem esta logado
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index', 'view','update', 'delete', 'create'],
+                        'allow' => true,
+                        'roles' => ['permissionBackoffice'],
+                    ],
+                ],
+            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

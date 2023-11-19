@@ -106,6 +106,8 @@
                         'items' => [
                             ['label' => 'Ver Utilizadores', 'url' => ['perfil/index'], 'iconStyle' => 'far'],
                             ['label' => 'Criar Novo', 'url' => ['site/signup'], 'iconStyle' => 'far'],
+                            ['label' => 'Atualizar dados pesoais', 'url' => ['perfil/update', 'id' => Yii::$app->user->identity->id], 'iconStyle' => 'far'],
+                            ['label' => 'Visualizar dados pessoais', 'url' => ['perfil/view', 'id' => Yii::$app->user->identity->id], 'iconStyle' => 'far'],
                         ]
                     ],
                 ],

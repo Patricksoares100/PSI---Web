@@ -33,14 +33,14 @@ class PerfilController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['index', 'view'],
+                            'actions' => ['update', 'view'],
                             'allow' => true,
-                            'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
+                            'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],
                         [
-                            'actions' => ['update', 'delete', 'create'], // update do proprio id ?--------
+                            'actions' => ['index', 'delete', 'create'],
                             'allow' => true,
-                            'roles' => ['editRoles'], //admin recebe as permissões de funcionario
+                            'roles' => ['editRoles'], //só admin
                         ],
 
                     ],

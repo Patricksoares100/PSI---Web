@@ -35,6 +35,11 @@ class EmpresaController extends Controller
                         'allow' => true,
                         'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
                     ],
+                    [
+                        'actions' => ['update', 'delete', 'create'],
+                        'allow' => true,
+                        'roles' => ['editRoles'],
+                    ],
 
                 ],
             ],

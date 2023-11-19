@@ -38,12 +38,12 @@ class SiteController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
+                        'roles' => ['permissionBackoffice'], //admin e funcionario
                     ],
                     [
                         'actions' => ['signup'],
                         'allow' => true,
-                        'roles' => ['editRoles'], //admin recebe as permissões de funcionario
+                        'roles' => ['editRoles'], //só o admin
                     ],
 
                 ],
