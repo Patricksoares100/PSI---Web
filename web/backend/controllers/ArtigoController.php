@@ -3,10 +3,12 @@
 namespace backend\controllers;
 
 use common\models\Artigo;
+use yii\base\View;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -42,11 +44,23 @@ class ArtigoController extends Controller
                     'actions' => [
                         'delete' => ['POST'],
                     ],
-                ],
-            ]
-        );
-    }
+                    [
+                        'actions' => ['logout', 'error'], // so tem acesso quem esta logado
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
 
+                ],
+            ],
+
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     /**
      * Lists all Artigo models.
      *
