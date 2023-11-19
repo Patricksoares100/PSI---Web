@@ -1,4 +1,4 @@
 <footer class="main-footer">
-    <strong>Melhor grupo &copy; PL - 2023-2024.</strong>
+    <strong>Copyright © 2014-2021 AdminLTE.io. All rights reserved.</strong>
 
 </footer>
