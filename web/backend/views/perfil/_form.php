@@ -23,6 +23,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'codigo_postal')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'role')->textInput(['value' => $model->getRole(), 'disabled'=> true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

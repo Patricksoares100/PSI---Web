@@ -14,12 +14,12 @@ use Yii;
  * @property string $morada
  * @property string $codigo_postal
  * @property string $localidade
- * @property int $carrinho_id
  *
- * @property Artigo[] $artigos
- * @property Avaliacao[] $avaliacaos
-
- * @property Fatura[] $faturas
+ * @property Artigos[] $artigos
+ * @property Avaliacaos[] $avaliacaos
+ * @property Faturas[] $faturas
+ * @property User $id0
+ * @property LinhasCarrinho[] $linhasCarrinhos
  */
 class Perfil extends \yii\db\ActiveRecord
 {
@@ -38,8 +38,9 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'telefone', 'nif', 'morada', 'codigo_postal', 'localidade'], 'required'],
-            [['telefone', 'nif', ], 'integer'],
+            [['telefone', 'nif'], 'integer'],
             [['nome', 'morada', 'codigo_postal', 'localidade'], 'string', 'max' => 255],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
         ];
     }
 
@@ -52,11 +53,10 @@ class Perfil extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'telefone' => 'Telefone',
-            'nif' => 'NIF',
+            'nif' => 'Nif',
             'morada' => 'Morada',
-            'codigo_postal' => 'Código Postal',
+            'codigo_postal' => 'Codigo Postal',
             'localidade' => 'Localidade',
-            'role' => 'Função',
         ];
     }
 
@@ -87,9 +87,30 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasMany(Fatura::class, ['perfil_id' => 'id']);
+        return $this->hasMany(Faturas::class, ['perfil_id' => 'id']);
     }
-     /**
+
+    /**
+     * Gets query for [[Id0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getId0()
+    {
+        return $this->hasOne(User::class, ['id' => 'id']);
+    }
+    public function getRole(){
+        $auth = Yii::$app->authManager;
+        $roles =$auth->getRolesByUser($this->id);
+        $roleUser = "null";
+        foreach ($roles as $role){
+            if($role->type==1)
+                $roleUser = $role->name;
+        }
+        return $roleUser;
+    }
+
+    /**
      * Gets query for [[LinhasCarrinhos]].
      *
      * @return \yii\db\ActiveQuery
@@ -98,5 +119,4 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LinhasCarrinho::class, ['perfil_id' => 'id']);
     }
-
 }

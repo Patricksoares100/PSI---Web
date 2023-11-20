@@ -219,6 +219,16 @@ class m231031_210433_criar_bd_inicial extends Migration
             'CASCADE' 
         );
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  faturas*/
+        /*INICIO CHAVES ESTRANGEIRAS DA TABELA perfis */
+        $this->addForeignKey(
+            'fk-perfis-user',
+            'perfis',
+            'id',
+            'user',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
     }
 
     /**
