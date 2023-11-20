@@ -56,7 +56,7 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'codigo_postal' => 'Código Postal',
             'localidade' => 'Localidade',
-
+            'role' => 'Função',
         ];
     }
 
@@ -98,4 +98,5 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LinhasCarrinho::class, ['perfil_id' => 'id']);
     }
+
 }
