@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],//tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['logout', 'signup', 'index'],//tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -40,6 +40,11 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],// utilizador logado
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['permissionFrontoffice'],// utilizador logado
                     ],
                 ],
             ],
@@ -91,6 +96,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if(!Yii::$app->user->can('permissionFrontoffice')){
+                return $this->actionLogout();
+            }
             return $this->goBack();
         }
 
