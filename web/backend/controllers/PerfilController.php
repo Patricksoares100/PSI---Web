@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
 
 /**
  * PerfilController implements the CRUD actions for Perfil model.
@@ -93,11 +94,20 @@ class PerfilController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+            // O usuário tem permissão para acessar/modificar os dados pessoais deste perfil
+        }
+        // O usuário não tem permissão
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -132,13 +142,14 @@ class PerfilController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use console\models\AuthorDadosPessoaisRule;
 
 /**
  * Class m231030_212423_init_rbac
@@ -14,6 +15,9 @@ class m231030_212423_init_rbac extends Migration
     {
         // The authManager can now be accessed via \Yii::$app->authManager.
         $auth = Yii::$app->authManager;
+
+        $rule = new AuthorDadosPessoaisRule;
+        $auth->add($rule);
 
         // Criar os roles - $auth->createRole();
         $role_admin = $auth->createRole('Admin');
@@ -42,9 +46,17 @@ class m231030_212423_init_rbac extends Migration
         $permission_frontoffice->description = 'Permissão para entrar no front office';
         $auth->add($permission_frontoffice);
 
+
+        $permissaoDadosPessoais = $auth->createPermission('updateDadosPessoais');
+        $permissaoDadosPessoais->description = 'Atualizar dados pessoais';
+        $permissaoDadosPessoais->ruleName = 'isAuthorDadosPessoais'; // Nome da regra
+        $auth->add($permissaoDadosPessoais);
+
+
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
+        $auth->addChild($role_funcionario, $permissaoDadosPessoais);
 
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $role_funcionario);
