@@ -175,6 +175,11 @@ AppAsset::register($this);
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="<?= \yii\helpers\Url::to(['/site/artigo']) ?>" class="nav-item nav-link active">Artigos</a>
                             </div>
+                            <div class="navbar-nav mr-auto py-0">
+                                <?php if (!Yii::$app->user->isGuest) : ?>
+                                    <a href="<?= \yii\helpers\Url::to(['/site/faturas']) ?>" class="nav-item nav-link active">Faturas</a>
+                                <?php endif; ?>
+                            </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                                 <a href="<?= \yii\helpers\Url::to(['/site/favorito']) //favorito/algo 
                                             ?>" class="btn px-0">

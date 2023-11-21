@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup', 'index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['logout', 'signup'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,15 +37,11 @@ class SiteController extends Controller
                         'roles' => ['?'], // qualquer utilizador
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout',],
                         'allow' => true,
                         'roles' => ['@'], // utilizador logado
                     ],
-                    [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['permissionFrontoffice'], // utilizador logado
-                    ],
+
                 ],
             ],
             'verbs' => [
@@ -96,6 +92,16 @@ class SiteController extends Controller
     public function actionDetail()
     {
         return $this->render('detail');
+    }
+
+    public function actionFaturas()
+    {
+        return $this->render('faturas');
+    }
+
+    public function actionCheckout()
+    {
+        return $this->render('checkout');
     }
 
 
