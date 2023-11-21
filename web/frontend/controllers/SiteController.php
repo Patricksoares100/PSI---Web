@@ -29,22 +29,22 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup', 'index'],//tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['logout', 'signup', 'index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
                         'allow' => true,
-                        'roles' => ['?'],// qualquer utilizador
+                        'roles' => ['?'], // qualquer utilizador
                     ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],// utilizador logado
+                        'roles' => ['@'], // utilizador logado
                     ],
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['permissionFrontoffice'],// utilizador logado
+                        'roles' => ['permissionFrontoffice'], // utilizador logado
                     ],
                 ],
             ],
@@ -83,6 +83,22 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionArtigo()
+    {
+        return $this->render('artigo');
+    }
+
+    public function actionFavorito()
+    {
+        return $this->render('favorito');
+    }
+
+    public function actionDetail()
+    {
+        return $this->render('detail');
+    }
+
+
     /**
      * Logs in a user.
      *
@@ -96,7 +112,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            if(!Yii::$app->user->can('permissionFrontoffice')){
+            if (!Yii::$app->user->can('permissionFrontoffice')) {
                 return $this->actionLogout();
             }
             return $this->goBack();

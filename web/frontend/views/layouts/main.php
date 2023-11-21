@@ -98,45 +98,45 @@ AppAsset::register($this);
 
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
-                <div class="col-lg-4">
-                    <a href="" class="text-decoration-none">
-                        <?php $empresa = Empresa::find()->one(); ?>
-                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-6 text-left">
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for products">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-transparent text-primary">
-                                    <i class="fa fa-search"></i>
-                                </span>
-                            </div>
-                        </div>
                     </form>
                 </div>
-                <div class="col-lg-4 col-6 text-right">
+                <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
+                    <div class="col-lg-4">
+                        <a href="" class="text-decoration-none">
+                            <?php $empresa = Empresa::find()->one(); ?>
+                            <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-6 text-left">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for products">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-6 text-right">
 
-                    <?php
-                    // Recuperar a empresa da  bd 
-                    $empresa = Empresa::find()->one();
+                        <?php
+                        // Recuperar a empresa da  bd 
+                        $empresa = Empresa::find()->one();
 
-                    // Verificar que a empresa foi encontrada antes de exibir o telefone
-                    if ($empresa) {
-                        echo '<p class="m-0">' . $empresa->nome . '</p>';
-                        echo '<h5 class="m-0">' . $empresa->telefone . '</h5>';
-                    } else {
-                        echo '<p class="m-0">Nome da empresa não disponível</p>';
-                        echo '<p class="m-0">Número de telefone não disponível</p>';
-                    }
-                    ?>
+                        // Verificar que a empresa foi encontrada antes de exibir o telefone
+                        if ($empresa) {
+                            echo '<p class="m-0">' . $empresa->nome . '</p>';
+                            echo '<h5 class="m-0">' . $empresa->telefone . '</h5>';
+                        } else {
+                            echo '<p class="m-0">Nome da empresa não disponível</p>';
+                            echo '<p class="m-0">Número de telefone não disponível</p>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
         <!-- Topbar End -->
         <!-- Navbar Start -->
@@ -150,8 +150,8 @@ AppAsset::register($this);
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                         <div class="navbar-nav w-100">
                             <?php
-                            $categorias = Categoria::find()->all() ;// vai buscar todas as categorias
-                            foreach ($categorias as $categoria) {// mostra todas as categorias
+                            $categorias = Categoria::find()->all(); // vai buscar todas as categorias
+                            foreach ($categorias as $categoria) { // mostra todas as categorias
                                 echo Html::a($categoria->nome, ['site/categoria', 'id' => $categoria->id], ['class' => 'nav-item nav-link']);
                             }
                             ?>
@@ -172,12 +172,17 @@ AppAsset::register($this);
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
                             </div>
+                            <div class="navbar-nav mr-auto py-0">
+                                <a href="<?= \yii\helpers\Url::to(['/site/artigo']) ?>" class="nav-item nav-link active">Artigos</a>
+                            </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="<?= \yii\helpers\Url::to(['/site/index'])//favorito/algo ?>" class="btn px-0">
+                                <a href="<?= \yii\helpers\Url::to(['/site/favorito']) //favorito/algo 
+                                            ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                                 </a>
-                                <a href="<?= \yii\helpers\Url::to(['/site/index'])//carrinho/algo ?>" class="btn px-0 ml-3" >
+                                <a href="<?= \yii\helpers\Url::to(['/linhacarrinho/index']) //carrinho/algo 
+                                            ?>" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                                 </a>
@@ -204,20 +209,20 @@ AppAsset::register($this);
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">Entre em contato conosco</h5>
-                <p class="mb-4"><?= $empresa->morada?> é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><?= $empresa->morada . ' ' . $empresa->codigo_postal . ' ' . $empresa->localidade?></p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><?= $empresa->email?></p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i><?= $empresa->telefone?></p>
+                <p class="mb-4"><?= $empresa->morada ?> é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><?= $empresa->morada . ' ' . $empresa->codigo_postal . ' ' . $empresa->localidade ?></p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><?= $empresa->email ?></p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i><?= $empresa->telefone ?></p>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">
-                    
+
                     <div class="col-md-4 mb-5">
-                        
+
                     </div>
                     <div class="col-md-4 mb-5">
                         <form action="">
-                            
+
                         </form>
                         <h6 class="text-secondary text-uppercase mt-4 mb-3">JUNTE-SE A NÓS</h6>
                         <div class="d-flex">
