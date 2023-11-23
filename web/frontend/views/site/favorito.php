@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
@@ -157,7 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger">
+                            <td class="align-middle"><i class="fas fa-plus fa-xs"></i><button class="btn btn-sm btn">
                                     <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
                                 </button>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
