@@ -159,12 +159,26 @@ class PerfilController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+public function actionDelete($id)
+{
+    $perfil = $this->findModel($id);
+    // Certificar de que o perfil foi encontrado antes de tentar excluir
+    if ($perfil != null) {
+        $userId = $perfil->id; 
+        // apagar o perfil
+        $perfil->delete();
 
-        return $this->redirect(['index']);
+        // Excluir o user associado ao perfil
+        if ($userId != null) {
+            $user = User::findOne(['id' => $userId]);// primeiro id é da tabela user o userID é o id que guardamos acima
+            if ($user !== null) {
+                $user->delete();
+            } 
+        }
     }
+    return $this->redirect(['index']);
+}
+
 
     /**
      * Finds the Perfil model based on its primary key value.

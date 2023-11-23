@@ -53,9 +53,9 @@ class Perfil extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'telefone' => 'Telefone',
-            'nif' => 'Nif',
+            'nif' => 'NIF',
             'morada' => 'Morada',
-            'codigo_postal' => 'Codigo Postal',
+            'codigo_postal' => 'Código Postal',
             'localidade' => 'Localidade',
         ];
     }
@@ -118,5 +118,9 @@ class Perfil extends \yii\db\ActiveRecord
     public function getLinhasCarrinhos()
     {
         return $this->hasMany(LinhasCarrinho::class, ['perfil_id' => 'id']);
+    }
+
+    public function apagarPerfilUser($id){
+        
     }
 }
