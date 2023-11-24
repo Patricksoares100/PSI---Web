@@ -34,12 +34,12 @@ class PerfilController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['update', 'view'],
+                            'actions' => ['update', 'view', 'index'],
                             'allow' => true,
                             'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],
                         [
-                            'actions' => ['index', 'delete', 'create'],
+                            'actions' => ['delete', 'create'],
                             'allow' => true,
                             'roles' => ['editRoles'], //só admin
                         ],
@@ -141,12 +141,31 @@ class PerfilController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $role = $model->getRole();
+        if($role == 'Cliente'){
+            if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) {//updateDadosPessoais
+                $model->save();
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else if($role == 'Funcionario'){
+            if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id]) || Yii::$app->user->can('editRoles')) {
+                $model->save();
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else {
+            if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
+                $model->save();
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
+
+
 
 
         throw new NotFoundHttpException('The requested page does not exist.');

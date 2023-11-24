@@ -1,6 +1,8 @@
 <?php
 $empresa = \common\models\Empresa::find()->one();
-$this->title = $empresa->nome;
+if($empresa){
+$this->title = $empresa->nome;}
+else{$this->title = "Insira uma empresa";}
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 ?>
 
