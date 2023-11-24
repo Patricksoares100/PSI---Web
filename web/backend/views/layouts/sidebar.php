@@ -5,8 +5,9 @@
         <?php $empresa = \common\models\Empresa::find()->one();
         if ($empresa){?>
         <span class="brand-text font-weight-light"><?= $empresa->nome ?></span>
-        <?php }else ?>
+        <?php }else { ?>
         <span class="brand-text font-weight-light">Insira uma empresa</span>
+        <?php } ?> 
     </a>
 
     <!-- Sidebar -->
