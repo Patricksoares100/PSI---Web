@@ -109,6 +109,17 @@ class Perfil extends \yii\db\ActiveRecord
         }
         return $roleUser;
     }
+   public function getStatus()
+   {
+       $user = User::findOne($this->id);
+       if ($user->status == 10)
+           return "Ativo";
+       if ($user->status == 9)
+           return "Inativo";
+       else {
+           return "Removido";
+       }
+   }
 
     /**
      * Gets query for [[LinhasCarrinhos]].

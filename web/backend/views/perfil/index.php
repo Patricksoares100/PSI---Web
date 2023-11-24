@@ -28,9 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'nome',
-            'telefone',
+            //'telefone',
             'nif',
             'role',
+            'status',
             //'morada',
             //'codigo_postal',
             //'localidade',
