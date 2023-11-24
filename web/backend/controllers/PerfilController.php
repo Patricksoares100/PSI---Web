@@ -142,23 +142,23 @@ class PerfilController extends Controller
     {
         $model = $this->findModel($id);
         $role = $model->getRole();
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
         if($role == 'Cliente'){
             if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) {//updateDadosPessoais
-                $model->save();
                 return $this->render('update', [
                     'model' => $model,
                 ]);
             }
         }else if($role == 'Funcionario'){
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id]) || Yii::$app->user->can('editRoles')) {
-                $model->save();
                 return $this->render('update', [
                     'model' => $model,
                 ]);
             }
         }else {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
-                $model->save();
                 return $this->render('update', [
                     'model' => $model,
                 ]);
