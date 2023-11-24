@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'role')->textInput(['value' => $model->getRole(), 'disabled'=> true]) ?>
 
-
+    <?= $form->field($model, 'status')->dropDownList(['value' => $model->getStatus(), 'Ativo'=> 'Ativo', 'Inativo'=>'Inativo']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'localidade') ?>
 
             <?= $form->field($model, 'codigo_postal')->label("Código Postal") ?>
-            
+
             <?= $form->field($model, 'status')->dropDownList(['Ativo'=> 'Ativo','Inativo'=> 'Inativo']) ?>
 
             <div class="form-group">

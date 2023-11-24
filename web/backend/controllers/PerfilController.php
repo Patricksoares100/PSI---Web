@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SignupForm;
 use common\models\Perfil;
 use common\models\User;
 use yii\data\ActiveDataProvider;
@@ -164,10 +165,6 @@ class PerfilController extends Controller
                 ]);
             }
         }
-
-
-
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
