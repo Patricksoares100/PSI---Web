@@ -103,8 +103,12 @@ AppAsset::register($this);
                 <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                     <div class="col-lg-4">
                         <a href="" class="text-decoration-none">
-                            <?php $empresa = Empresa::find()->one(); ?>
+                            <?php if(Empresa::find()->one() != null){ 
+                                $empresa =Empresa::find()->one() ?>
                             <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
+                            <?php }else{?>
+                                <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Insira uma empresa</span>
+                                <?php }?>
                         </a>
                     </div>
                     <div class="col-lg-4 col-6 text-left">
@@ -214,10 +218,14 @@ AppAsset::register($this);
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">Entre em contato conosco</h5>
-                <p class="mb-4"><?= $empresa->nome ?> é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
+                <?php  if ($empresa) {?>
+                <p class="mb-4"><?= $empresa->nome ?>, é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><?= $empresa->morada . ' ' . $empresa->codigo_postal . ' ' . $empresa->localidade ?></p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><?= $empresa->email ?></p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i><?= $empresa->telefone ?></p>
+                <?php }else {
+                   echo '<p class="mb-4"> Insira uma empresa,  é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>';
+                }?>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">

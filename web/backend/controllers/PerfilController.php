@@ -99,7 +99,7 @@ class PerfilController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
+        if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) {
             return $this->render('view', [
                 'model' => $model,
             ]);
