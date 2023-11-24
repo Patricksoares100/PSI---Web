@@ -18,6 +18,7 @@ class SignupForm extends Model
     public $username; // estes 3 são da tabela user
     public $email;
     public $password;
+    public $status;
 
     public $nome; // aqui leva os da tabela perfil
     public $telefone;
@@ -64,6 +65,9 @@ class SignupForm extends Model
             ['morada', 'trim'],
             ['morada', 'required'],
 
+            ['status', 'trim'],
+            ['status', 'required'],
+
             ['codigo_postal', 'trim'],
             ['codigo_postal', 'required'],
             ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Invalid Postal Code'],
@@ -90,6 +94,13 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
+
+        if($this->status == 'Ativo'){
+            $valor = 10;
+        }else{
+            $valor = 9;
+        }
+        $user->status = $valor;
 
         $user->save() && $this->sendEmail($user);
 
