@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AuthAssignment;
 use backend\models\SignupForm;
 use common\models\Artigo;
 use common\models\Categoria;
@@ -13,7 +14,6 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
-use common\models\Perfil;
 
 /**
  * Site controller
@@ -88,7 +88,8 @@ class SiteController extends Controller
                 'numeroCategorias' => Categoria::getNumeroCategorias(),
                 'numeroArtigos' => Artigo::getNumeroArtigos(),
                 'numeroFornecedores' => Fornecedor::getNumeroFornecedores(),
-                //'numeroFuncionarios' => Perfil::getNumeroFuncionarios(),
+                'numeroFuncionarios' => AuthAssignment::getNumeroFuncionarios(),
+                'numeroClientes' => AuthAssignment::getNumeroClientes(),
             ]);
         }
 

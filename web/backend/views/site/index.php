@@ -17,16 +17,16 @@ if ($error) {
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => '150',
+            'title' => $numeroClientes,
             'text' => 'Clientes Registados',
-            'icon' => 'fas fa-shopping-cart',
+            'icon' => 'fas fa-users',
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
-            'title' => '10',
+            'title' => $numeroFuncionarios,
             'text' => 'Funcionários Registados',
-            'icon' => 'fas fa-shopping-cart',
+            'icon' => 'fas fa-user',
             'theme' => 'success'
         ]) ?>
         <?php \hail812\adminlte\widgets\SmallBox::end() ?>
@@ -57,22 +57,22 @@ if ($error) {
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => '44',
+            'title' => 'XXX',
             'text' => 'Total de encomendas anual',
-            'icon' => 'fas fa-user-plus',
+            'icon' => 'fas fa-shopping-cart',
             'theme' => 'gradient-success'
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => '150',
+            'title' => 'XXX',
             'text' => 'Artigos em Carrinho',
             'icon' => 'fas fa-shopping-cart',
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
-            'title' => '150',
+            'title' => 'XXX',
             'text' => 'Artigos nos favoritos',
             'icon' => 'fas fa-shopping-cart',
             'theme' => 'success'
@@ -81,7 +81,7 @@ if ($error) {
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => '44',
+            'title' => 'XXX',
             'text' => 'Artigo mais vendido',
             'icon' => 'fas fa-user-plus',
             'theme' => 'gradient-success'
