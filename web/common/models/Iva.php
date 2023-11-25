@@ -57,6 +57,6 @@ class Iva extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['iva_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['iva_id' => 'id']);
     }
 }

@@ -27,7 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'em_vigor',
+            'em_vigor' => [
+                'attribute' => 'em_vigor',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $buttonColorClass = ($model->em_vigor == 'Sim') ? 'btn btn-success' : 'btn btn-danger'; // ver se esta ativo ou não e dar uma cor
+
+                    return Html::a(
+                        $model->em_vigor,
+                        ['iva/atualizarvigor', 'id' => $model->id],
+                        ['class' => $buttonColorClass]
+                    );
+                },
+            ],
             'descricao',
             'percentagem',
             [

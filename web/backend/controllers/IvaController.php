@@ -31,7 +31,7 @@ class IvaController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index', 'view','update', 'delete', 'create'],
+                        'actions' => ['index', 'view','update', 'delete', 'create', 'atualizarvigor'],
                         'allow' => true,
                         'roles' => ['permissionBackoffice'],
                     ],
@@ -71,6 +71,16 @@ class IvaController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+    public function actionAtualizarvigor($id){
+        $iva = Iva::findOne($id);
+        if($iva->em_vigor == 'Sim'){
+            $iva->em_vigor = 'Não';
+        }else{
+            $iva->em_vigor = 'Sim';
+        }
+        $iva->save();
+        return $this->redirect(['index']);
     }
 
     /**

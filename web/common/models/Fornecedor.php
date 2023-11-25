@@ -45,7 +45,7 @@ class Fornecedor extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome do Fornecedor',
             'telefone' => 'Telefone',
-            'nif' => 'Nif',
+            'nif' => 'NIF',
             'morada' => 'Morada',
         ];
     }
