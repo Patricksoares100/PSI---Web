@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\models\SignupForm;
+
 use common\models\Perfil;
 use common\models\User;
 use yii\data\ActiveDataProvider;
@@ -181,7 +181,7 @@ class PerfilController extends Controller
     {
         $perfil = $this->findModel($id);
         // Certificar de que o perfil foi encontrado antes de tentar excluir
-        if ($perfil != null) {
+        if ($perfil != null && $perfil->id != 1) {
             $userId = $perfil->id;
             // apagar o perfil
             $perfil->delete();
