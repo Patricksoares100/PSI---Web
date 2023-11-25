@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\models\AuthAssignment;
 use Yii;
 use yii\rbac\Item;
 
@@ -79,6 +80,28 @@ class Perfil extends \yii\db\ActiveRecord
     public function getAvaliacaos()
     {
         return $this->hasMany(Avaliacao::class, ['perfil_id' => 'id']);
+    }
+    public function setNewRole($id){
+        $auth = AuthAssignment::findOne(['user_id' => $id]);
+        if($auth->item_name == 'Funcionario'){
+            $auth->item_name = 'Cliente';
+            $auth->save();
+        }else{
+            $auth->item_name = 'Funcionario';
+            $auth->save();
+        }
+        return 1;
+    }
+    public function setNewStatus($id){
+        $user = User::findOne($id);
+        if($user->status == 10){
+            $user->status = 9;
+            $user->save();
+        }else{
+            $user->status = 10;
+            $user->save();
+        }
+        return 1;
     }
 
     /**

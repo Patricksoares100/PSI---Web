@@ -30,7 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             //'telefone',
             'nif',
-            'role',
+            'role' => [
+                'attribute' => 'role',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $buttonColorClass = ($model->role == 'Funcionario') ? 'btn btn-dark' : (($model->role == 'Cliente') ? 'btn btn-light' : 'btn btn-primary disabled');
+                    // ver se esta ativo ou não e dar uma cor
+
+                    return Html::a(
+                        $model->role,
+                        ['perfil/atualizarrole', 'id' => $model->id],
+                        ['class' => $buttonColorClass]
+                    );
+                },
+            ],
             'status' => [
                 'attribute' => 'status',
                 'format' => 'raw',

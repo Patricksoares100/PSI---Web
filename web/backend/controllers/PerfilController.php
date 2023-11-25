@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 
+
+use backend\models\AuthAssignment;
 use common\models\Perfil;
 use common\models\User;
 use yii\data\ActiveDataProvider;
@@ -40,7 +42,7 @@ class PerfilController extends Controller
                             'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],
                         [
-                            'actions' => ['delete', 'create','atualizarstatus'],
+                            'actions' => ['delete', 'create','atualizarstatus','atualizarrole'],
                             'allow' => true,
                             'roles' => ['editRoles'], //só admin
                         ],
@@ -174,6 +176,20 @@ class PerfilController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionAtualizarrole($id){
+        try {
+            if($id == 1){// se for administrador
+                throw new \Exception("Não pode alterar o role do administrador");
+            }
+        }catch (\Exception $e){
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return  $this->redirect(['site/index']);
+        }
+        $model = $this->findModel($id);
+        if($model->setNewRole($id) == 1) {// troca o role de funcionario para cliente e vice versa
+            return $this->redirect(['index']);
+        }
+    }
     public function actionAtualizarstatus($id){
         try {
             if($id == 1){// se for administrador
@@ -183,17 +199,8 @@ class PerfilController extends Controller
             Yii::$app->session->setFlash('error', $e->getMessage());
             return  $this->redirect(['site/index']);
         }
-
-        if (Yii::$app->user->can('editRoles')) {
-
-            $user = User::findOne($id);
-            if($user->status == 10){
-                $user->status = 9;
-                $user->save();
-            }else{
-                $user->status = 10;
-                $user->save();
-            }
+        $model = $this->findModel($id);
+        if ($model->setNewStatus($id)==1) {// troca o status entre o 9 e o 10
             return $this->redirect(['index']);
         }
     }
