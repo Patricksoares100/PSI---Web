@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\SignupForm;
+use common\models\Empresa;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -76,7 +77,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $empresa = new Empresa();
+        $empresas = $empresa->find()->all();
+        if (count($empresas) == 1) {
+            return $this->render(['index']);
+        }
+
+        return $this->redirect(['empresa/create']);// leva os parenteses retos quando é para outro controller
     }
 
     /**
