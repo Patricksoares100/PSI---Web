@@ -1,13 +1,13 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="http://brindeszorro-back.test/index.php?r=site%2Findex" class="brand-link">
         <img src="<?= $assetDir ?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <?php $empresa = \common\models\Empresa::find()->one();
         if ($empresa){?>
         <span class="brand-text font-weight-light"><?= $empresa->nome ?></span>
         <?php }else { ?>
         <span class="brand-text font-weight-light">Insira uma empresa</span>
-        <?php } ?> 
+        <?php } ?>
     </a>
 
     <!-- Sidebar -->

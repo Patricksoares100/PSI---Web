@@ -5,6 +5,12 @@ $this->title = $empresa->nome;}
 else{$this->title = "Insira uma empresa";}
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 ?>
+<?php
+$error = Yii::$app->session->getFlash('error');
+if ($error) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+}
+?>
 
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">

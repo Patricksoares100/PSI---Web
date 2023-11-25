@@ -3,12 +3,16 @@
 namespace backend\controllers;
 
 use common\models\Artigo;
+use common\models\Categoria;
+use common\models\Fornecedor;
+use common\models\Iva;
 use yii\base\View;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * ArtigoController implements the CRUD actions for Artigo model.
@@ -95,6 +99,25 @@ class ArtigoController extends Controller
     {
         $model = new Artigo();
 
+        $fornecedores = Fornecedor::find()->all();
+        $taxasIva = Iva::find()->all();
+        $categorias = Categoria::find()->all();
+        try {
+            if(empty($fornecedores)){
+                throw new \Exception("Não pode criar um artigo sem um fornecedor criado previamente");
+            }
+            if(empty($taxasIva)){
+                throw new \Exception("Não pode criar um artigo sem uma taxa de IVA criada previamente");
+            }
+            if(empty($categorias)){
+                throw new \Exception("Não pode criar um artigo sem uma Categoria criada previamente");
+            }
+        }catch (\Exception $e){
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            //return $this->goHome();
+            return  $this->goBack();
+        }
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
