@@ -146,19 +146,19 @@ class PerfilController extends Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        if($role == 'Cliente'){
-            if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) {//updateDadosPessoais
+        if ($role == 'Cliente') {
+            if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) { //updateDadosPessoais
                 return $this->render('update', [
                     'model' => $model,
                 ]);
             }
-        }else if($role == 'Funcionario'){
+        } else if ($role == 'Funcionario') {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id]) || Yii::$app->user->can('editRoles')) {
                 return $this->render('update', [
                     'model' => $model,
                 ]);
             }
-        }else {
+        } else {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
                 return $this->render('update', [
                     'model' => $model,
@@ -168,6 +168,8 @@ class PerfilController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+
+
     /**
      * Deletes an existing Perfil model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -175,25 +177,25 @@ class PerfilController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-public function actionDelete($id)
-{
-    $perfil = $this->findModel($id);
-    // Certificar de que o perfil foi encontrado antes de tentar excluir
-    if ($perfil != null) {
-        $userId = $perfil->id; 
-        // apagar o perfil
-        $perfil->delete();
+    public function actionDelete($id)
+    {
+        $perfil = $this->findModel($id);
+        // Certificar de que o perfil foi encontrado antes de tentar excluir
+        if ($perfil != null) {
+            $userId = $perfil->id;
+            // apagar o perfil
+            $perfil->delete();
 
-        // Excluir o user associado ao perfil
-        if ($userId != null) {
-            $user = User::findOne(['id' => $userId]);// primeiro id é da tabela user o userID é o id que guardamos acima
-            if ($user !== null) {
-                $user->delete();
-            } 
+            // Excluir o user associado ao perfil
+            if ($userId != null) {
+                $user = User::findOne(['id' => $userId]); // primeiro id é da tabela user o userID é o id que guardamos acima
+                if ($user !== null) {
+                    $user->delete();
+                }
+            }
         }
+        return $this->redirect(['index']);
     }
-    return $this->redirect(['index']);
-}
 
 
     /**

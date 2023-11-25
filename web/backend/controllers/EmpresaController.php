@@ -21,28 +21,29 @@ class EmpresaController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            ['access' => [
-                'class' => AccessControl::class,
-                // como n esta o only aqui , quer dizer q tudo é proibido
-                'rules' => [
-                    [
-                        'actions' => ['error'], // so tem acesso quem esta logado
-                        'allow' => true,
-                        'roles' => ['permissionBackoffice'],
-                    ],
-                    [
-                        'actions' => ['index','view'],
-                        'allow' => true,
-                        'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
-                    ],
-                    [
-                        'actions' => ['update', 'delete', 'create'],
-                        'allow' => true,
-                        'roles' => ['editRoles'],
-                    ],
+            [
+                'access' => [
+                    'class' => AccessControl::class,
+                    // como n esta o only aqui , quer dizer q tudo é proibido
+                    'rules' => [
+                        [
+                            'actions' => ['error'], // so tem acesso quem esta logado
+                            'allow' => true,
+                            'roles' => ['permissionBackoffice'],
+                        ],
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'roles' => ['permissionBackoffice'], //admin recebe as permissões de funcionario
+                        ],
+                        [
+                            'actions' => ['update', 'delete', 'create'],
+                            'allow' => true,
+                            'roles' => ['editEmpresa'],
+                        ],
 
+                    ],
                 ],
-            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -99,8 +100,14 @@ class EmpresaController extends Controller
      */
     public function actionCreate()
     {
+        $empresa = new Empresa();  //condição de validaçáo de apenas 1 unica empresa
+        $empresas = $empresa->find()->all();
+        if (count($empresas) == 1) {
+            return $this->redirect(['index']);
+        }
+
+        // se nao existir deixa criar
         $model = new Empresa();
-        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -143,6 +150,12 @@ class EmpresaController extends Controller
      */
     public function actionDelete($id)
     {
+
+        $empresa = new Empresa();  //condição que impossibilita apagar a empresa criada - Só é possivel editar
+        $empresas = $empresa->find()->all();
+        if (count($empresas) == 1) {
+            return $this->redirect(['index']);
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

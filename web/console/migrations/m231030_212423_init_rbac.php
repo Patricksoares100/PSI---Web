@@ -38,6 +38,11 @@ class m231030_212423_init_rbac extends Migration
         $permission_gerir_produtos->description = 'Permissão para gerir produtos';
         $auth->add($permission_gerir_produtos);
 
+        $permission_edit_empresa = $auth->createPermission('editEmpresa');
+        $permission_edit_empresa->description = 'Permissão para editar os dados da empresa';
+        $auth->add($permission_edit_empresa);
+
+
         $permission_backoffice = $auth->createPermission('permissionBackoffice');
         $permission_backoffice->description = 'Permissão para entrar no backoffice';
         $auth->add($permission_backoffice);
@@ -59,6 +64,7 @@ class m231030_212423_init_rbac extends Migration
         $auth->addChild($role_funcionario, $permissaoDadosPessoais);
 
         $auth->addChild($role_admin, $permission_edit_roles);
+        $auth->addChild($role_admin, $permission_edit_empresa);
         $auth->addChild($role_admin, $role_funcionario);
 
         // o primeiro utilizador vai ser ADMIN
