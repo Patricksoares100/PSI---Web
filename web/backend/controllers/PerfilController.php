@@ -175,6 +175,15 @@ class PerfilController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
     public function actionAtualizarstatus($id){
+        try {
+            if($id == 1){// se for administrador
+                throw new \Exception("Não pode alterar o estado do administrador");
+            }
+        }catch (\Exception $e){
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return  $this->redirect(['site/index']);
+        }
+
         if (Yii::$app->user->can('editRoles')) {
 
             $user = User::findOne($id);
