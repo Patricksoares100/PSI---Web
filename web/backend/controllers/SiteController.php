@@ -80,7 +80,7 @@ class SiteController extends Controller
         $empresa = new Empresa();
         $empresas = $empresa->find()->all();
         if (count($empresas) == 1) {
-            return $this->render(['index']);
+            return $this->render('index');
         }
 
         return $this->redirect(['empresa/create']);// leva os parenteses retos quando é para outro controller
