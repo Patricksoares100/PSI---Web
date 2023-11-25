@@ -49,53 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="align-middle"><button class="btn btn-sm btn"><i class="fas fa-clock fa-lg"></i></button></td>
                         </tr>
 
-                        <tr>
-                            <td class="align-middle"><i class="fas fa-paste"></i> Product Name</td>
-                            <td class="align-middle"><i class="fas fa-euro-sign"></i>
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                </div>
-                            </td>
-                            <td class="align-middle"><button class="btn btn-sm btn">
-                                    <i class="far fa-calendar-alt fa-lg"></i>
-                                </button>
-                            <td class="align-middle"><button class="btn btn-sm btn"><i class="fas fa-clock fa-lg"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><i class="fas fa-paste"></i> Product Name</td>
-                            <td class="align-middle"><i class="fas fa-euro-sign"></i>
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                </div>
-                            </td>
-                            <td class="align-middle"><button class="btn btn-sm btn">
-                                    <i class="far fa-calendar-alt fa-lg"></i>
-                                </button>
-                            <td class="align-middle"><button class="btn btn-sm btn"><i class="fas fa-check-circle fa-lg"></i></i></button></td>
-                        </tr>
-
-                        <tr>
-                            <td class="align-middle"><i class="fas fa-paste"></i> Product Name</td>
-                            <td class="align-middle"><i class="fas fa-euro-sign"></i>
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                </div>
-                            </td>
-                            <td class="align-middle"><button class="btn btn-sm btn">
-                                    <i class="far fa-calendar-alt fa-lg"></i>
-                                </button>
-                            <td class="align-middle"><button class="btn btn-sm btn"><i class="fas fa-check-circle fa-lg"></i></i></button></td>
-                        </tr>
-
-                        <tr>
-                            <td class="align-middle"><i class="fas fa-paste"></i> Product Name</td>
-                            <td class="align-middle"><i class="fas fa-euro-sign"></i>
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                </div>
-                            </td>
-                            <td class="align-middle"><button class="btn btn-sm btn">
-                                    <i class="far fa-calendar-alt fa-lg"></i>
-                                </button>
-                            <td class="align-middle"><button class="btn btn-sm btn"><i class="fas fa-clock fa-lg"></i></button></td>
-                        </tr>
-
                     </tbody>
                 </table>
 
