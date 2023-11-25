@@ -35,7 +35,9 @@ use yii\widgets\ActiveForm;
     $ivaDropdown = [];
 
     foreach ($ivas as $iva) {
-        $ivaDropdown[$iva->id] = $iva->percentagem;
+        if($iva->em_vigor == 'Sim') {
+            $ivaDropdown[$iva->id] = $iva->percentagem;
+        }
     }
     foreach ($fornecedores as $fornecedor) {
         $fornecedorDropdown[$fornecedor->id] = $fornecedor->nome;
