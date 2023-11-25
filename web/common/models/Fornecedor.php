@@ -32,6 +32,15 @@ class Fornecedor extends \yii\db\ActiveRecord
     {
         return [
             [['telefone', 'nif'], 'integer'],
+            ['nif', 'trim'],
+            ['nif', 'required'],
+            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Invalid NIF'],
+            ['nif', 'string', 'max' => 9, 'message' => 'Invalid NIF'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Fornecedor', 'message' => 'Este NIF já está a ser usado!'],
+            ['telefone', 'trim'],
+            ['telefone', 'required'],
+            ['telefone', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Número de telefone incorreto'],
+            ['telefone', 'string', 'max' => 9, 'message' => 'Número de telefone incorreto'],
             [['nome', 'morada'], 'string', 'max' => 255],
         ];
     }
@@ -58,5 +67,10 @@ class Fornecedor extends \yii\db\ActiveRecord
     public function getArtigos()
     {
         return $this->hasMany(Artigos::class, ['fornecedor_id' => 'id']);
+    }
+
+    public static function getNumeroFornecedores(){
+
+        return static::find()->count();
     }
 }

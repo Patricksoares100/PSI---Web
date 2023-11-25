@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\rbac\Item;
 
 /**
  * This is the model class for table "perfis".
@@ -99,27 +100,30 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'id']);
     }
-    public function getRole(){
+
+    public function getRole()
+    {
         $auth = Yii::$app->authManager;
-        $roles =$auth->getRolesByUser($this->id);
+        $roles = $auth->getRolesByUser($this->id);
         $roleUser = "null";
-        foreach ($roles as $role){
-            if($role->type==1)
+        foreach ($roles as $role) {
+            if ($role->type == 1)
                 $roleUser = $role->name;
         }
         return $roleUser;
     }
-   public function getStatus()
-   {
-       $user = User::findOne($this->id);
-       if ($user->status == 10)
-           return "Ativo";
-       if ($user->status == 9)
-           return "Inativo";
-       else {
-           return "Removido";
-       }
-   }
+
+    public function getStatus()
+    {
+        $user = User::findOne($this->id);
+        if ($user->status == 10)
+            return "Ativo";
+        if ($user->status == 9)
+            return "Inativo";
+        else {
+            return "Removido";
+        }
+    }
     public function getStatusNumber()
     {
         $user = User::findOne($this->id);
@@ -136,7 +140,7 @@ class Perfil extends \yii\db\ActiveRecord
         return $this->hasMany(LinhasCarrinho::class, ['perfil_id' => 'id']);
     }
 
-    public function apagarPerfilUser($id){
-        
+    public function apagarPerfilUser($id)
+    {
     }
 }

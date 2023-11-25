@@ -142,4 +142,9 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
+
+    public static function getNumeroArtigos(){
+
+        return static::find()->count();
+    }
 }

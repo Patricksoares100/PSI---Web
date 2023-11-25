@@ -3,13 +3,17 @@
 namespace backend\controllers;
 
 use backend\models\SignupForm;
+use common\models\Artigo;
+use common\models\Categoria;
 use common\models\Empresa;
+use common\models\Fornecedor;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use common\models\Perfil;
 
 /**
  * Site controller
@@ -80,7 +84,12 @@ class SiteController extends Controller
         $empresa = new Empresa();
         $empresas = $empresa->find()->all();
         if (count($empresas) == 1) {
-            return $this->render('index');
+            return $this->render('index', [
+                'numeroCategorias' => Categoria::getNumeroCategorias(),
+                'numeroArtigos' => Artigo::getNumeroArtigos(),
+                'numeroFornecedores' => Fornecedor::getNumeroFornecedores(),
+                //'numeroFuncionarios' => Perfil::getNumeroFuncionarios(),
+            ]);
         }
 
         return $this->redirect(['empresa/create']);// leva os parenteses retos quando é para outro controller

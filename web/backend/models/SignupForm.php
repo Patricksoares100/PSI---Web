@@ -37,14 +37,14 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser usado!'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser usado!'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
@@ -54,13 +54,14 @@ class SignupForm extends Model
 
             ['telefone', 'trim'],
             ['telefone', 'required'],
-            ['telefone', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Invalid Phone Number'],
-            ['telefone', 'string', 'max' => 9, 'message' => 'Invalid Phone Number'],
+            ['telefone', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Número de telefone incorreto'],
+            ['telefone', 'string', 'max' => 9, 'message' => 'Número de telefone incorreto'],
 
             ['nif', 'trim'],
             ['nif', 'required'],
-            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Invalid NIF'],
-            ['nif', 'string', 'max' => 9, 'message' => 'Invalid NIF'],
+            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'NIF inválido'],
+            ['nif', 'string', 'max' => 9, 'message' => 'NIF inválido'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Perfil', 'message' => 'Este NIF já está a ser usado!'],
 
             ['morada', 'trim'],
             ['morada', 'required'],
@@ -70,7 +71,7 @@ class SignupForm extends Model
 
             ['codigo_postal', 'trim'],
             ['codigo_postal', 'required'],
-            ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Invalid Postal Code'],
+            ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Insira o código postal neste formato: xxxx-xxx'],
 
             ['localidade', 'trim'],
             ['localidade', 'required'],

@@ -53,4 +53,9 @@ class Categoria extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Artigo::class, ['categoria_id' => 'id']);
     }
+
+    public static function getNumeroCategorias(){
+
+        return static::find()->count();
+    }
 }
