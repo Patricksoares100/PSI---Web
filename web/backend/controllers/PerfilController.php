@@ -40,7 +40,7 @@ class PerfilController extends Controller
                             'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],
                         [
-                            'actions' => ['delete', 'create'],
+                            'actions' => ['delete', 'create','atualizarstatus'],
                             'allow' => true,
                             'roles' => ['editRoles'], //só admin
                         ],
@@ -99,10 +99,12 @@ class PerfilController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $user = User::findOne($model->id);
 
         if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) {
             return $this->render('view', [
                 'model' => $model,
+                'user' => $user,
             ]);
             // O usuário tem permissão para acessar/modificar os dados pessoais deste perfil
         }
@@ -143,7 +145,12 @@ class PerfilController extends Controller
     {
         $model = $this->findModel($id);
         $role = $model->getRole();
+        $user = User::findOne($model->id);
+        $user->status = $model->getStatusNumber();
+
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $user->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
         if ($role == 'Cliente') {
@@ -167,6 +174,20 @@ class PerfilController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionAtualizarstatus($id){
+        if (Yii::$app->user->can('editRoles')) {
+
+            $user = User::findOne($id);
+            if($user->status == 10){
+                $user->status = 9;
+                $user->save();
+            }else{
+                $user->status = 10;
+                $user->save();
+            }
+            return $this->redirect(['index']);
+        }
+    }
 
 
 
@@ -181,7 +202,7 @@ class PerfilController extends Controller
     {
         $perfil = $this->findModel($id);
         // Certificar de que o perfil foi encontrado antes de tentar excluir
-        if ($perfil != null && $perfil->id != 1) {
+        if ($perfil != null && $perfil->id != 1) {// e que não é o admin
             $userId = $perfil->id;
             // apagar o perfil
             $perfil->delete();

@@ -31,7 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'telefone',
             'nif',
             'role',
-            'status',
+            'status' => [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $buttonColorClass = ($model->status == 'Ativo') ? 'btn btn-success' : 'btn btn-danger'; // ver se esta ativo ou não e dar uma cor
+
+                    return Html::a(
+                        $model->status,
+                        ['perfil/atualizarstatus', 'id' => $model->id],
+                        ['class' => $buttonColorClass]
+                    );
+                },
+            ],
             //'morada',
             //'codigo_postal',
             //'localidade',

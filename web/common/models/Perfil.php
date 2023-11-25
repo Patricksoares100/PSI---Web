@@ -120,6 +120,11 @@ class Perfil extends \yii\db\ActiveRecord
            return "Removido";
        }
    }
+    public function getStatusNumber()
+    {
+        $user = User::findOne($this->id);
+        return $user->status;
+    }
 
     /**
      * Gets query for [[LinhasCarrinhos]].
