@@ -89,7 +89,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getCategoria()
     {
-        return $this->hasOne(Categorias::class, ['id' => 'categoria_id']);
+        return $this->hasOne(Categoria::class, ['id' => 'categoria_id']);
     }
 
     /**
@@ -99,7 +99,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getFornecedor()
     {
-        return $this->hasOne(Fornecedores::class, ['id' => 'fornecedor_id']);
+        return $this->hasOne(Fornecedor::class, ['id' => 'fornecedor_id']);
     }
 
     /**
@@ -109,8 +109,9 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getIva()
     {
-        return $this->hasOne(Ivas::class, ['id' => 'iva_id']);
+        return $this->hasOne(Iva::class, ['id' => 'iva_id']);
     }
+
 
     /**
      * Gets query for [[LinhasCarrinhos]].
@@ -139,6 +140,6 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getPerfil()
     {
-        return $this->hasOne(Perfis::class, ['id' => 'perfil_id']);
+        return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
 }

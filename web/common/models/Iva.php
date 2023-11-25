@@ -46,7 +46,7 @@ class Iva extends \yii\db\ActiveRecord
             'id' => 'ID',
             'em_vigor' => 'Em Vigor',
             'descricao' => 'Descrição',
-            'percentagem' => 'Percentagem',
+            'percentagem' => 'Percentagem de IVA',
         ];
     }
 

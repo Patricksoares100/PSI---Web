@@ -43,7 +43,7 @@ class Fornecedor extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
+            'nome' => 'Nome do Fornecedor',
             'telefone' => 'Telefone',
             'nif' => 'Nif',
             'morada' => 'Morada',

@@ -35,10 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'referencia',
             'preco',
             'stock_atual',
-            'iva_id',
-            'fornecedor_id',
-            'categoria_id',
-            'perfil_id',
+            'iva.percentagem',
+            'fornecedor.nome',
+            'categoria.nome',
+            'perfil.nome',
         ],
     ]) ?>
 
