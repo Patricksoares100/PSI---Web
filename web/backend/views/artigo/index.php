@@ -31,7 +31,25 @@ $this->params['breadcrumbs'][] = $this->title;
             //'descricao',
             'referencia',
             'preco',
-            //'stock_atual',
+            'stock_atual' => [
+                'attribute' => 'stock_atual',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $menos = Html::a(
+                        '-',
+                        ['artigo/atualizarstock', 'id' => $model->id, 'sinal' => '-'],
+                        ['class' => 'btn btn-danger']
+
+                    );
+
+                    $mais = Html::a(
+                        '+',
+                        ['artigo/atualizarstock', 'id' => $model->id, 'sinal' => '+'],
+                        ['class' => 'btn btn-success']
+                    );
+                    return $menos . ' ' . $model->stock_atual . ' ' . $mais;
+                },
+            ],
             //'iva_id',
             //'fornecedor_id',
             //'categoria_id',

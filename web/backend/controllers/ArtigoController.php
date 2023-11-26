@@ -37,7 +37,7 @@ class ArtigoController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                            'actions' => ['index', 'view', 'update', 'delete', 'create', 'atualizarstock'],
                             'allow' => true,
                             'roles' => ['permissionBackoffice'],
                         ],
@@ -180,5 +180,27 @@ class ArtigoController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAtualizarstock($id, $sinal){
+        $model = $this->findModel($id);
+        if($sinal == '+'){
+            $model->stock_atual++;
+        }
+
+        else{
+            $model->stock_atual--;
+            if($model->stock_atual <= 0){
+                $this->findModel($id)->delete();
+            }
+        }
+
+        if ($model->save()) {
+            return $this->redirect(['index', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 }
