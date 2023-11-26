@@ -34,13 +34,14 @@ class Fornecedor extends \yii\db\ActiveRecord
             [['telefone', 'nif'], 'integer'],
             ['nif', 'trim'],
             ['nif', 'required'],
-            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Invalid NIF'],
-            ['nif', 'string', 'max' => 9, 'message' => 'Invalid NIF'],
+            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Insira o NIF no seguinte formato xxxx-xxx'],
+            ['nif', 'string', 'max' => 9, 'message' => 'Insira o NIF no seguinte formato xxxx-xxx'],
             ['nif', 'unique', 'targetClass' => '\common\models\Fornecedor', 'message' => 'Este NIF já está a ser usado!'],
             ['telefone', 'trim'],
             ['telefone', 'required'],
             ['telefone', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Número de telefone incorreto'],
             ['telefone', 'string', 'max' => 9, 'message' => 'Número de telefone incorreto'],
+            ['telefone', 'unique', 'targetClass' => '\common\models\Fornecedor', 'message' => 'Este telefone já está a ser usado!'],
             [['nome', 'morada'], 'string', 'max' => 255],
         ];
     }

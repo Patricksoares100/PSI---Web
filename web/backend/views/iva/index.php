@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Ivas';
+$this->title = 'Taxas de Iva';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="iva-index">

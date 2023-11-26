@@ -43,8 +43,12 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'descricao', 'referencia', 'preco', 'stock_atual', 'iva_id', 'fornecedor_id', 'categoria_id', 'perfil_id'], 'required'],
-            [['preco'], 'number'],
-            [['stock_atual', 'iva_id', 'fornecedor_id', 'categoria_id', 'perfil_id'], 'integer'],
+            [['nome', 'descricao', 'referencia', 'preco', 'stock_atual'], 'trim'],
+            ['nome', 'unique', 'targetClass' => '\common\models\Artigo', 'message' => 'Este nome já está a ser usado!'],
+            ['referencia', 'unique', 'targetClass' => '\common\models\Artigo', 'message' => 'Esta referência já está a ser usada!'],
+            [['preco'], 'number', 'message' => 'Preço não pode conter caracteres'],
+            [['iva_id', 'fornecedor_id', 'categoria_id', 'perfil_id'], 'integer'],
+            [['stock_atual'], 'integer','message' => 'Stock tem de ser um número inteiro'],
             [['nome', 'descricao', 'referencia'], 'string', 'max' => 255],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['categoria_id' => 'id']],
             [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
@@ -69,6 +73,7 @@ class Artigo extends \yii\db\ActiveRecord
             'fornecedor_id' => 'Fornecedor',
             'categoria_id' => 'Categoria',
             'perfil_id' => 'Funcionário',
+            'perfil.nome' => 'Nome do Funcionário'
         ];
     }
 
