@@ -51,8 +51,9 @@ class LinhacarrinhoController extends Controller
      */
     public function actionIndex()
     {
+        $id = \Yii::$app->user->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => LinhaCarrinho::find(),
+            'query' => LinhaCarrinho::find()->where(['perfil_id' => $id]), // So vai busar as linhas do carrinho apenas do utilizador que esta logado
             /*
             'pagination' => [
                 'pageSize' => 50
