@@ -42,7 +42,7 @@ class Artigo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'descricao', 'referencia', 'preco', 'stock_atual', 'iva_id', 'fornecedor_id', 'categoria_id', 'perfil_id'], 'required'],
+            [['nome', 'descricao', 'referencia', 'preco', 'stock_atual', 'iva_id', 'fornecedor_id', 'categoria_id', 'perfil_id'], 'required','message' => 'Campo não pode estar em branco!'],
             [['nome', 'descricao', 'referencia', 'preco', 'stock_atual'], 'trim'],
             ['nome', 'unique', 'targetClass' => '\common\models\Artigo', 'message' => 'Este nome já está a ser usado!'],
             ['referencia', 'unique', 'targetClass' => '\common\models\Artigo', 'message' => 'Esta referência já está a ser usada!'],

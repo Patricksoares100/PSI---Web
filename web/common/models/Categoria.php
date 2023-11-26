@@ -28,7 +28,7 @@ class Categoria extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'required'],
+            [['nome'], 'required','message' => 'O Campo não pode estar vazio!'],
             [['nome'], 'string', 'max' => 255],
         ];
     }

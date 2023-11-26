@@ -31,8 +31,8 @@ class Iva extends \yii\db\ActiveRecord
     {
         return [
             [['em_vigor'], 'string'],
-            [['descricao', 'percentagem'], 'required'],
-            [['percentagem'], 'number'],
+            [['em_vigor','descricao', 'percentagem'], 'required','message' => 'O Campo não pode estar vazio!'],
+            [['percentagem'], 'number','message' => 'Insira uma percentagem para o IVA!'],
             [['descricao'], 'string', 'max' => 255],
         ];
     }
