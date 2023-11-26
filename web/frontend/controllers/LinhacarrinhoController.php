@@ -111,12 +111,22 @@ class LinhacarrinhoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $sinal)
     {
         $model = $this->findModel($id);
+        if($sinal == '+'){
+            $model->quantidade++;
+        }
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        else{
+            $model->quantidade--;
+            if($model->quantidade <= 0){
+                $this->findModel($id)->delete();
+            }
+        }
+
+        if ($this->request->isPost && $model->save()) {
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [

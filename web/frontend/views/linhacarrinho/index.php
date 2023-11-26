@@ -75,17 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+
+                                    <?= Html::a('-', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '-'], ['class' => 'btn btn-sm btn-primary btn-minus', 'data-method' => 'post']) ?>
+
                                 </div>
                                 <input type="text"
                                        class="form-control form-control-sm bg-secondary border-0 text-center"
                                        value="<?= $model->quantidade ?>">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+
+                                    <?= Html::a('+', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '+'], ['class' => 'btn btn-sm btn-primary btn-plus', 'data-method' => 'post']) ?>
+
                                 </div>
                             </div>
                         </td>
