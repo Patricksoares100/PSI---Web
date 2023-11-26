@@ -80,8 +80,6 @@ AppAsset::register($this);
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
                         <div class="btn-group">
-
-
                             <?php
                             // Verifica se o usuário está logado
                             if (Yii::$app->user->isGuest) {
@@ -98,7 +96,6 @@ AppAsset::register($this);
                             </div>';
                             }
                             ?>
-
                         </div>
                     </div>
                     </form>

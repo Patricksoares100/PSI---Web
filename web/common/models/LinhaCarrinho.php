@@ -33,8 +33,8 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
         return [
             [['quantidade', 'artigo_id', 'perfil_id'], 'required'],
             [['quantidade', 'artigo_id', 'perfil_id'], 'integer'],
-            [['artigo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['artigo_id' => 'id']],
-            [['perfil_id'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::class, 'targetAttribute' => ['perfil_id' => 'id']],
+            [['artigo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['artigo_id' => 'id']],
+            [['perfil_id'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['perfil_id' => 'id']],
         ];
     }
 
@@ -58,7 +58,7 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
      */
     public function getArtigo()
     {
-        return $this->hasOne(Artigos::class, ['id' => 'artigo_id']);
+        return $this->hasOne(Artigo::class, ['id' => 'artigo_id']);
     }
 
     /**
@@ -68,6 +68,6 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
      */
     public function getPerfil()
     {
-        return $this->hasOne(Perfis::class, ['id' => 'perfil_id']);
+        return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
 }

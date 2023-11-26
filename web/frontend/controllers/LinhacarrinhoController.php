@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\LinhaCarrinho;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,18 @@ class LinhacarrinhoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'view'],
+                            'allow' => true,
+                            'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
+                        ],
+                    ],
+                ],
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -75,17 +88,15 @@ class LinhacarrinhoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new LinhaCarrinho();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        $model->quantidade = 1;
+        $model->artigo_id = intval($id); // converte string to int em php
+        $model->perfil_id = \Yii::$app->user->id;
+            if ($model->save()) {
+                return $this->redirect(['index', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
         return $this->render('create', [
             'model' => $model,
