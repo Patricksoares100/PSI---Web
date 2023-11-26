@@ -4,9 +4,11 @@ namespace frontend\controllers;
 
 use common\models\Perfil;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
 
 /**
  * PerfilController implements the CRUD actions for Perfil model.
@@ -20,7 +22,17 @@ class PerfilController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            [
+            [   'access' => [
+                'class' => AccessControl::class,
+                'only' => ['update', 'view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'rules' => [
+                    [
+                        'actions' => ['update', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'], // criar regra para apenas o propio
+                    ],
+                ],
+            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -29,32 +41,6 @@ class PerfilController extends Controller
                 ],
             ]
         );
-    }
-
-    /**
-     * Lists all Perfil models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Perfil::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
@@ -71,28 +57,6 @@ class PerfilController extends Controller
     }
 
     /**
-     * Creates a new Perfil model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Perfil();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
      * Updates an existing Perfil model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
@@ -101,6 +65,7 @@ class PerfilController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -110,20 +75,6 @@ class PerfilController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Deletes an existing Perfil model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

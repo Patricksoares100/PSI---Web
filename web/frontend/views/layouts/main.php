@@ -13,6 +13,7 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\helpers\Url;
 
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -87,12 +88,15 @@ AppAsset::register($this);
                                 // Mostra o botão de login
                                 echo Html::a('Login', Url::to(['site/login']), ['class' => 'btn btn-primary']);
                             } else {
-                                // Mostra o botão de logout
-                                echo Html::a(
-                                    '<i class="fas fa-sign-out-alt"> ' . Yii::$app->user->identity->username . ' (Logout)</i>',
-                                    ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'nav-link']
-                                );
+                                echo '<div class="btn-group show">
+                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="true">'. Yii::$app->user->identity->username .'</button>
+                                <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
+                                    '. Html::a('Ver Perfil', ['/perfil/view', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
+                                    '. Html::a('Alterar Dados',  ['/perfil/update', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
+                                    '. Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
+                                </div>
+                            </div>';
+
                             }
                             ?>
 
