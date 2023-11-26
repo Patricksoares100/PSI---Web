@@ -1,21 +1,15 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use common\models\Artigo;
-use common\models\Categoria;
-use common\models\Fornecedor;
-use common\models\Iva;
-use yii\base\View;
-use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
+use app\models\ArtigoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
 
 /**
- * ArtigoController implements the CRUD actions for Artigo model.
+ * ArtigoController implements the CRUD actions for Artigos model.
  */
 class ArtigoController extends Controller
 {
@@ -27,22 +21,6 @@ class ArtigoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    // como n esta o only aqui , quer dizer q tudo é proibido
-                    'rules' => [
-                        [
-                            'actions' => ['error'], // so tem acesso quem esta logado
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                        [
-                            'actions' => ['index', 'view', 'update', 'delete', 'create'],
-                            'allow' => true,
-                            'roles' => ['permissionBackoffice'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -52,72 +30,45 @@ class ArtigoController extends Controller
             ]
         );
     }
+
     /**
-     * Lists all Artigo models.
+     * Lists all Artigos models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Artigo::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new ArtigoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Artigo model.
+     * Displays a single Artigos model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->render('artigo');
+        /*return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
+        ]);*/
     }
 
     /**
-     * Creates a new Artigo model.
+     * Creates a new Artigos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new Artigo();
-
-        $fornecedores = Fornecedor::find()->all();
-        $taxasIva = Iva::find()->all();
-        $categorias = Categoria::find()->all();
-        try {
-            if (empty($fornecedores)) {
-                throw new \Exception("Não pode criar um artigo sem um fornecedor criado previamente");
-            }
-            if (empty($taxasIva)) {
-                throw new \Exception("Não pode criar um artigo sem uma taxa de IVA criada previamente");
-            }
-            if (empty($categorias)) {
-                throw new \Exception("Não pode criar um artigo sem uma Categoria criada previamente");
-            }
-        } catch (\Exception $e) {
-            Yii::$app->session->setFlash('error', $e->getMessage());
-            //return $this->goHome();
-            return  $this->goBack();
-        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -133,7 +84,7 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Updates an existing Artigo model.
+     * Updates an existing Artigos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -153,7 +104,7 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Deletes an existing Artigo model.
+     * Deletes an existing Artigos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -167,10 +118,10 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Finds the Artigo model based on its primary key value.
+     * Finds the Artigos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Artigo the loaded model
+     * @return Artigos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -180,5 +131,14 @@ class ArtigoController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDetail($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('detail', [
+            'model' => $model,
+        ]);
     }
 }

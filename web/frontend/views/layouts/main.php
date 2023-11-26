@@ -89,14 +89,13 @@ AppAsset::register($this);
                                 echo Html::a('Login', Url::to(['site/login']), ['class' => 'btn btn-primary']);
                             } else {
                                 echo '<div class="btn-group show">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="true">'. Yii::$app->user->identity->username .'</button>
+                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="true">' . Yii::$app->user->identity->username . '</button>
                                 <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
-                                    '. Html::a('Ver Perfil', ['/perfil/view', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
-                                    '. Html::a('Alterar Dados',  ['/perfil/update', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
-                                    '. Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) .'
+                                    ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                    ' . Html::a('Alterar Dados',  ['/perfil/update', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                    ' . Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                 </div>
                             </div>';
-
                             }
                             ?>
 
@@ -107,12 +106,12 @@ AppAsset::register($this);
                 <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                     <div class="col-lg-4">
                         <a href="" class="text-decoration-none">
-                            <?php if(Empresa::find()->one() != null){ 
-                                $empresa =Empresa::find()->one() ?>
-                            <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
-                            <?php }else{?>
+                            <?php if (Empresa::find()->one() != null) {
+                                $empresa = Empresa::find()->one() ?>
+                                <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
+                            <?php } else { ?>
                                 <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Insira uma empresa</span>
-                                <?php }?>
+                            <?php } ?>
                         </a>
                     </div>
                     <div class="col-lg-4 col-6 text-left">
@@ -181,7 +180,7 @@ AppAsset::register($this);
                                 <a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
                             </div>
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="<?= \yii\helpers\Url::to(['/site/artigo']) ?>" class="nav-item nav-link active">Artigos</a>
+                                <a href="<?= \yii\helpers\Url::to(['/artigo/index']) ?>" class="nav-item nav-link active">Artigos</a>
                             </div>
                             <div class="navbar-nav mr-auto py-0">
                                 <?php if (!Yii::$app->user->isGuest) : ?>
@@ -222,14 +221,14 @@ AppAsset::register($this);
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">Entre em contato conosco</h5>
-                <?php  if ($empresa) {?>
-                <p class="mb-4"><?= $empresa->nome ?>, é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><?= $empresa->morada . ' ' . $empresa->codigo_postal . ' ' . $empresa->localidade ?></p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><?= $empresa->email ?></p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i><?= $empresa->telefone ?></p>
-                <?php }else {
-                   echo '<p class="mb-4"> Insira uma empresa,  é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>';
-                }?>
+                <?php if ($empresa) { ?>
+                    <p class="mb-4"><?= $empresa->nome ?>, é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><?= $empresa->morada . ' ' . $empresa->codigo_postal . ' ' . $empresa->localidade ?></p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><?= $empresa->email ?></p>
+                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i><?= $empresa->telefone ?></p>
+                <?php } else {
+                    echo '<p class="mb-4"> Insira uma empresa,  é uma empresa especializada em artigos para oferta, com produção própria e uma vasta experiência no sector de brindes publicitários.</p>';
+                } ?>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">

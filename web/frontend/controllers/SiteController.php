@@ -89,11 +89,6 @@ class SiteController extends Controller
         return $this->render('favorito');
     }
 
-    public function actionDetail()
-    {
-        return $this->render('detail');
-    }
-
     public function actionFaturas()
     {
         return $this->render('faturas');
