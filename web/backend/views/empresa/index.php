@@ -17,7 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Criar Empresa', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php
+        $empresa = \common\models\Empresa::find()->one();
+        if ($empresa->id != 1) {
+           echo Html::a('Criar Empresa', ['create'], ['class' => 'btn btn-success']);
+        }
+        ?>
     </p>
 
 
