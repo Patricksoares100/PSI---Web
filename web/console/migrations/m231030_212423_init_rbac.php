@@ -63,6 +63,8 @@ class m231030_212423_init_rbac extends Migration
         $auth->addChild($role_funcionario, $permission_backoffice);
         $auth->addChild($role_funcionario, $permissaoDadosPessoais);
 
+        $auth->addChild($role_cliente, $permissaoDadosPessoais);
+
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $permission_edit_empresa);
         $auth->addChild($role_admin, $role_funcionario);

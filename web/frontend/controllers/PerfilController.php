@@ -29,7 +29,7 @@ class PerfilController extends Controller
                     [
                         'actions' => ['update', 'view'],
                         'allow' => true,
-                        'roles' => ['@'], // criar regra para apenas o propio
+                        'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
                     ],
                 ],
             ],
@@ -51,9 +51,12 @@ class PerfilController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->can('updateDadosPessoais', ['perfil'=> $id])){
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        }
     }
 
     /**
