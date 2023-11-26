@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * EmpresaController implements the CRUD actions for Empresa model.
@@ -154,7 +155,8 @@ class EmpresaController extends Controller
         $empresa = new Empresa();  //condição que impossibilita apagar a empresa criada - Só é possivel editar
         $empresas = $empresa->find()->all();
         if (count($empresas) == 1) {
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('error', 'Não pode apagar a empresa criada, apenas alterar dados!');
+            return $this->goHome();
         }
         $this->findModel($id)->delete();
 
