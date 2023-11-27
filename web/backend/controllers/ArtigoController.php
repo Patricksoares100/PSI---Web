@@ -182,23 +182,23 @@ class ArtigoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionAtualizarstock($id, $sinal){
+    public function actionAtualizarstock($id, $sinal){// em vez de apagar ele manda mensagem ...temos q passar isso para o modelo
         $model = $this->findModel($id);
         if($sinal == '+'){
             $model->stock_atual++;
         }
-
         else{
+            if($model->stock_atual > 0) {
             $model->stock_atual--;
-            if($model->stock_atual <= 0){
-                $this->findModel($id)->delete();
+        }else{
+                Yii::$app->session->setFlash('error', 'Não pode reduzir mais a quantidade');
+                //return $this->goHome();
+                return $this->redirect(['index']);
             }
         }
-
         if ($model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
