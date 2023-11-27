@@ -150,8 +150,9 @@ class PerfilController extends Controller
         $user = User::findOne($model->id);
         $user->status = $model->getStatusNumber();
 
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $user->username = Yii::$app->request->post('Perfil')['username'];
+            $user->email = Yii::$app->request->post('Perfil')['email'];
             $user->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }

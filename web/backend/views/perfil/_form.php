@@ -11,6 +11,8 @@ use yii\widgets\ActiveForm;
 <div class="perfil-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'username')->textInput(['value' => $model->getUsername()]) ?>
+    <?= $form->field($model, 'email')->textInput(['value' => $model->getEmail()]) ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
