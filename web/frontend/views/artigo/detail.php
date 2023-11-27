@@ -6,6 +6,7 @@
 
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Artigo';
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,23 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -96,8 +80,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary mr-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                        <a class="btn btn-primary mr-3" href="<?= Url::to(['linhacarrinho/create', 'id' => $model->id])?>">
+                            <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+                        </a>
                         <button class="btn btn-primary px-3"><i class="fa fa-heart mr-1" id="btn_fav"></i> Add To Cart</button>
                     </div>
                     <div class="d-flex pt-2">

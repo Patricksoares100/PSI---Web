@@ -91,18 +91,63 @@ class LinhacarrinhoController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new LinhaCarrinho();
-        $model->quantidade = 1;
-        $model->artigo_id = intval($id); // converte string to int em php
-        $model->perfil_id = \Yii::$app->user->id;
+        $artigo_id = intval($id);
+        $perfil_id = \Yii::$app->user->id;
+
+        // Verifica se já existe uma linha com o mesmo artigo_id e perfil_id
+        $existeModel = LinhaCarrinho::findOne(['artigo_id' => $artigo_id, 'perfil_id' => $perfil_id]);
+
+        if ($existeModel) { // se encontrar uma linha com o mesmo artigo_id com o id logado
+            $existeModel->quantidade += 1; // Se já existe, incrementa a quantidade
+            if ($existeModel->save()) {
+                return $this->redirect(['index', 'id' => $existeModel->id]);
+            }
+        } else { // aqui deixei igual, apenas coloquei a condição antes
+            $model = new LinhaCarrinho();
+            $model->quantidade = 1;
+            $model->artigo_id = intval($id); // converte string to int em php
+            $model->perfil_id = \Yii::$app->user->id;
             if ($model->save()) {
                 return $this->redirect(['index', 'id' => $model->id]);
             }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
+/*
+    public function actionCreate($id)
+    {
+        $artigo_id = intval($id);
+        $perfil_id = \Yii::$app->user->id;
+
+        // Verifica se já existe uma linha com o mesmo artigo_id e perfil_id
+        $existingModel = LinhaCarrinho::findOne(['artigo_id' => $artigo_id, 'perfil_id' => $perfil_id]);
+
+        if ($existingModel) {
+            // Se já existe, incrementa a quantidade
+            $existingModel->quantidade += 1;
+
+            if ($existingModel->save()) {
+                return $this->redirect(['index', 'id' => $existingModel->id]);
+            }
+        } else {
+            // Se não existe, cria uma nova linha
+            $model = new LinhaCarrinho();
+            $model->quantidade = 1;
+            $model->artigo_id = $artigo_id;
+            $model->perfil_id = $perfil_id;
+
+            if ($model->save()) {
+                return $this->redirect(['index', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('create', [
+            'model' => isset($model) ? $model : new LinhaCarrinho(),
+        ]);
+    }*/
 
     /**
      * Updates an existing LinhaCarrinho model.
