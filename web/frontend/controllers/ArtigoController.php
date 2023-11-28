@@ -36,9 +36,11 @@ class ArtigoController extends Controller
      *
      * @return string
      */
+
     public function actionIndex()
     {
         $searchModel = new ArtigoSearch();
+
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -46,6 +48,23 @@ class ArtigoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+       public function actionCategorias($id)
+       {
+           $searchModel = new ArtigoSearch();
+
+           if ($id != null) {
+               $searchModel->categoria_id = $id;
+           }
+
+           $dataProvider = $searchModel->search($this->request->queryParams);
+
+           return $this->render('index', [
+               'searchModel' => $searchModel,
+               'dataProvider' => $dataProvider,
+           ]);
+       }
 
     /**
      * Displays a single Artigos model.
