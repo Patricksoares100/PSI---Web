@@ -135,6 +135,18 @@ class Perfil extends \yii\db\ActiveRecord
         }
         return $roleUser;
     }
+    public function getEmail(){
+        $user = User::findOne($this->id);
+        return $user->email;
+    }
+    public function getUsername(){
+        $user = User::findOne($this->id);
+        return $user->username;
+    }
+    public function getPassword(){
+        $user = User::findOne($this->id);
+        return $user->password;
+    }
 
     public function getStatus()
     {
