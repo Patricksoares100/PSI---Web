@@ -20,6 +20,8 @@ class SignupForm extends Model
     public $password;
     public $status;
 
+    public $role;
+
     public $nome; // aqui leva os da tabela perfil
     public $telefone;
     public $nif;
@@ -69,6 +71,9 @@ class SignupForm extends Model
             ['status', 'trim'],
             ['status', 'required'],
 
+            ['role', 'trim'],
+            ['role', 'required'],
+
             ['codigo_postal', 'trim'],
             ['codigo_postal', 'required'],
             ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Insira o código postal neste formato: xxxx-xxx'],
@@ -90,6 +95,7 @@ class SignupForm extends Model
         }
         $perfil = new Perfil(); //Instancia do perfil
         $user = new User();
+
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
@@ -115,11 +121,19 @@ class SignupForm extends Model
 
         //Guardar os novos utilizadores com o role de cliente
         //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin
-        $contadorUsers = User::find()->count();
         $auth = \Yii::$app->authManager;
-        if ($contadorUsers != 1) {
-            $authorRole = $auth->getRole('funcionario');
-            $auth->assign($authorRole, $user->getId());
+
+        if($this->role == 'Cliente'){
+            $r = $auth->getRole('cliente');
+            $auth->assign($r, $user->getId());
+        }else if(Yii::$app->user->can('editRoles')) {
+            if ($this->role == 'Funcionario') {
+                $r = $auth->getRole('funcionario');
+                $auth->assign($r, $user->getId());
+            } else if ($this->role == 'Admin') {
+                $r = $auth->getRole('admin');
+                $auth->assign($r, $user->getId());
+            }
         }
         return $user;
     }
