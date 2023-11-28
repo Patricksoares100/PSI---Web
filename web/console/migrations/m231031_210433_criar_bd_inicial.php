@@ -25,7 +25,7 @@ class m231031_210433_criar_bd_inicial extends Migration
         ], 'ENGINE=InnoDB');
 
         $this->createTable('categorias', [
-            'id' => $this->primaryKey(), 
+            'id' => $this->primaryKey(),
             'nome' => $this->string()->notNull(),
             //'categoria_mae' => $this->string()->notNull(),
         ], 'ENGINE=InnoDB');
@@ -85,7 +85,6 @@ class m231031_210433_criar_bd_inicial extends Migration
             'percentagem' => $this->double()->notNull(),
         ], 'ENGINE=InnoDB');
 
-
         $this->createTable('faturas', [
             'id' => $this->primaryKey(),
             'data' => $this->dateTime()->notNull(),
@@ -101,11 +100,43 @@ class m231031_210433_criar_bd_inicial extends Migration
             'artigo_id' => $this->integer()->notNull(),
             'perfil_id' => $this->integer()->notNull(),
         ], 'ENGINE=InnoDB');
+
+        $this->createTable('favoritos', [
+            'id' => $this->primaryKey(),
+            'artigo_id' => $this->integer()->notNull(),
+            'perfil_id' => $this->integer()->notNull(),
+        ], 'ENGINE=InnoDB');
+
+
         //CHAVES ESTRANGEIRAS https://www.yiiframework.com/doc/guide/2.0/en/db-migrations
         //atenção aos comentarios que não estao no manual do yii
         // TEMOS QUE FAZER DROP DAS CHAVES? PERGUNTAR AO PROFESSOR
 
+        /*INICIO CHAVES ESTRANGEIRAS DA TABELA  favoritos*/
+
+        $this->addForeignKey(
+            'fk-favoritos-artigos_id',
+            'favoritos',
+            'artigo_id',
+            'artigos',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'fk-favoritos-perfil_id',
+            'favoritos',
+            'perfil_id',
+            'perfis',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        /*FIM CHAVES ESTRANGEIRAS DA TABELA  favoritos*/
+
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA ARTIGOS */
+
         $this->addForeignKey(
             'fk-artigos-iva_id', // Nome da chave estrangeira (pode ser qualquer nome único)
             'artigos', // Tabela da chave estrangeira(ou seja onde a chave estrangeira esta)
@@ -142,60 +173,65 @@ class m231031_210433_criar_bd_inicial extends Migration
             'CASCADE',
             'CASCADE'
         );
+
         /*FIM CHAVES ESTRANGEIRAS DA TABELA ARTIGOS */
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA CARRINHO_linha */
 
         $this->addForeignKey(
-            'fk-linhascarrinho-artigos_id', 
-            'linhas_carrinho', 
-            'artigo_id', 
-            'artigos', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-linhascarrinho-artigos_id',
+            'linhas_carrinho',
+            'artigo_id',
+            'artigos',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
         $this->addForeignKey(
-            'fk-linhascarrinho-perfil_id', 
-            'linhas_carrinho', 
-            'perfil_id', 
-            'perfis', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-linhascarrinho-perfil_id',
+            'linhas_carrinho',
+            'perfil_id',
+            'perfis',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
+
         /*FIM CHAVES ESTRANGEIRAS DA TABELA CARRINHO_LINHA */
+
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA fatura_ITEMS */
 
         $this->addForeignKey(
-            'fk-linhasfaturas-artigos_id', 
-            'linhas_faturas', 
-            'artigo_id', 
-            'artigos', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-linhasfaturas-artigos_id',
+            'linhas_faturas',
+            'artigo_id',
+            'artigos',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
         $this->addForeignKey(
-            'fk-linhasfaturas-faturas_id', 
-            'linhas_faturas', 
-            'fatura_id', 
-            'faturas', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-linhasfaturas-faturas_id',
+            'linhas_faturas',
+            'fatura_id',
+            'faturas',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
+
         /*FIM CHAVES ESTRANGEIRAS DA TABELA fatura_ITEMS */
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA  avaliacaos*/
+
         $this->addForeignKey(
-            'fk-avaliacaos-artigos_id', 
-            'avaliacaos', 
-            'artigo_id', 
-            'artigos', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-avaliacaos-artigos_id',
+            'avaliacaos',
+            'artigo_id',
+            'artigos',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
         $this->addForeignKey(
             'fk-avaliacaos-perfil_id',
@@ -206,20 +242,25 @@ class m231031_210433_criar_bd_inicial extends Migration
             'CASCADE',
             'CASCADE'
         );
+
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  avaliacaos*/
 
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA faturas */
+
         $this->addForeignKey(
-            'fk-faturas-perfil_id', 
-            'faturas', 
-            'perfil_id', 
-            'perfis', 
-            'id', 
-            'CASCADE', 
-            'CASCADE' 
+            'fk-faturas-perfil_id',
+            'faturas',
+            'perfil_id',
+            'perfis',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
+
         /*FIM CHAVES ESTRANGEIRAS DA TABELA  faturas*/
+
         /*INICIO CHAVES ESTRANGEIRAS DA TABELA perfis */
+
         $this->addForeignKey(
             'fk-perfis-user',
             'perfis',
@@ -246,6 +287,7 @@ class m231031_210433_criar_bd_inicial extends Migration
         $this->dropTable('avaliacoes');
         $this->dropTable('categorias');
         $this->dropTable('linhas_faturas');
+        $this->dropTable('favoritos');
     }
 
     /*
