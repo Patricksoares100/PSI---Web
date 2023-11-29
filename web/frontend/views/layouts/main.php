@@ -185,7 +185,7 @@ AppAsset::register($this);
                                 <?php endif; ?>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="<?= \yii\helpers\Url::to(['/site/favorito']) //favorito/algo 
+                                <a href="<?= \yii\helpers\Url::to(['/favorito/index']) //favorito/algo
                                             ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['linhacarrinho/create', 'id' => $model->id])?>"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['favorito/create', 'id' => $model->id])?>"><i class="far fa-heart"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
