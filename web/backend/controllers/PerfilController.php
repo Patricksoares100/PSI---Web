@@ -146,33 +146,47 @@ class PerfilController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $role = $model->getRole();
+        $role = $model->getRole();// role de quem vai ser alterado
         $user = User::findOne($model->id);
-        $user->status = $model->getStatusNumber();
+
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $user->username = Yii::$app->request->post('Perfil')['username'];
-            $user->email = Yii::$app->request->post('Perfil')['email'];
+            if ($role == 'Cliente') {
+                $user->status = Yii::$app->request->post('Perfil')['status']; // funcionario pode alterar
+                if(Yii::$app->user->can('editRoles')) {
+                    $user->username = Yii::$app->request->post('Perfil')['username'];// admin altera o resto
+                    $user->email = Yii::$app->request->post('Perfil')['email'];
+                }
+            }else if ($role == 'Funcionario') {
+                if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
+                    $user->username = Yii::$app->request->post('Perfil')['username'];
+                    $user->email = Yii::$app->request->post('Perfil')['email'];
+                }
+                    if(Yii::$app->user->can('editRoles')) {
+                        $user->username = Yii::$app->request->post('Perfil')['username'];
+                        $user->email = Yii::$app->request->post('Perfil')['email'];
+                        $user->status = Yii::$app->request->post('Perfil')['status'];// so admin altera o status do funcionario
+                    }
+
+            }else {
+                $user->username = Yii::$app->request->post('Perfil')['username'];// admin altera tudo
+                $user->email = Yii::$app->request->post('Perfil')['email'];
+                $user->status = Yii::$app->request->post('Perfil')['status'];
+            }
             $user->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
         if ($role == 'Cliente') {
-            if (Yii::$app->user->can('permissionBackoffice', ['perfil' => $id])) { //updateDadosPessoais
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+                return $this->render('update', ['model' => $model]);
+
         } else if ($role == 'Funcionario') {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id]) || Yii::$app->user->can('editRoles')) {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+                return $this->render('update', ['model' => $model]);
             }
         } else {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+                return $this->render('update', ['model' => $model]);
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');

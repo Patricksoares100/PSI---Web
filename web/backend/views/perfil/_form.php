@@ -26,9 +26,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'role')->textInput(['value' => $model->getRole(), 'disabled'=> true]) ?>
+    <?= $form->field($model, 'role')->dropDownList([ 'Funcionario'=>'Funcionário','Cliente'=> 'Cliente','Admin'=> 'Admin']) ?>
 
-    <?= $form->field($model, 'status')->textInput(['value' => $model->getStatus(), 'disabled'=> true]) ?>
+    <?= $form->field($model, 'status')->dropDownList([$model->getStatusNumber()=> $model->getStatus(), 10 =>'Ativo', 9 =>'Inativo' ]) ?>
+
+
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

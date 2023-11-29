@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             //'telefone',
             'nif',
-            'role' => [
+            'role',
+            /*'role' => [
                 'attribute' => 'role',
                 'format' => 'raw',
                 'value' => function ($model) {
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => $buttonColorClass]
                     );
                 },
-            ],
+            ],*/
             'status' => [
                 'attribute' => 'status',
                 'format' => 'raw',

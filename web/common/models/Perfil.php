@@ -135,6 +135,15 @@ class Perfil extends \yii\db\ActiveRecord
         }
         return $roleUser;
     }
+    public function getStatusOptions()
+    {
+
+        return [
+            'Ativo' => 'Ativo',
+            'Inativo' => 'Inativo',
+        ];
+    }
+
     public function getEmail(){
         $user = User::findOne($this->id);
         return $user->email;
