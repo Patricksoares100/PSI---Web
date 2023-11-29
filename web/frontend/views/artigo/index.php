@@ -61,9 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </form>
                 </div>
                 <!-- Price End -->
-
             </div>
-            <!-- Shop Sidebar End -->
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-8">

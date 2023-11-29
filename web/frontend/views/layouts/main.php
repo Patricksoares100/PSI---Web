@@ -156,7 +156,7 @@ AppAsset::register($this);
                             <?php
                             $categorias = Categoria::find()->all(); // vai buscar todas as categorias
                             foreach ($categorias as $categoria) { // mostra todas as categorias
-                                echo Html::a($categoria->nome, ['site/artigo', 'id' => $categoria->id], ['class' => 'nav-item nav-link']);
+                                echo Html::a($categoria->nome, ['artigo/categorias', 'id' => $categoria->id], ['class' => 'nav-item nav-link']);
                             }
                             ?>
                         </div>
