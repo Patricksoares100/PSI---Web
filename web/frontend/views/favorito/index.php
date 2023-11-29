@@ -5,6 +5,7 @@
 
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -30,24 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($dataProvider->models as $model) : ?>
                     <tbody class="align-middle">
                     <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Product Name
+                        <td class="align-middle"><img src="img/product-1.jpg" alt=""
+                                                      style="width: 50px;"> <?= $model->artigo->nome ?>
                         </td>
-                        <td class="align-middle"><?= $model->artigo->nome ?> </td>
+                        <td class="align-middle">Product Name</td>
                         <td class="align-middle">
-                            <!--<div class="product-action">
-                                <a class="btn btn-outline-dark btn-square"
-                                   href="<//?= Url::to(['linhacarrinho/create', 'id' => $model->id]) ?>"><i
-                                            class="fa fa-shopping-cart"></i></a>
-                            </div>-->
+                            <a class="btn btn-outline-dark btn-square"
+                               href="<?= Url::to(['linhacarrinho/create', 'id' => $model->artigo_id]) ?>"><i
+                                        class="fa fa-shopping-cart"></i></a>    <!-- Aqui fica $model->artigo_id porque queremos o id do artigo selecionado -->
                         </td>
-                        <td class="align-middle"><i></i>
-                            <button class="btn btn-sm btn-success">
-                                <i class="fa fa-shopping-cart"></i> <!-- Ícone do carrinho -->
-                            </button>
                         <td class="align-middle">
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-times"></i>
-                            </button>
+                            <?= Html::a('X', ['/favorito/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger', 'data-method' => 'post']) ?>
                         </td>
                     </tr>
                     </tbody>

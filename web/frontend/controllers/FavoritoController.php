@@ -152,6 +152,17 @@ class FavoritoController extends Controller
         return $this->redirect(['index']);
     }
 
+    //COLOCAR ESTA CONFIRMAÇÃO NO BOTAO DE REMOVER DOS FAVORITOS??????
+
+    /*<?= Html::a('<i class="fa fa-times"></i>', ['/favorito/delete', 'id' => $model->id], [
+        'class' => 'btn btn-sm btn-danger',
+        'title' => 'Remover',
+        'data' => [
+            'confirm' => 'Tem certeza que deseja remover este item?',
+            'method' => 'post',
+        ],
+    ]) ?>*/
+
     /**
      * Finds the Favorito model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
