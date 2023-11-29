@@ -1,17 +1,17 @@
 <?php
 
-namespace frontend\controllers;
+namespace app\controllers;
 
-use common\models\Artigo;
-use app\models\ArtigoSearch;
+use common\models\Avaliacao;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArtigoController implements the CRUD actions for Artigos model.
+ * AvaliacaoController implements the CRUD actions for Avaliacao model.
  */
-class ArtigoController extends Controller
+class AvaliacaoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,65 +32,58 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Lists all Artigos models.
+     * Lists all Avaliacao models.
      *
      * @return string
      */
-
     public function actionIndex()
     {
-        $searchModel = new ArtigoSearch();
-
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Avaliacao::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-
-       public function actionCategorias($id)
-       {
-           $searchModel = new ArtigoSearch();
-
-           if ($id != null) {
-               $searchModel->categoria_id = $id;
-           }
-
-           $dataProvider = $searchModel->search($this->request->queryParams);
-
-           return $this->render('index', [
-               'searchModel' => $searchModel,
-               'dataProvider' => $dataProvider,
-           ]);
-       }
-
     /**
-     * Displays a single Artigos model.
+     * Displays a single Avaliacao model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->render('artigo');
-        /*return $this->render('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);*/
+        ]);
     }
 
     /**
-     * Creates a new Artigos model.
+     * Creates a new Avaliacao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Artigo();
+        var_dump('olaaa');
+        die;
+        $model = new Avaliacao();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -103,7 +96,7 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Updates an existing Artigos model.
+     * Updates an existing Avaliacao model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -123,7 +116,7 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Deletes an existing Artigos model.
+     * Deletes an existing Avaliacao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -137,27 +130,18 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Finds the Artigos model based on its primary key value.
+     * Finds the Avaliacao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Artigos the loaded model
+     * @return Avaliacao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Artigo::findOne(['id' => $id])) !== null) {
+        if (($model = Avaliacao::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionDetail($id)
-    {
-        $model = $this->findModel($id);
-
-        return $this->render('detail', [
-            'model' => $model,
-        ]);
     }
 }

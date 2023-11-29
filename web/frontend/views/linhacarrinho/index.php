@@ -49,11 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- Cart Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
-        <div class="col-lg-8 table-responsive mb-5">
+        <div class="col-lg-9 table-responsive mb-5">
             <table class="table table-light table-borderless table-hover text-center mb-0">
                 <thead class="thead-dark">
                 <tr>
                     <th>Produto</th>
+                    <th>Nome</th>
                     <th>Preço</th>
                     <th>% IVA</th>
                     <th>Valor IVA</th>
@@ -66,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody class="align-middle">
                     <tr>
                         <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"></td>
+                        <td class="align-middle"><?= $model->artigo->nome ?> </td>
                         <td class="align-middle"><?= $model->artigo->preco ?> €</td>
                         <!-- vai buscar ao modelo o getArtigo - MASTER DETAIL-->
                         <td class="align-middle"><?= $model->artigo->iva->percentagem ?> %</td>
@@ -100,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endforeach; ?>
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <h5 class="section-title position-relative text-uppercase mb-3"><span
                         class="bg-secondary pr-3">Cart Summary</span></h5>
             <div class="bg-light p-30 mb-5">
