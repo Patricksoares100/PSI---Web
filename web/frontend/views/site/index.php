@@ -164,7 +164,7 @@ $this->title = 'My Yii Application';
                     </a>
 
                     <div class="d-flex align-items-center justify-content-center mt-2">
-                        <h5><?= $artigo->preco ?></h5>
+                        <h5><?= number_format($artigo->preco,2) ?></h5>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mb-1">
                         <small class="fa fa-star text-primary mr-1"></small>
