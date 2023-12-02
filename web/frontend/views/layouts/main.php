@@ -195,7 +195,9 @@ AppAsset::register($this);
                                 ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
-                                          style="padding-bottom: 2px;">0</span>
+                                          style="padding-bottom: 2px;"><?php $numberFav = \common\models\Favorito::find()->count(); ?>
+                                    <?= $numberFav ?>
+                                    </span>
                                 </a>
                                 <a href="<?= \yii\helpers\Url::to(['/linhacarrinho/index']) //carrinho/algo 
                                 ?>" class="btn px-0 ml-3">
