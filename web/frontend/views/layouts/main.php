@@ -103,7 +103,7 @@ AppAsset::register($this);
                 </div>
                 <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                     <div class="col-lg-4">
-                        <a href="" class="text-decoration-none">
+                        <a href="<?= Url::to(['/site/index']) ?>" class="text-decoration-none">
                             <?php if (Empresa::find()->one() != null) {
                                 $empresa = Empresa::find()->one() ?>
                                 <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
