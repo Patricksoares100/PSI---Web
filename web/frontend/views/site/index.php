@@ -76,7 +76,7 @@ $this->title = 'My Yii Application';
                 <div class="offer-text">
                     <?php
                     $categoryId = 2; // Aqui igual ao de cima mas com um id diferente para nao puxar a mesma. Em baxio praticamente igual
-                    $categoria = Categoria::find()->where(['id' => $categoryId])->one();
+                    $categoria = Categoria::find()->orderBy('RAND()')->one();
                     if ($categoria): ?>
                         <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
                         <h3 class="text-white mb-3">Ofertas Especiais</h3>
