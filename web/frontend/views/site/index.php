@@ -5,6 +5,7 @@
 use common\models\Artigo;
 use common\models\Categoria;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
 ?>
@@ -56,17 +57,33 @@ $this->title = 'My Yii Application';
             <div class="product-offer mb-30" style="height: 200px;">
                 <img class="img-fluid" src="img/mochila.jpg" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Mochilas</h6>
-                    <h3 class="text-white mb-3">Ofertas Especiais</h3>
-                    <a href="" class="btn btn-primary">Compra Agora</a>
+                    <div class="offer-text">
+                        <?php
+                        $categoryId = 1; // Aqui podemos escolher um qualquer, apenas para associar alguma categoria ao menu
+                        $categoria = Categoria::find()->where(['id' => $categoryId])->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
+                        if ($categoria): ?>
+                            <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
+                            <h3 class="text-white mb-3">Ofertas Especiais</h3>
+                            <a href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>" class="btn btn-primary">Compra Agora</a>
+                        <?php else: ?>
+                            <h6 class="text-white text-uppercase">A definir categoria</h6>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <div class="product-offer mb-30" style="height: 200px;">
                 <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Canecas</h6>
-                    <h3 class="text-white mb-3">Especial Inverno</h3>
-                    <a href="" class="btn btn-primary">Compra Agora</a>
+                    <?php
+                    $categoryId = 2; // Aqui igual ao de cima mas com um id diferente para nao puxar a mesma. Em baxio praticamente igual
+                    $categoria = Categoria::find()->where(['id' => $categoryId])->one();
+                    if ($categoria): ?>
+                        <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
+                        <h3 class="text-white mb-3">Ofertas Especiais</h3>
+                        <a href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>" class="btn btn-primary">Compra Agora</a>
+                    <?php else: ?>
+                        <h6 class="text-white text-uppercase">A definir categoria</h6>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -165,7 +182,7 @@ $this->title = 'My Yii Application';
                     </a>
 
                     <div class="d-flex align-items-center justify-content-center mt-2">
-                        <h5><?= number_format($artigo->preco,2) ?></h5>
+                        <h5><?= number_format($artigo->preco,2) ?>€</h5>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mb-1">
                         <small class="fa fa-star text-primary mr-1"></small>

@@ -43,39 +43,35 @@ GridView::widget([
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label>Primeiro Nome</label>
-                        <input class="form-control" type="text" placeholder="John">
+                        <input class="form-control" type="text" placeholder="Nome">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Ultimo Nome</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                        <input class="form-control" type="text" placeholder="Sobrenome">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" placeholder="example@email.com">
+                        <input class="form-control" type="text" placeholder="examplo@email.com">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Telefone/Telemovel</label>
-                        <input class="form-control" type="text" placeholder="+123 456 789">
+                        <input class="form-control" type="text" placeholder="9 digítos ">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Endereço</label>
-                        <input class="form-control" type="text" placeholder="123 Street">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Endereço 2 (opcional) </label>
-                        <input class="form-control" type="text" placeholder="123 Street">
+                        <input class="form-control" type="text" placeholder="Rua 123">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Localidade</label>
-                        <input class="form-control" type="text" placeholder="New York">
+                        <input class="form-control" type="text" placeholder="Localidade">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Cidade</label>
-                        <input class="form-control" type="text" placeholder="New York">
+                        <input class="form-control" type="text" placeholder="Cidade">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Codigo Postal</label>
-                        <input class="form-control" type="text" placeholder="123">
+                        <input class="form-control" type="text" placeholder="2400-000">
                     </div>
                 </div>
             </div>
@@ -155,24 +151,6 @@ GridView::widget([
 </div>
 </div>
 <!-- Checkout End -->
-
-
-<!-- Back to Top -->
-<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-<!-- Contact Javascript File -->
-<script src="mail/jqBootstrapValidation.min.js"></script>
-<script src="mail/contact.js"></script>
-
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
 </body>
 
 </html>

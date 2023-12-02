@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="text-center py-4">
                                     <?= Html::a(Html::encode($model->nome), ['/artigo/detail', 'id' => $model->id], ['class' => 'h6 text-decoration-none text-truncate']) ?>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$<?= $model->preco ?></h5>
+                                        <h5><?= number_format($model->preco ,2) ?>€</h5>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
                                         <small class="fa fa-star text-primary mr-1"></small>
