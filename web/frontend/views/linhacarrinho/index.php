@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5>Total</h5>
                         <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
                     </div>
-                    <a href="<?= \yii\helpers\Url::to(['/site/checkout']) ?>"
+                    <a href="<?= \yii\helpers\Url::to(['/site/checkout','id' => $model->id]) ?>"
                        class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                 </div>
             </div>
