@@ -139,11 +139,12 @@ $this->title = 'My Yii Application';
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
     <div class="row px-xl-5">
         <?php
+
         $artigos = Artigo::find()->all(); // vai buscar todas as categorias
-
-        $artigos = array_slice($artigos, 0, 12); // Limita a apresentação a 20 artigos para nao ficar estupidamente grande
-        $indicesAleatorios = array_rand($artigos, count($artigos));  // Obtém índices aleatórios
-
+        if ($artigos !=null) {
+            $artigos = array_slice($artigos, 0, 12); // Limita a apresentação a 20 artigos para nao ficar estupidamente grande
+            $indicesAleatorios = array_rand($artigos, count($artigos));  // Obtém índices aleatórios
+        }
         foreach ($artigos as $artigo) { // mostra todas as categorias
         ?>
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
