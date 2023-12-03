@@ -159,6 +159,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <?php } ?>
 
+                            <a class="btn btn-primary mr-4" href="<?= Url::to(['avaliacao/create', 'id' => $model->id]) ?>">
+                                <i class="fa fa-shopping-cart mr-1"></i> Add Carrinho
+                            </a>
+
                             <!-- Retirei estes formularios do _form do avalicao, sao os que vamos precisar. Mas ainda nao está a gravar -->
                             <?php $model = new Avaliacao () ?>
                             <?php $form = ActiveForm::begin(); ?>
