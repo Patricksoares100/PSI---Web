@@ -7,7 +7,9 @@
 
 use common\models\Artigo;
 use common\models\Avaliacao;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Artigo';
 $this->params['breadcrumbs'][] = $this->title;
@@ -138,33 +140,39 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <p><?= $avaliacao->comentario ?></p>
                                         </div>
                                     </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                         <?php if (!Yii::$app->user->isGuest) { ?>
-                            <div class="col-md-6">
-                                <h4 class="mb-4">Leave a review</h4>
-                                <small>Your email address will not be published. Required fields are marked *</small>
-                                <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">Your Rating * :</p>
-                                    <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
+                        <div class="col-md-6">
+                            <h4 class="mb-4">Leave a review</h4>
+                            <small>Your email address will not be published. Required fields are marked *</small>
+                            <div class="d-flex my-3">
+                                <p class="mb-0 mr-2">Your Rating * :</p>
+                                <div class="text-primary">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
                                 </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="message">Your Review *</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                    </div>
-                                </form>
-                            </div><?php } ?>
+                            </div>
+                            <?php } ?>
+
+                            <!-- Retirei estes formularios do _form do avalicao, sao os que vamos precisar. Mas ainda nao está a gravar -->
+                            <?php $model = new Avaliacao () ?>
+                            <?php $form = ActiveForm::begin(); ?>
+
+                            <?= $form->field($model, 'comentario')->textInput(['maxlength' => true]) ?>
+
+                            <?= $form->field($model, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',], ['prompt' => '']) ?>
+
+                            <div class="form-group">
+                                <?= Html::submitButton('Leave Your Review', ['class' => 'btn btn-primary']) ?>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -183,7 +191,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col">
             <div class="owl-carousel related-carousel">
                 <?php
-                $modelosAleatorios = \common\models\Artigo::find()->orderBy('RAND()')->limit(4)->all();
+                $modelosAleatorios = Artigo::find()->orderBy('RAND()')->limit(4)->all();
                 foreach ($modelosAleatorios as $model): ?>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
