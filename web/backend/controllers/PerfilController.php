@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 
-
 use backend\models\AuthAssignment;
 use common\models\Perfil;
 use common\models\User;
@@ -42,7 +41,7 @@ class PerfilController extends Controller
                             'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],
                         [
-                            'actions' => ['delete', 'create','atualizarstatus','atualizarrole'],
+                            'actions' => ['delete', 'create', 'atualizarstatus', 'atualizarrole'],
                             'allow' => true,
                             'roles' => ['editRoles'], //só admin
                         ],
@@ -81,8 +80,6 @@ class PerfilController extends Controller
             ],
             */
         ]);
-
-
 
 
         return $this->render('index', [
@@ -149,36 +146,39 @@ class PerfilController extends Controller
         $role = $model->getRole();// role de quem vai ser alterado
         $user = User::findOne($model->id);
 
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
             if ($role == 'Cliente') {
                 $user->status = Yii::$app->request->post('Perfil')['status']; // funcionario pode alterar
-                if(Yii::$app->user->can('editRoles')) {
+                if (Yii::$app->user->can('editRoles')) {
                     $user->username = Yii::$app->request->post('Perfil')['username'];// admin altera o resto
                     $user->email = Yii::$app->request->post('Perfil')['email'];
                 }
-            }else if ($role == 'Funcionario') {
+            } else if ($role == 'Funcionario') {
                 if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id])) {
                     $user->username = Yii::$app->request->post('Perfil')['username'];
                     $user->email = Yii::$app->request->post('Perfil')['email'];
                 }
-                    if(Yii::$app->user->can('editRoles')) {
-                        $user->username = Yii::$app->request->post('Perfil')['username'];
-                        $user->email = Yii::$app->request->post('Perfil')['email'];
-                        $user->status = Yii::$app->request->post('Perfil')['status'];// so admin altera o status do funcionario
-                    }
-
-            }else {
+                if (Yii::$app->user->can('editRoles')) {
+                    $user->username = Yii::$app->request->post('Perfil')['username'];
+                    $user->email = Yii::$app->request->post('Perfil')['email'];
+                    $user->status = Yii::$app->request->post('Perfil')['status'];// so admin altera o status do funcionario
+                }
+            } else {
                 $user->username = Yii::$app->request->post('Perfil')['username'];// admin altera tudo
                 $user->email = Yii::$app->request->post('Perfil')['email'];
                 $user->status = Yii::$app->request->post('Perfil')['status'];
             }
+            if (!empty($model->novaPassword) && ($model->novaPassword == $model->confirmarPassword)) {
+                $user->updatePassword($model->novaPassword);
+            }
             $user->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         if ($role == 'Cliente') {
-                return $this->render('update', ['model' => $model]);
+            return $this->render('update', ['model' => $model]);
 
         } else if ($role == 'Funcionario') {
             if (Yii::$app->user->can('updateDadosPessoais', ['perfil' => $id]) || Yii::$app->user->can('editRoles')) {
@@ -189,37 +189,41 @@ class PerfilController extends Controller
                 return $this->render('update', ['model' => $model]);
             }
         }
+
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    public function actionAtualizarrole($id){
+
+    public function actionAtualizarrole($id)
+    {
         try {
-            if($id == 1){// se for administrador
+            if ($id == 1) {// se for administrador
                 throw new \Exception("Não pode alterar o role do administrador");
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
-            return  $this->redirect(['site/index']);
+            return $this->redirect(['site/index']);
         }
         $model = $this->findModel($id);
-        if($model->setNewRole($id) == 1) {// troca o role de funcionario para cliente e vice versa
-            return $this->redirect(['index']);
-        }
-    }
-    public function actionAtualizarstatus($id){
-        try {
-            if($id == 1){// se for administrador
-                throw new \Exception("Não pode alterar o estado do administrador");
-            }
-        }catch (\Exception $e){
-            Yii::$app->session->setFlash('error', $e->getMessage());
-            return  $this->redirect(['site/index']);
-        }
-        $model = $this->findModel($id);
-        if ($model->setNewStatus($id)==1) {// troca o status entre o 9 e o 10
+        if ($model->setNewRole($id) == 1) {// troca o role de funcionario para cliente e vice versa
             return $this->redirect(['index']);
         }
     }
 
+    public function actionAtualizarstatus($id)
+    {
+        try {
+            if ($id == 1) {// se for administrador
+                throw new \Exception("Não pode alterar o estado do administrador");
+            }
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(['site/index']);
+        }
+        $model = $this->findModel($id);
+        if ($model->setNewStatus($id) == 1) {// troca o status entre o 9 e o 10
+            return $this->redirect(['index']);
+        }
+    }
 
 
     /**
