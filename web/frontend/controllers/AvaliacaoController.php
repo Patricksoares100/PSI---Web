@@ -77,8 +77,6 @@ class AvaliacaoController extends Controller
      */
     public function actionCreate()
     {
-        var_dump('olaaa');
-        die;
         $model = new Avaliacao();
 
         if ($this->request->isPost) {

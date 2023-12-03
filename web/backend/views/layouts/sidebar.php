@@ -9,7 +9,7 @@ use common\models\Perfil;
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <?php $empresa = Empresa::find()->one();?>
-    <a href="<?= Yii::$app->urlManager->createUrl(['empresa/view', 'id' => $empresa->id]) ?>" class="brand-link">
+    <a href="<?= Yii::$app->urlManager->createUrl(['empresa/view', 'id' => $empresa ? $empresa->id : null]) ?>" class="brand-link">
         <img src="<?= $assetDir ?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <?php if ($empresa){?>
         <span class="brand-text font-weight-light"><?= $empresa->nome ?></span>
