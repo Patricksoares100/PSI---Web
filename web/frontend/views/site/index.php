@@ -20,36 +20,54 @@ $this->title = 'My Yii Application';
                     <li data-target="#header-carousel" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
+
+                    <?php
+                    $categoria1 = Categoria::find()->orderBy('RAND()')->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
+                    if ($categoria1): ?>
                     <div class="carousel-item position-relative active" style="height: 430px;">
                         <img class="position-absolute w-100 h-100" src="img/pen_wallpaper_index.jpg" style="object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Escrita</h1>
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria1->nome ?> </h1>
                                 <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Explore o mundo da escrita com a nossa exclusiva coleção de canetas personalizadas</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Compra Agora</a>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="<?= Url::to(['artigo/categorias', 'id' => $categoria1->id]) ?>">Compra Agora</a>
                             </div>
                         </div>
                     </div>
+                    <?php else: ?>
+                    <h6 class="text-white text-uppercase">A definir categoria</h6>
+                    <?php endif; ?>
+
+                    <?php $categoria2 = Categoria::find()->orderBy('RAND()')->one();
+                    if ($categoria2): ?>
                     <div class="carousel-item position-relative" style="height: 430px;">
                         <img class="position-absolute w-100 h-100" src="img/agenda.jpg" style="object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Agendas</h1>
-                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Organize a sua vida com elegância e praticidade com as nossas exclusivas agendas personalizadas</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Compra Agora</a>
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria2->nome ?> </h1>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">A indicar mensgaem que queremos</p>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="<?= Url::to(['artigo/categorias', 'id' => $categoria2->id]) ?>">Compra Agora</a>
                             </div>
                         </div>
+                        <?php else: ?>
+                            <h6 class="text-white text-uppercase">A definir categoria</h6>
+                        <?php endif; ?>
                     </div>
+                    <?php $categoria3 = Categoria::find()->orderBy('RAND()')->one();
+                    if ($categoria3): ?>
                     <div class="carousel-item position-relative" style="height: 430px;">
                         <img class="position-absolute w-100 h-100" src="img/acessorios_homem.jpg" style="object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Acessorios Homem</h1>
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria3->nome ?> </h1>
                                 <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Elevamos o estilo masculino com a nossa seleção de acessórios cuidadosamente escolhidos</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Compra Agora</a>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="<?= Url::to(['artigo/categorias', 'id' => $categoria3->id]) ?>">Compra Agora</a>
                             </div>
                         </div>
                     </div>
+                        <?php else: ?>
+                        <h6 class="text-white text-uppercase">A definir categoria</h6>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -59,8 +77,7 @@ $this->title = 'My Yii Application';
                 <div class="offer-text">
                     <div class="offer-text">
                         <?php
-                        $categoryId = 1; // Aqui podemos escolher um qualquer, apenas para associar alguma categoria ao menu
-                        $categoria = Categoria::find()->where(['id' => $categoryId])->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
+                        $categoria = Categoria::find()->orderBy('RAND()')->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
                         if ($categoria): ?>
                             <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
                             <h3 class="text-white mb-3">Ofertas Especiais</h3>
@@ -75,7 +92,6 @@ $this->title = 'My Yii Application';
                 <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
                 <div class="offer-text">
                     <?php
-                    $categoryId = 2; // Aqui igual ao de cima mas com um id diferente para nao puxar a mesma. Em baxio praticamente igual
                     $categoria = Categoria::find()->orderBy('RAND()')->one();
                     if ($categoria): ?>
                         <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
@@ -205,23 +221,33 @@ $this->title = 'My Yii Application';
 <div class="container-fluid pt-5 pb-3">
     <div class="row px-xl-5">
         <div class="col-md-6">
+            <?php
+            $categoriaFooter = Categoria::find()->orderBy('RAND()')->one();
+            if ($categoriaFooter): ?>
             <div class="product-offer mb-30" style="height: 300px;">
                 <img class="img-fluid" src="img/mochila.jpg" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Save 20%</h6>
-                    <h3 class="text-white mb-3">Special Offer</h3>
-                    <a href="" class="btn btn-primary">Shop Now</a>
+                    <h3 class="text-white mb-3"><?= $categoriaFooter->nome?></h3>
+                    <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaFooter->id]) ?>" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
+            <?php else: ?>
+            <h3 class="text-white mb-3">A definir categoria</h3>
+            <?php endif; ?>
         </div>
         <div class="col-md-6">
+            <?php
+            $categoriaFooter2 = Categoria::find()->orderBy('RAND()')->one();
+            if ($categoriaFooter2): ?>
             <div class="product-offer mb-30" style="height: 300px;">
                 <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Save 20%</h6>
-                    <h3 class="text-white mb-3">Special Offer</h3>
-                    <a href="" class="btn btn-primary">Shop Now</a>
+                    <h3 class="text-white mb-3"><?= $categoriaFooter2->nome?></h3>
+                    <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaFooter2->id]) ?>" class="btn btn-primary">Shop Now</a>
                 </div>
+                <?php else: ?>
+                    <h3 class="text-white mb-3">A definir categoria</h3>
+                <?php endif; ?>
             </div>
         </div>
     </div>
