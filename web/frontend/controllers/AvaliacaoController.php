@@ -40,6 +40,12 @@ class AvaliacaoController extends Controller
      */
     public function actionIndex()
     {
+        $idUser = Yii::$app->user->id;
+        $avaliacao = Avaliacao::findOne(['perfil_id' => $idUser]);
+        $perfilId = $avaliacao->perfil_id;
+        $model = $avaliacao;
+
+
         $dataProvider = new ActiveDataProvider([
             'query' => Avaliacao::find(),
             /*
@@ -56,6 +62,8 @@ class AvaliacaoController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'perfilId' => $perfilId,
+            'model' => $model,
         ]);
     }
 

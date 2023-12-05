@@ -12,25 +12,26 @@ use yii\grid\GridView;
 $this->title = 'Avaliacaos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div style="height: 200px; ">
+    <img class="img-fluid" src="img/star.png"  alt="" >
+    <div class="offer-text">
+        <h3 class="text-white mb-3">As suas avaliações</h3>
+    </div>
+</div>
+
 <div class="avaliacao-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Avaliacao', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'comentario',
             'classificacao',
-            'artigo_id',
-            'perfil_id',
+            //'artigo_id',
+            //'perfil_id',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Avaliacao $model, $key, $index, $column) {
