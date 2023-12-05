@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -15,10 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['value' => $model->getEmail()]) ?>
 
-    <?= $form->field($model, 'novaPassword')->passwordInput() ?>
-
-    <?= $form->field($model, 'confirmarPassword')->passwordInput() ?>
-
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'telefone')->textInput() ?>
@@ -31,13 +28,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'role')->dropDownList([ 'Funcionario'=>'Funcionário','Cliente'=> 'Cliente','Admin'=> 'Admin']) ?>
+    <?= $form->field($model, 'role')->dropDownList(['Funcionario' => 'Funcionário', 'Cliente' => 'Cliente', 'Admin' => 'Admin']) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([$model->getStatusNumber()=> $model->getStatus(), 10 =>'Ativo', 9 =>'Inativo' ]) ?>
-
+    <?= $form->field($model, 'status')->dropDownList([$model->getStatusNumber() => $model->getStatus(), 10 => 'Ativo', 9 => 'Inativo']) ?>
 
 
     <div class="form-group">
+        <a class="btn btn-outline-dark btn-square"
+           href="<?= Url::to(['perfil/alterar-password']) ?>"><i
+                    class="fa fa-key"></i> Alterar Password</a>
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

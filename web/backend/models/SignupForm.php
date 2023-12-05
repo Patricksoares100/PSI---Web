@@ -156,4 +156,6 @@ class SignupForm extends Model
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
     }
+
+
 }

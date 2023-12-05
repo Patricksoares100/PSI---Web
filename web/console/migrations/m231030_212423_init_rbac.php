@@ -58,12 +58,18 @@ class m231030_212423_init_rbac extends Migration
         $auth->add($permissaoDadosPessoais);
 
 
+        $permissaoAlterarPassword = $auth->createPermission('updatePassword');
+        $permissaoAlterarPassword->description = 'Alterar Password';
+        $auth->add($permissaoAlterarPassword);
+
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
         $auth->addChild($role_funcionario, $permissaoDadosPessoais);
+        $auth->addChild($role_funcionario, $permissaoAlterarPassword);
 
         $auth->addChild($role_cliente, $permissaoDadosPessoais);
+        $auth->addChild($role_cliente, $permissaoAlterarPassword);
 
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $permission_edit_empresa);

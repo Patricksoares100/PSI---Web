@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 
+use backend\models\AlterarPasswordForm;
 use backend\models\AuthAssignment;
 use common\models\Perfil;
 use common\models\User;
@@ -21,6 +22,7 @@ class PerfilController extends Controller
     /**
      * @inheritDoc
      */
+
     public function behaviors()
     {
         return array_merge(
@@ -36,9 +38,9 @@ class PerfilController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['update', 'view', 'index'],
+                            'actions' => ['update', 'view', 'index', 'alterar-password'],
                             'allow' => true,
-                            'roles' => ['permissionBackoffice'], //admin e funcionario
+                            'roles' => ['permissionBackoffice', 'updatePassword'], //admin e funcionario
                         ],
                         [
                             'actions' => ['delete', 'create', 'atualizarstatus', 'atualizarrole'],
@@ -169,9 +171,9 @@ class PerfilController extends Controller
                 $user->email = Yii::$app->request->post('Perfil')['email'];
                 $user->status = Yii::$app->request->post('Perfil')['status'];
             }
-            if (!empty($model->novaPassword) && ($model->novaPassword == $model->confirmarPassword)) {
+            /*if (!empty($model->novaPassword) && ($model->novaPassword == $model->confirmarPassword)) {
                 $user->updatePassword($model->novaPassword);
-            }
+            }*/
             $user->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -268,5 +270,28 @@ class PerfilController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAlterarPassword()
+    {
+        $model = new AlterarPasswordForm();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $valid = $model->validate();
+                if ($valid) {
+
+                    $user = User::findOne(['id' => Yii::$app->user->id]);
+
+                    $user->setPassword($model->novaPassword);
+                    if ($user->save())
+                        return $this->redirect(['view', 'id' => $user->id, 'msg' => 'Password alterada com sucesso!']);
+                    else
+                        return $this->redirect(array('alterar-password', 'msg' => 'Erro ao alterar password!'));
+                }
+            }
+        }
+
+        return $this->render('alterar-password', ['model' => $model]);
     }
 }
