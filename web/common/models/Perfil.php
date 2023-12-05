@@ -25,8 +25,8 @@ use yii\rbac\Item;
  */
 class Perfil extends \yii\db\ActiveRecord
 {
-    public $novaPassword;
-    public $confirmarPassword;
+    /*public $novaPassword;
+    public $confirmarPassword;*/
 
     /**
      * {@inheritdoc}
@@ -46,8 +46,8 @@ class Perfil extends \yii\db\ActiveRecord
             [['telefone', 'nif'], 'integer'],
             [['nome', 'morada', 'codigo_postal', 'localidade'], 'string', 'max' => 255],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
-            [['novaPassword', 'confirmarPassword'], 'required', 'on' => ['update']],
-            ['confirmarPassword', 'compare', 'compareAttribute' => 'novaPassword', 'message' => 'As passwords não são iguais.'],
+            /*[['novaPassword', 'confirmarPassword'], 'required', 'on' => ['update']],
+            ['confirmarPassword', 'compare', 'compareAttribute' => 'novaPassword', 'message' => 'As passwords não são iguais.'],*/
         ];
     }
 
