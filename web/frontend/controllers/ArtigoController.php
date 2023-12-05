@@ -4,9 +4,11 @@ namespace frontend\controllers;
 
 use common\models\Artigo;
 use app\models\ArtigoSearch;
+use common\models\Avaliacao;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * ArtigoController implements the CRUD actions for Artigos model.
@@ -155,9 +157,14 @@ class ArtigoController extends Controller
     public function actionDetail($id)
     {
         $model = $this->findModel($id);
+        $avaliacoes = Avaliacao::findAll(['artigo_id' => $model->id]);
+        $avaliacao = new Avaliacao ();
 
         return $this->render('detail', [
             'model' => $model,
+            'avaliacoes' => $avaliacoes,
+            'avaliacao' => $avaliacao,
+            'id'=> $id,
         ]);
     }
 }

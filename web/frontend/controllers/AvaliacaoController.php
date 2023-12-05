@@ -2,7 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\models\Artigo;
 use common\models\Avaliacao;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,21 +79,27 @@ class AvaliacaoController extends Controller
      */
     public function actionCreate($id)
     {
+        $idUser = Yii::$app->user->id;
+        $artigo = Artigo::findOne($id);
         $model = new Avaliacao();
+        $model->perfil_id = $idUser;
+        $model->artigo_id = $id;
+
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate() && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['artigo/detail', 'id' => $artigo->id]);
             }
         } else {
             $model->loadDefaultValues();
+
         }
 
         return $this->render('create', [
             'model' => $model,
+            'id' => $id,
         ]);
     }
-
 
 
     /**
