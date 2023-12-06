@@ -39,6 +39,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'fornecedor.nome',
             'categoria.nome',
             'perfil.nome',
+            [
+                'attribute' => 'imagem.image_path',
+                'format' => 'html',
+                'value' => function ($model) {
+                    if (!empty($model->imagens)) {
+                        $html = '';
+                        foreach ($model->imagens as $imagem) {
+                            $html .= '<img src="' .
+                                Yii::getAlias('@web/' . $imagem->image_path) .
+                                '" alt="Imagem do Artigo" style="width: 5cm; height: 5cm;">';
+                        }
+                        return $html;
+                    } else {
+                        return 'Não existem imagens associadas';
+                    }
+                },
+            ],
         ],
     ]) ?>
 

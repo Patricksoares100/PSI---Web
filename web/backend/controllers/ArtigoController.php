@@ -13,6 +13,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\UploadedFile;
+
 
 /**
  * ArtigoController implements the CRUD actions for Artigo model.
@@ -86,8 +88,11 @@ class ArtigoController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $imagens = $model->imagens;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'imagens' => $imagens,
         ]);
     }
 
@@ -121,7 +126,11 @@ class ArtigoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+                $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                if ($model->upload() ) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -144,7 +153,10 @@ class ArtigoController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload() ) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

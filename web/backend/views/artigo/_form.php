@@ -13,7 +13,9 @@ use yii\widgets\ActiveForm;
 
 <div class="artigo-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
