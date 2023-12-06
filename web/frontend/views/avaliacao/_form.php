@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /** @var common\models\Avaliacao $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<?php $form = ActiveForm::begin(['action' => ['create'], 'method' => 'post']); ?>
+<?php $form = ActiveForm::begin(['action' => ['create', 'id' => $id]]); ?>
 
 <?= $form->field($model, 'comentario')->textInput(['maxlength' => true]) ?>
 

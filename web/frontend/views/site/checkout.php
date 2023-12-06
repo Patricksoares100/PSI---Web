@@ -1,6 +1,8 @@
 <?php
 
 use common\models\LinhaCarrinho;
+use common\models\Perfil;
+use common\models\User;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -33,6 +35,12 @@ GridView::widget([
     ],
 ]);
 ?>
+<?php
+$userId = Yii::$app->user->id; // vai receber o ID do utilizador logado
+$perfil = Perfil::find()->where(['id' => $userId])->one();
+$user = User::find()->where(['id' => $userId])->one();
+?>
+
 <!-- Checkout Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
@@ -43,35 +51,31 @@ GridView::widget([
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label>Primeiro Nome</label>
-                        <input class="form-control" type="text" placeholder="Nome">
+                        <input class="form-control" type="text" value="<?= $perfil->nome?>" >
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Ultimo Nome</label>
-                        <input class="form-control" type="text" placeholder="Sobrenome">
+                        <label>Nif</label>
+                        <input class="form-control" type="text" value="<?=$perfil->nif?>">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" placeholder="examplo@email.com">
+                        <input class="form-control" type="text" value="<?=$user->email?>">
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Telefone/Telemovel</label>
-                        <input class="form-control" type="text" placeholder="9 digítos ">
+                        <label>Telefone</label>
+                        <input class="form-control" type="text" value="<?=$perfil->telefone?> ">
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-12 form-group">
                         <label>Endereço</label>
-                        <input class="form-control" type="text" placeholder="Rua 123">
+                        <input class="form-control" type="text" value="<?=$perfil->morada?>">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Localidade</label>
-                        <input class="form-control" type="text" placeholder="Localidade">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Cidade</label>
-                        <input class="form-control" type="text" placeholder="Cidade">
+                        <input class="form-control" type="text" value="<?=$perfil->localidade?>">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Codigo Postal</label>
-                        <input class="form-control" type="text" placeholder="2400-000">
+                        <input class="form-control" type="text" value="<?=$perfil->codigo_postal ?>">
                     </div>
                 </div>
             </div>

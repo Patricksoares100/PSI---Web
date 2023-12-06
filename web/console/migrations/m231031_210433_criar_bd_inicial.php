@@ -1,6 +1,8 @@
 <?php
 
 use yii\db\Migration;
+use common\models\User;
+use common\models\Perfil;
 
 use function PHPUnit\Framework\assertNotNull;
 
@@ -23,6 +25,22 @@ class m231031_210433_criar_bd_inicial extends Migration
             'codigo_postal' => $this->string()->notNull(),
             'localidade' => $this->string()->notNull(),
         ], 'ENGINE=InnoDB');
+
+        $admin = new User();
+        $admin->username = "admin";
+        $admin->setPassword("teste123");
+        $admin->status = 10;
+        $admin->email = "a@a.a";
+        $admin->save();
+
+        $perfil = new Perfil();
+        $perfil->nome = "Admin";
+        $perfil->codigo_postal = "2480-123";
+        $perfil->nif = "123456789";
+        $perfil->telefone = "987654321";
+        $perfil->morada = "Leiria";
+        $perfil->localidade = "leiria";
+        $perfil->save();
 
         $this->createTable('categorias', [
             'id' => $this->primaryKey(),

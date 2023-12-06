@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="row px-xl-5">
-        <?php $avaliacoes = Avaliacao::findAll(['artigo_id' => $model->id]); ?>
+        <?php ?>
         <div class="col">
             <div class="bg-light p-30">
                 <div class="nav nav-tabs mb-4">
@@ -159,22 +159,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <?php } ?>
 
-                            <a class="btn btn-primary mr-4" href="<?= Url::to(['avaliacao/create', 'id' => $model->id]) ?>">
-                                <i class="fa fa-shopping-cart mr-1"></i> Add Carrinho
-                            </a>
+                            <form method="post" action="<?= Yii::$app->urlManager->createUrl(['avaliacao/create', 'id' => $id]) ?>">
+                                <?php $form = ActiveForm::begin(['id' => $id]); ?>
 
-                            <!-- Retirei estes formularios do _form do avalicao, sao os que vamos precisar. Mas ainda nao está a gravar -->
-                            <?php $model = new Avaliacao () ?>
-                            <?php $form = ActiveForm::begin(); ?>
+                                <?= $form->field($avaliacao, 'comentario')->textInput(['maxlength' => true]) ?>
 
-                            <?= $form->field($model, 'comentario')->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($avaliacao, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',], ['prompt' => '']) ?>
 
-                            <?= $form->field($model, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',], ['prompt' => '']) ?>
+                                <div class="form-group">
+                                    <?= Html::submitButton('Leave Your Review', ['class' => 'btn btn-primary']) ?>
+                                </div>
 
-                            <div class="form-group">
-                                <?= Html::submitButton('Leave Your Review', ['class' => 'btn btn-primary']) ?>
-                            </div>
-                            <?php ActiveForm::end(); ?>
+                                <?php ActiveForm::end(); ?>
+                            </form>
                         </div>
 
                     </div>

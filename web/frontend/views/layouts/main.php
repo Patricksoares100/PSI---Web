@@ -4,6 +4,7 @@
 
 /** @var string $content */
 
+use common\models\Avaliacao;
 use common\models\Categoria;
 use common\models\Empresa;
 use common\widgets\Alert;
@@ -82,6 +83,7 @@ AppAsset::register($this);
                     <div class="d-inline-flex align-items-center">
                         <div class="btn-group">
                             <?php
+                            $idUser = Yii::$app->user->id;
                             // Verifica se o usuário está logado
                             if (Yii::$app->user->isGuest) {
                                 // Mostra o botão de login
@@ -90,8 +92,9 @@ AppAsset::register($this);
                                 echo '<div class="btn-group show">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="true">' . Yii::$app->user->identity->username . '</button>
                                 <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
-                                    ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
-                                    ' . Html::a('Alterar Dados', ['/perfil/update', 'id' => Yii::$app->user->id], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                    ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                    ' . Html::a('Alterar Dados', ['/perfil/update', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                     ' . Html::a('Minhas Avaliações', ['/avaliacao/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
                                     ' . Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                 </div>
                             </div>';
@@ -196,7 +199,7 @@ AppAsset::register($this);
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
                                           style="padding-bottom: 2px;"><?php $numberFav = \common\models\Favorito::find()->count(); ?>
-                                    <?= $numberFav ?>
+                                        <?= $numberFav ?>
                                     </span>
                                 </a>
                                 <a href="<?= \yii\helpers\Url::to(['/linhacarrinho/index']) //carrinho/algo 
