@@ -22,15 +22,27 @@ class AlterarPasswordForm extends Model
     public function rules()
     {
         return [
-            ['novaPassword', 'required'],
-            ['confirmarPassword', 'compare', 'compareAttribute' => 'novaPassword', 'on' => 'alterarPassword'],
+            [['atualPassword', 'novaPassword', 'confirmarPassword'], 'required'],
+            ['atualPassword', 'validateCurrentPassword'],
+            ['confirmarPassword', 'compare', 'compareAttribute' => 'novaPassword'],
         ];
     }
 
-    public function findPasswords($attribute, $params)
+    public function attributeLabels()
     {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if ($user->password != md5($this->atualPassword))
-            $this->addError($attribute, 'A password atual está incorreta!');
+        return [
+            'atualPassword' => 'Password Atual',
+            'novaPassword' => 'Nova Password',
+            'confirmarPassword' => 'Confirmar Nova Password',
+        ];
+    }
+
+    public function validateCurrentPassword($attribute, $params)
+    {
+        $user = User::findOne(Yii::$app->user->id);
+
+        if (!$user || !$user->validatePassword($this->atualPassword)) {
+            $this->addError($attribute, 'A password atual está incorreta.');
+        }
     }
 }
