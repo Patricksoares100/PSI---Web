@@ -181,20 +181,20 @@ AppAsset::register($this);
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
+                                <a href="<?= Url::to(['/site/index']) ?>" class="nav-item nav-link active">Home</a>
                             </div>
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="<?= \yii\helpers\Url::to(['/artigo/index']) ?>"
+                                <a href="<?= Url::to(['/artigo/index']) ?>"
                                    class="nav-item nav-link active">Artigos</a>
                             </div>
                             <div class="navbar-nav mr-auto py-0">
                                 <?php if (!Yii::$app->user->isGuest) : ?>
-                                    <a href="<?= \yii\helpers\Url::to(['/site/faturas']) ?>"
+                                    <a href="<?= Url::to(['/fatura/index']) ?>"
                                        class="nav-item nav-link active">Faturas</a>
                                 <?php endif; ?>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="<?= \yii\helpers\Url::to(['/favorito/index']) //favorito/algo
+                                <a href="<?= Url::to(['/favorito/index']) //favorito/algo
                                 ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
@@ -202,7 +202,7 @@ AppAsset::register($this);
                                         <?= $numberFav ?>
                                     </span>
                                 </a>
-                                <a href="<?= \yii\helpers\Url::to(['/linhacarrinho/index']) //carrinho/algo 
+                                <a href="<?= Url::to(['/linhacarrinho/index']) //carrinho/algo
                                 ?>" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
