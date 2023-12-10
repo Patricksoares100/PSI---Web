@@ -10,3 +10,6 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+config:
+    Db:
+        dsn: 'mysql:host=localhost;dbname=seu_banco_de_dados_de_teste'
