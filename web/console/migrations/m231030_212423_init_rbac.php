@@ -60,6 +60,7 @@ class m231030_212423_init_rbac extends Migration
 
         $permissaoAlterarPassword = $auth->createPermission('updatePassword');
         $permissaoAlterarPassword->description = 'Alterar Password';
+        $permissaoAlterarPassword->ruleName = 'isAuthorPassword'; // Nome da regra
         $auth->add($permissaoAlterarPassword);
 
         // dar heranças addChild
