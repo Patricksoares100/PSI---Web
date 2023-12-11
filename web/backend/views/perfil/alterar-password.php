@@ -17,8 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="row"> <?php echo $form->field($model, 'novaPassword')->passwordInput(); ?></div>
-    <div class="row"> <?php echo $form->field($model, 'confirmarPassword')->passwordInput(); ?></div>
+    <div class="row">
+        <?= $form->field($model, 'atualPassword')->passwordInput() ?>
+    </div>
+    <div class="row">
+        <?php echo $form->field($model, 'novaPassword')->passwordInput(); ?>
+    </div>
+    <div class="row">
+        <?php echo $form->field($model, 'confirmarPassword')->passwordInput(); ?>
+    </div>
 
 
     <div class="row submit">

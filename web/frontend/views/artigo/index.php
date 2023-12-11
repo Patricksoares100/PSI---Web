@@ -23,26 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="container-fluid">
         <div class="row px-xl-4">
-            <div class="col-lg-3 col-md-4">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filtrar por Categorias</span></h5>
-
-                <div class="bg-light p-2 mb-20">
-                    <form>
-                        <?php
-                        $categorias = Categoria::find()->all();
-                        foreach ($dataProvider->models as $categorias) : ?>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="radio" class="custom-control-input" id="price-all<?= $categorias->categoria_id ?>" name="category" value="<?= $categorias->categoria_id ?>">
-                            <label class="custom-control-label" for="price-all<?= $categorias->categoria_id ?>"><?=$categorias->nome?></label>
-                        </div>
-                        <?php endforeach;?>
-                    </form>
-                </div>
-
-            </div>
-
-            <!-- Shop Product Start -->
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-12 col-md-8">
                 <div class="row pb-3">
                     <?php foreach ($dataProvider->models as $model) : ?> <!-- tive de colocar aqui o foreach para repetir separadamente em colunas -->
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">

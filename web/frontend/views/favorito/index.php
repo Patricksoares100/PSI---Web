@@ -31,8 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($dataProvider->models as $model) : ?>
                     <tbody class="align-middle">
                     <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt=""
-                                                      style="width: 50px;"> <?= $model->artigo->nome ?>
+                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> <?= $model->artigo->nome ?>
                         </td>
                         <td class="align-middle">Product Name</td>
                         <td class="align-middle">

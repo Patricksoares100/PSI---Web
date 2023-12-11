@@ -147,7 +147,7 @@ $user = User::find()->where(['id' => $userId])->one();
                         <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                     </div>
                 </div>
-                <button class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button>
+                <a href="<?= Url::to(['fatura/index','id' => $model->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Fazer Pagamento</a>
             </div>
         </div>
     </div>
