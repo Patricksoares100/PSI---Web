@@ -147,9 +147,20 @@ class IvaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $iva =$this->findModel($id);
+        try {
+            if ($iva->em_vigor == "Não") {
+                $this->findModel($id)->delete();
+            } else {
+                throw new \Exception("Não pode apagar uma taxa de IVA em vigor");
+            }
+        }catch (\Exception $e){
+            \Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
+
     }
 
     /**

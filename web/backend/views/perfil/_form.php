@@ -35,8 +35,14 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <a class="btn btn-outline-dark btn-square"
-           href="<?= Url::to(['perfil/alterar-password', 'id' => $model->id]) ?>"><i
+            <?php if (Yii::$app->user->id == $model->id){ ?>
+           href="<?= Url::to(['perfil/alterar-password', 'id' => Yii::$app->user->id]) ?>"><i
                     class="fa fa-key"></i> Alterar Password</a>
+        <?php } else { ?>
+            <a class="btn btn-outline-dark btn-square"
+               href="<?= Url::to(['perfil/reset-password', 'id' => $model->id]) ?>"><i
+                        class="fa fa-key"></i> Repor Password</a>
+        <?php } ?>
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

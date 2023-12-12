@@ -38,14 +38,9 @@ class PerfilController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['update', 'view', 'index'],
+                            'actions' => ['update', 'view', 'index', 'alterar-password', 'reset-password'],
                             'allow' => true,
                             'roles' => ['permissionBackoffice'], //admin e funcionario
-                        ],
-                        [
-                            'actions' => ['alterar-password'],
-                            'allow' => true,
-                            'roles' => ['updatePassword'], //admin e funcionario
                         ],
                         [
                             'actions' => ['delete', 'create', 'atualizarstatus', 'atualizarrole'],
@@ -179,9 +174,7 @@ class PerfilController extends Controller
                 $user->email = Yii::$app->request->post('Perfil')['email'];
                 $user->status = Yii::$app->request->post('Perfil')['status'];
             }
-            /*if (!empty($model->novaPassword) && ($model->novaPassword == $model->confirmarPassword)) {
-                $user->updatePassword($model->novaPassword);
-            }*/
+
             $user->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -256,6 +249,7 @@ class PerfilController extends Controller
             if ($userId != null) {
                 $user = User::findOne(['id' => $userId]); // primeiro id é da tabela user o userID é o id que guardamos acima
                 if ($user !== null) {
+                    AuthAssignment::deleteAll(['user_id' => $userId]);
                     $user->delete();
                 }
             }
@@ -280,7 +274,7 @@ class PerfilController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionAlterarPassword($id)
+    public function actionAlterarPassword()
     {
         $model = new AlterarPasswordForm();
         if ($this->request->isPost) {
@@ -288,7 +282,7 @@ class PerfilController extends Controller
                 $valid = $model->validate();
                 if ($valid) {
 
-                    $user = User::findOne(['id' => $id]);
+                    $user = User::findOne(['id' => Yii::$app->user->id]);
 
                     $user->setPassword($model->novaPassword);
 
@@ -301,5 +295,21 @@ class PerfilController extends Controller
         }
 
         return $this->render('alterar-password', ['model' => $model]);
+    }
+
+    public function actionResetPassword($id)
+    {
+        $user = User::findOne($id);
+        if ($user == null) {
+            return $this->redirect(array('view', 'msg' => 'User not found!'));
+        }
+        //$user = User::findOne(['id' => Yii::$app->user->id]);
+
+        $user->setPassword("12345678");
+
+        if ($user->save())
+            return $this->redirect(['view', 'id' => $user->id, 'msg' => 'Password reposta!']);
+        else
+            return $this->redirect(array('view', 'msg' => 'Erro ao repor password!'));
     }
 }
