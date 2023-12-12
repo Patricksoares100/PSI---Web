@@ -12,7 +12,9 @@ use yii\grid\GridView;
 $this->title = 'Faturas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="fatura-index">
+    <?php /*
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -31,8 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-
+*/ ?>
 </div>
 
 
@@ -67,6 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td class="align-middle">
                             <i class="fas fa-paste"></i> <?=$model->id?>
+                            <a href="<?= Url::to(['fatura/view', 'id' => $model->id]) ?>">
+                                <i class="fas fa-eye"></i>
+                            </a>
                         </td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
