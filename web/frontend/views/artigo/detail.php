@@ -58,15 +58,62 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
                 <h3><?= $model->nome ?></h3>
+                <?php
+                $somaTotal = 0;
+                foreach ($avaliacoes as $avaliacao) : ?>
+                    <?php  $somaTotal += $avaliacao->classificacao; ?>
+                <?php endforeach; ?>
+                <?php $valorMedioReview = number_format($somaTotal / count($avaliacoes), 1) ?>
                 <div class="d-flex mb-3">
+                    <small class="pt-1"><?=$valorMedioReview  ?></small>
                     <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
+                        <?php switch ($valorMedioReview) {
+                            case $valorMedioReview >0 && $valorMedioReview<1.5:
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                break;
+                            case $valorMedioReview >=1.5 && $valorMedioReview<2.5:
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                break;
+                            case $valorMedioReview >=2.5 && $valorMedioReview<3.5:
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                break;
+                            case $valorMedioReview >=3.5 && $valorMedioReview <4.5:
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                break;
+                            case 5:
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                echo '<i class="fas fa-star"></i>';
+                                break;
+                            default:
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                echo '<i class="far fa-star"></i>';
+                                break;
+                        }
+                        ?>
                     </div>
-                    <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
+                    <small class="pt-1">(<?= count($avaliacoes) ?>  Reviews)</small>
                 </div>
                 <h3 class="font-weight-semi-bold mb-4"><?= $model->preco ?>€</h3>
                 <p class="mb-4"><?= $model->descricao ?></p>
@@ -132,12 +179,45 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <?php if ($utilizador) : ?>
                                                 <h6><?= $utilizador->nome ?></h6>
                                                 <div class="text-primary mb-2">
-                                                    <?=$avaliacao->classificacao?>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="far fa-star"></i>
+                                                    <?php switch ($avaliacao->classificacao) {
+                                                        case 1:
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            break;
+                                                        case 2:
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            break;
+                                                        case 3:
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            break;
+                                                        case 4:
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="far fa-star"></i>';
+                                                            break;
+                                                        default:
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            echo '<i class="fas fa-star"></i>';
+                                                            break;
+                                                    }
+                                                    ?>
+
                                                 </div>
                                                 <p><?= $avaliacao->comentario ?></p>
                                             <?php endif; ?>
