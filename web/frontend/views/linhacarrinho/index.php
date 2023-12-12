@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
                     </div>
                     <?php foreach ($dataProvider->models as $model) : ?>
-                    <a href="<?= Url::to(['/site/checkout','id' => $model->id]) ?>"
+                    <a href="<?= Url::to(['/linhafatura/index','id' => $model->id]) ?>"
                        class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                     <?php endforeach; ?>
                 </div>
