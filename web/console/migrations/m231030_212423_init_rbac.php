@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 use console\models\AuthorDadosPessoaisRule;
-
+use console\models\AlterarPasswordRule;
 /**
  * Class m231030_212423_init_rbac
  */
@@ -17,6 +17,8 @@ class m231030_212423_init_rbac extends Migration
         $auth = Yii::$app->authManager;
 
         $rule = new AuthorDadosPessoaisRule;
+        $auth->add($rule);
+        $rule = new AlterarPasswordRule;
         $auth->add($rule);
 
         // Criar os roles - $auth->createRole();
