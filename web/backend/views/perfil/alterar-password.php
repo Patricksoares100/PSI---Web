@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'atualPassword')->passwordInput() ?>
     </div>
     <div class="row">
-        <?php echo $form->field($model, 'novaPassword')->passwordInput(); ?>
+        <?= $form->field($model, 'novaPassword')->passwordInput(); ?>
     </div>
     <div class="row">
-        <?php echo $form->field($model, 'confirmarPassword')->passwordInput(); ?>
+        <?= $form->field($model, 'confirmarPassword')->passwordInput(); ?>
     </div>
 
 

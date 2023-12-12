@@ -23,7 +23,7 @@ class AlterarPasswordForm extends Model
     {
         return [
             [['atualPassword', 'novaPassword', 'confirmarPassword'], 'required'],
-            ['atualPassword', 'validateCurrentPassword'],
+            [['atualPassword'], 'validateCurrentPassword'],
             ['confirmarPassword', 'compare', 'compareAttribute' => 'novaPassword'],
         ];
     }

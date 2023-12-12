@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <a class="btn btn-outline-dark btn-square"
-           href="<?= Url::to(['perfil/alterar-password']) ?>"><i
+           href="<?= Url::to(['perfil/alterar-password', 'id' => $model->id]) ?>"><i
                     class="fa fa-key"></i> Alterar Password</a>
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
