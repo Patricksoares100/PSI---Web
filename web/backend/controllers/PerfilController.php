@@ -249,6 +249,7 @@ class PerfilController extends Controller
             if ($userId != null) {
                 $user = User::findOne(['id' => $userId]); // primeiro id é da tabela user o userID é o id que guardamos acima
                 if ($user !== null) {
+                    AuthAssignment::deleteAll(['user_id' => $userId]);
                     $user->delete();
                 }
             }
