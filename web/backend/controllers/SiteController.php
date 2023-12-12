@@ -90,6 +90,7 @@ class SiteController extends Controller
                 'numeroFornecedores' => Fornecedor::getNumeroFornecedores(),
                 'numeroFuncionarios' => AuthAssignment::getNumeroFuncionarios(),
                 'numeroClientes' => AuthAssignment::getNumeroClientes(),
+                'empresa' => Empresa::find()->one(),
             ]);
         }
 
