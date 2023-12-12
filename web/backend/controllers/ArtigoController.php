@@ -106,13 +106,13 @@ class ArtigoController extends Controller
         $model = new Artigo();
 
         $fornecedores = Fornecedor::find()->all();
-        $taxasIva = Iva::find()->all();
+        $ivas = Iva::find()->all();
         $categorias = Categoria::find()->all();
         try {
             if (empty($fornecedores)) {
                 throw new \Exception("Não pode criar um artigo sem um fornecedor criado previamente");
             }
-            if (empty($taxasIva)) {
+            if (empty($ivas)) {
                 throw new \Exception("Não pode criar um artigo sem uma taxa de IVA criada previamente");
             }
             if (empty($categorias)) {
@@ -138,6 +138,10 @@ class ArtigoController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'fornecedores' =>$fornecedores,
+            'ivas'=>$ivas,
+            'categorias'=>$categorias,
+
         ]);
     }
 
@@ -152,15 +156,21 @@ class ArtigoController extends Controller
     {
         $model = $this->findModel($id);
 
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
             if ($model->upload() ) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
+        $fornecedores = Fornecedor::find()->all();
+        $ivas = Iva::find()->all();
+        $categorias = Categoria::find()->all();
         return $this->render('update', [
             'model' => $model,
+            'fornecedores' =>$fornecedores,
+            'ivas'=>$ivas,
+            'categorias'=>$categorias,
         ]);
     }
 
