@@ -6,6 +6,7 @@ use common\models\Artigo;
 use common\models\Avaliacao;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,6 +24,17 @@ class AvaliacaoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['update', 'create','view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'rules' => [
+                        [
+                            'actions' => ['update', 'view', 'create'],
+                            'allow' => true,
+                            'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
