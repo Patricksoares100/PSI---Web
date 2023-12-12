@@ -1,5 +1,5 @@
 <?php
-$empresa = \common\models\Empresa::find()->one();
+
 if ($empresa) {
     $this->title = $empresa->nome;
 } else {
