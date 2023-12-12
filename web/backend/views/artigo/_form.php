@@ -28,10 +28,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'stock_atual')->textInput() ?>
 
     <?php
-    $userId = Yii::$app->user->id; // vai receber o ID do utilizador logado
-    $ivas = Iva::find()->all();
-    $fornecedores = Fornecedor::find()->all();
-    $categorias = Categoria::find()->all();
+
     $categoriaDropdown = [];
     $fornecedorDropdown = [];
     $ivaDropdown = [];
@@ -55,7 +52,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'categoria_id')->dropDownList($categoriaDropdown, ['prompt' => 'Escolha uma Categoria']) ?>
 
-    <?= $form->field($model, 'perfil_id')->hiddenInput(['value' => $userId])->label(false) ?>
+    <?= $form->field($model, 'perfil_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
