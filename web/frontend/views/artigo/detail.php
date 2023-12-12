@@ -7,6 +7,7 @@
 
 use common\models\Artigo;
 use common\models\Avaliacao;
+use common\models\Perfil;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -65,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <small class="fas fa-star-half-alt"></small>
                         <small class="far fa-star"></small>
                     </div>
-                    <small class="pt-1">(99 Reviews)</small>
+                    <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
                 </div>
                 <h3 class="font-weight-semi-bold mb-4"><?= $model->preco ?>€</h3>
                 <p class="mb-4"><?= $model->descricao ?></p>
@@ -124,24 +125,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             <h4 class="mb-4"> <?= count($avaliacoes) ?> Review</h4>
                             <?php if ($avaliacoes !== null) : ?>
                                 <?php foreach ($avaliacoes as $avaliacao) : ?>
-
                                     <div class="media mb-4">
-                                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                             style="width: 45px;">
+                                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                         <div class="media-body">
-                                            <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                            <div class="text-primary mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
-                                            <p><?= $avaliacao->comentario ?></p>
+                                            <?php $utilizador = $avaliacao->perfil; ?>
+                                            <?php if ($utilizador) : ?>
+                                                <h6><?= $utilizador->nome ?></h6>
+                                                <div class="text-primary mb-2">
+                                                    <?=$avaliacao->classificacao?>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <p><?= $avaliacao->comentario ?></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
+
                         </div>
                         <?php if (!Yii::$app->user->isGuest) { ?>
                         <div class="col-md-6">
@@ -157,7 +161,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <i class="far fa-star"></i>
                                 </div>
                             </div>
-                            <?php } ?>
 
                             <form method="post" action="<?= Yii::$app->urlManager->createUrl(['avaliacao/create', 'id' => $id]) ?>">
                                 <?php $form = ActiveForm::begin(['id' => $id]); ?>
@@ -172,6 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <?php ActiveForm::end(); ?>
                             </form>
+                            <?php } ?>
                         </div>
 
                     </div>
