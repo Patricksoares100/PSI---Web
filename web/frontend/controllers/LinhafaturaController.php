@@ -40,7 +40,9 @@ class LinhafaturaController extends Controller
      */
     public function actionIndex($id)
     {
-            $linhasCarrinho = LinhaCarrinho::find()->all();
+        LinhaFatura::deleteAll(['fatura_id' => $id]);
+
+        $linhasCarrinho = LinhaCarrinho::find()->all();
 
             foreach ($linhasCarrinho as $linhaCarrinho) {
                 $linhaFaturaExistente = LinhaFatura::find()->where(['fatura_id' => $id, 'artigo_id' => $linhaCarrinho->artigo_id])
