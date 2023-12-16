@@ -40,33 +40,33 @@ class LinhafaturaController extends Controller
      */
     public function actionIndex($id)
     {
-        $linhasCarrinho = LinhaCarrinho::find()->all();
+            $linhasCarrinho = LinhaCarrinho::find()->all();
 
-        foreach ($linhasCarrinho as $linhaCarrinho) {
-            $linhaFatura = new LinhaFatura();
+            foreach ($linhasCarrinho as $linhaCarrinho) {
+                $linhaFaturaExistente = LinhaFatura::find()->where(['fatura_id' => $id, 'artigo_id' => $linhaCarrinho->artigo_id])
+                    ->exists();
 
-            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-            $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
-            $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
-            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
-            $linhaFatura->fatura_id = 1;
+                if (!$linhaFaturaExistente) {
+                    $linhaFatura = new LinhaFatura();
 
-            if ($linhaFatura !== null) {
-                $linhaFatura->save();
-            } else {
-                // Está-me a dar erro caso não atribua valor ao fatura_id. Supostamente como atribuo valor ao id da fatura se só fica com id depois de atribuída?
-                print_r($linhaFatura->errors);
+                    $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+                    $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
+                    $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
+                    $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+                    $linhaFatura->fatura_id = $id;
+                    $linhaFatura->save();
+                }
             }
-        }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => LinhaFatura::find(),
+            'query' => LinhaFatura::find()->where(['fatura_id' => $id]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
+
 
 
 

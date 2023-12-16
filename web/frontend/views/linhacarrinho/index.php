@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>-->
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,8 +137,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5>Total</h5>
                         <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
                     </div>
-
-                    <a href="<?= Url::to(['/linhafatura/index','id' => $model->id]) ?>"
+                    <?php $userId = Yii::$app->user->id;?>
+                    <a href="<?= Url::to(['/linhafatura/index','id' => $userId]) ?>"
                        class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                 </div>
             </div>
