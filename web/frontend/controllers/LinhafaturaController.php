@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Artigo;
 use common\models\LinhaCarrinho;
 use common\models\LinhaFatura;
 use yii\data\ActiveDataProvider;
@@ -37,26 +38,37 @@ class LinhafaturaController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        $linhasCarrinho = LinhaCarrinho::find()->all();
+
+        foreach ($linhasCarrinho as $linhaCarrinho) {
+            $linhaFatura = new LinhaFatura();
+
+            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+            $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
+            $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
+            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+            $linhaFatura->fatura_id = 1;
+
+            if ($linhaFatura !== null) {
+                $linhaFatura->save();
+            } else {
+                // Está-me a dar erro caso não atribua valor ao fatura_id. Supostamente como atribuo valor ao id da fatura se só fica com id depois de atribuída?
+                print_r($linhaFatura->errors);
+            }
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => LinhaFatura::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
 
     /**
      * Displays a single LinhaFatura model.
@@ -146,5 +158,10 @@ class LinhafaturaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function getArtigo()
+    {
+        return $this->hasOne(Artigo::class, ['id' => 'artigo_id']);
     }
 }

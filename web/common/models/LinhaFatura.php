@@ -36,8 +36,8 @@ class LinhaFatura extends \yii\db\ActiveRecord
             [['quantidade', 'valor', 'valor_iva', 'artigo_id', 'fatura_id'], 'required'],
             [['quantidade', 'artigo_id', 'fatura_id'], 'integer'],
             [['valor', 'valor_iva'], 'number'],
-            [['artigo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['artigo_id' => 'id']],
-            [['fatura_id'], 'exist', 'skipOnError' => true, 'targetClass' => Faturas::class, 'targetAttribute' => ['fatura_id' => 'id']],
+            [['artigo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['artigo_id' => 'id']],
+            [['fatura_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fatura::class, 'targetAttribute' => ['fatura_id' => 'id']],
         ];
     }
 
@@ -63,7 +63,7 @@ class LinhaFatura extends \yii\db\ActiveRecord
      */
     public function getArtigo()
     {
-        return $this->hasOne(Artigos::class, ['id' => 'artigo_id']);
+        return $this->hasOne(Artigo::class, ['id' => 'artigo_id']);
     }
 
     /**
@@ -73,6 +73,6 @@ class LinhaFatura extends \yii\db\ActiveRecord
      */
     public function getFatura()
     {
-        return $this->hasOne(Faturas::class, ['id' => 'fatura_id']);
+        return $this->hasOne(Fatura::class, ['id' => 'fatura_id']);
     }
 }
