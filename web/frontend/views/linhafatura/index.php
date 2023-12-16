@@ -156,8 +156,9 @@ $user = User::find()->where(['id' => $userId])->one();
                         <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                     </div>
                 </div>
-                <a href="<?= Url::to(['fatura/index', 'id' => $userId]) ?>"
-                   class="btn btn-block btn-primary font-weight-bold py-3">Fazer Pagamento</a>
+                <?= Html::a('Criar Nova Fatura', ['/fatura/create', 'id' => Yii::$app->user->id], ['class' => 'btn btn-block btn-primary font-weight-bold py-3']) ?>
+
+
             </div>
         </div>
     </div>

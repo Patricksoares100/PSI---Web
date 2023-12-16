@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\Artigo;
 use common\models\LinhaCarrinho;
 use common\models\LinhaFatura;
+use common\models\Perfil;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,39 +38,26 @@ class LinhafaturaController extends Controller
      *
      * @return string
      */
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        LinhaFatura::deleteAll(['fatura_id' => $id]);
-
-        $linhasCarrinho = LinhaCarrinho::find()->all();
-
-            foreach ($linhasCarrinho as $linhaCarrinho) {
-                $linhaFaturaExistente = LinhaFatura::find()->where(['fatura_id' => $id, 'artigo_id' => $linhaCarrinho->artigo_id])
-                    ->exists();
-
-                if (!$linhaFaturaExistente) {
-                    $linhaFatura = new LinhaFatura();
-
-                    $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-                    $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
-                    $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
-                    $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
-                    $linhaFatura->fatura_id = $id;
-                    $linhaFatura->save();
-                }
-            }
-
         $dataProvider = new ActiveDataProvider([
-            'query' => LinhaFatura::find()->where(['fatura_id' => $id]),
+            'query' => LinhaFatura::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
-
-
-
 
     /**
      * Displays a single LinhaFatura model.
@@ -92,23 +79,18 @@ class LinhafaturaController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new LinhaFatura();
-
-        $model->artigo_id = intval($id);
-        $model->perfil_id = \Yii::$app->user->id;
-        $model->quantidade = LinhaCarrinho::findOne($model->artigo_id);
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        $linhasCarrinho = LinhaCarrinho::find()->where(['perfil_id' => $id])->all();
+        foreach ($linhasCarrinho as $linhaCarrinho) {
+            $linhaFatura = new LinhaFatura();
+            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+            $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
+            $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
+            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+            $linhaFatura->fatura_id = 100;
+            $linhaFatura->save();
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['index']);
     }
 
 
@@ -160,10 +142,5 @@ class LinhafaturaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function getArtigo()
-    {
-        return $this->hasOne(Artigo::class, ['id' => 'artigo_id']);
     }
 }

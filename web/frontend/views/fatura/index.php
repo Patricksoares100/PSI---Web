@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="fatura-index">
-    <?php /*
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -33,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-*/ ?>
 </div>
 
 

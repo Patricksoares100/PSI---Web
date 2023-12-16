@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\Fatura;
+use common\models\LinhaFatura;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,23 +40,15 @@ class FaturaController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => Fatura::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -77,19 +71,20 @@ class FaturaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Fatura();
+        $dataAtual = new \DateTime();
+        $valorArtigosSiva = LinhaFatura::find()->sum('valor');
+        $valorIva = LinhaFatura::find()->sum('valor_iva');
+        $valorFatura = $valorArtigosSiva + $valorIva;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        $fatura = new Fatura();
+        $fatura->data = $dataAtual->format('Y-m-d H:i:s');
+        $fatura->valor_fatura = $valorFatura;
+        $fatura->perfil_id = Yii::$app->user->id;
+        $fatura->estado = 'Emitida';
+        $fatura->save();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
+        return $this->redirect(['index']);
     }
 
     /**

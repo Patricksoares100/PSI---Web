@@ -37,7 +37,7 @@ class Fatura extends \yii\db\ActiveRecord
             [['valor_fatura'], 'number'],
             [['estado'], 'string'],
             [['perfil_id'], 'integer'],
-            [['perfil_id'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::class, 'targetAttribute' => ['perfil_id' => 'id']],
+            [['perfil_id'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['perfil_id' => 'id']],
         ];
     }
 
@@ -72,6 +72,6 @@ class Fatura extends \yii\db\ActiveRecord
      */
     public function getPerfil()
     {
-        return $this->hasOne(Perfis::class, ['id' => 'perfil_id']);
+        return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
 }
