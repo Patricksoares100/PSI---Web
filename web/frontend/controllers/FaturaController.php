@@ -70,7 +70,7 @@ class FaturaController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionCreate()
-    {
+    { /*
         $dataAtual = new \DateTime();
         $valorArtigosSiva = LinhaFatura::find()->sum('valor');
         $valorIva = LinhaFatura::find()->sum('valor_iva');
@@ -85,6 +85,7 @@ class FaturaController extends Controller
 
 
         return $this->redirect(['index']);
+ */
     }
 
     /**

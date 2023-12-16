@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\Fatura;
 use common\models\LinhaCarrinho;
 use common\models\LinhaFatura;
 use common\models\Perfil;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -79,21 +81,45 @@ class LinhafaturaController extends Controller
      */
     public function actionCreate($id)
     {
+        $dataAtual = new \DateTime();
+        $valorArtigosSiva = LinhaFatura::find()->sum('valor');
+        $valorIva = LinhaFatura::find()->sum('valor_iva');
+        $valorFatura = $valorArtigosSiva + $valorIva;
+
+        $fatura = new Fatura();
+        $fatura->data = $dataAtual->format('Y-m-d H:i:s');
+        $fatura->valor_fatura = $valorFatura;
+        $fatura->perfil_id = $id;
+        $fatura->estado = 'Emitida';
+        $fatura->save();
+
+        // Obtém o ID da fatura criada
+        $faturaId = $fatura->id;
+
+        LinhaFatura::deleteAll();
         $linhasCarrinho = LinhaCarrinho::find()->where(['perfil_id' => $id])->all();
         foreach ($linhasCarrinho as $linhaCarrinho) {
-            $linhaFatura = new LinhaFatura();
-            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-            $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
-            $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
-            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
-            $linhaFatura->fatura_id = 100;
-            $linhaFatura->save();
+            $linhaFaturaExistente = LinhaFatura::find()
+                ->where(['artigo_id' => $linhaCarrinho->artigo_id, 'fatura_id' => $faturaId])->exists();
+
+
+            $linhaFaturaArtigoExistente = LinhaFatura::find()->where(['artigo_id' => $linhaCarrinho->artigo_id])->exists();
+
+            if (!$linhaFaturaExistente && !$linhaFaturaArtigoExistente) {
+                $linhaFatura = new LinhaFatura();
+                $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+                $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
+                $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
+                $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+                $linhaFatura->fatura_id = $faturaId;
+                $linhaFatura->save();
+            }
         }
 
         return $this->redirect(['index']);
     }
 
-
+    
     /**
      * Updates an existing LinhaFatura model.
      * If update is successful, the browser will be redirected to the 'view' page.

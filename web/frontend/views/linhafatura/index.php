@@ -156,7 +156,7 @@ $user = User::find()->where(['id' => $userId])->one();
                         <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                     </div>
                 </div>
-                <?= Html::a('Criar Nova Fatura', ['/fatura/create', 'id' => Yii::$app->user->id], ['class' => 'btn btn-block btn-primary font-weight-bold py-3']) ?>
+                <?= Html::a('Criar Nova Fatura', ['/fatura/index', 'id' => Yii::$app->user->id], ['class' => 'btn btn-block btn-primary font-weight-bold py-3']) ?>
 
 
             </div>
