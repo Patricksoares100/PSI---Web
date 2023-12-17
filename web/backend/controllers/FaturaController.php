@@ -141,4 +141,23 @@ class FaturaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionAtualizarstatus($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            // Verifique o estado atual antes de fazer alterações
+            if ($model->estado === 'Emitida') {
+                // Altera o estado para "Paga"
+                $model->estado = 'Paga';
+            } elseif ($model->estado === 'Paga') {
+                // Altera o estado para "Emitida"
+                $model->estado = 'Emitida';
+            }
+            // Salva o modelo
+            $model->save();
+        }
+        return $this->redirect(['index']);
+    }
 }

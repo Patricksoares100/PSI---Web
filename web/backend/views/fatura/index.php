@@ -29,13 +29,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'data',
             'valor_fatura',
-            'estado',
+            'estado' => [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $buttonColorClass = ($model->estado == 'Emitida') ? 'btn btn-danger' : 'btn btn-success'; // ver se esta ativo ou não e dar uma cor
+
+                    return Html::a(
+                        $model->estado,
+                        ['fatura/atualizarstatus', 'id' => $model->id],
+                        ['class' => $buttonColorClass]
+                    );
+                },
+            ],
             'perfil_id',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Fatura $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+
+
             ],
         ],
     ]); ?>
