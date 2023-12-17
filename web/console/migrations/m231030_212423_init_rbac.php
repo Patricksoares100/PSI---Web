@@ -3,6 +3,7 @@
 use yii\db\Migration;
 use console\models\AuthorDadosPessoaisRule;
 use console\models\AlterarPasswordRule;
+use console\models\PermissoesProprioClienteRule;
 /**
  * Class m231030_212423_init_rbac
  */
@@ -20,7 +21,7 @@ class m231030_212423_init_rbac extends Migration
         $auth->add($rule);
         $rule = new AlterarPasswordRule;
         $auth->add($rule);
-        $rule = new PermissoesProprioCliente;
+        $rule = new PermissoesProprioClienteRule;
         $auth->add($rule);
 
         // Criar os roles - $auth->createRole();
