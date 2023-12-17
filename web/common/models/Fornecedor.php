@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Artigo;
 
 /**
  * This is the model class for table "fornecedores".
@@ -67,11 +68,19 @@ class Fornecedor extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['fornecedor_id' => 'id']);
+        return $this->hasMany(Artigo::class, ['fornecedor_id' => 'id']);
     }
 
     public static function getNumeroFornecedores(){
 
         return static::find()->count();
+    }
+    public static function canDeleteFornecedor($id)
+    {
+        // ver se existe algum artigo relacionado
+        $artigosRelacionados = Artigo::find()->where(['fornecedor_id' => $id])->one();
+
+        // Se existir, retorna false se existir retorna true
+        return $artigosRelacionados ? false : true;
     }
 }

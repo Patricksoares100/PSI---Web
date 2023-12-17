@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+
 /**
  * FornecedorController implements the CRUD actions for Fornecedor model.
  */
@@ -137,8 +138,12 @@ class FornecedorController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $podeApagar = Fornecedor::canDeleteFornecedor($id);
+        if($podeApagar == false){
+            \Yii::$app->session->setFlash('error',"Não pode remover o Fornecedor devido já estar relacionado com um ou mais artigo(s)!");
+        }else{
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 
