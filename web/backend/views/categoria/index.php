@@ -12,6 +12,12 @@ use yii\grid\GridView;
 $this->title = 'Categorias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+$error = Yii::$app->session->getFlash('error');
+if ($error) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+}
+?>
 <div class="categoria-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

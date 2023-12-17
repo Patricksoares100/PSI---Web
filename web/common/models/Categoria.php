@@ -58,4 +58,12 @@ class Categoria extends \yii\db\ActiveRecord
 
         return static::find()->count();
     }
+    public static function canDeleteCategoria($id)
+    {
+        // ver se existe algum artigo relacionado
+        $artigosRelacionados = Artigo::find()->where(['categoria_id' => $id])->one();
+
+        // Se existir, retorna false senao  true
+        return $artigosRelacionados ? false : true;
+    }
 }

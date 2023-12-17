@@ -140,8 +140,12 @@ class CategoriaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $podeApagar = Categoria::canDeleteCategoria($id);
+        if($podeApagar == false) {// false= nao pode apagar
+            \Yii::$app->session->setFlash('error', "Não pode remover a Categoria devido já estar relacionada com um ou mais artigo(s)!");
+        }else{
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 
