@@ -139,7 +139,7 @@ class FornecedorController extends Controller
     public function actionDelete($id)
     {
         $podeApagar = Fornecedor::canDeleteFornecedor($id);
-        if($podeApagar == false){
+        if($podeApagar == false){// false= nao pode apagar
             \Yii::$app->session->setFlash('error',"Não pode remover o Fornecedor devido já estar relacionado com um ou mais artigo(s)!");
         }else{
             $this->findModel($id)->delete();

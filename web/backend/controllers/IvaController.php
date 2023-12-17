@@ -150,7 +150,13 @@ class IvaController extends Controller
         $iva =$this->findModel($id);
         try {
             if ($iva->em_vigor == "Não") {
-                $this->findModel($id)->delete();
+                $podeApagar = Iva::canDeleteIva($id);
+                if($podeApagar == true){//true =  pode apagar
+                    $this->findModel($id)->delete();
+                }else{
+                    \Yii::$app->session->setFlash('error',"Não pode remover o Iva devido já estar relacionado com um ou mais artigo(s)!");
+                }
+
             } else {
                 throw new \Exception("Não pode apagar uma taxa de IVA em vigor");
             }

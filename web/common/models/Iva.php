@@ -59,4 +59,12 @@ class Iva extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Artigo::class, ['iva_id' => 'id']);
     }
+    public static function canDeleteIva($id)
+    {
+        // ver se existe algum artigo relacionado
+        $artigosRelacionados = Artigo::find()->where(['iva_id' => $id])->one();
+
+        // Se existir, retorna false senao retorna true
+        return $artigosRelacionados ? false : true;
+    }
 }

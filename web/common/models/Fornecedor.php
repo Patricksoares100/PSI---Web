@@ -80,7 +80,7 @@ class Fornecedor extends \yii\db\ActiveRecord
         // ver se existe algum artigo relacionado
         $artigosRelacionados = Artigo::find()->where(['fornecedor_id' => $id])->one();
 
-        // Se existir, retorna false se existir retorna true
+        // Se existir, retorna false senao  true
         return $artigosRelacionados ? false : true;
     }
 }
