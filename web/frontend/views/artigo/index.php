@@ -15,10 +15,34 @@ use yii\widgets\ActiveForm;
 $this->title = 'Artigos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <div class="artigos-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
     ?>
+
+    <div class="col-lg-4 col-6 text-left">
+        <div class="site-index">
+
+            <?php $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+            ]); ?>
+
+            <?= $form->field($searchModel, 'nome')->textInput(['maxlength' => true]) ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('Pesquisar', ['class' => 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
+    </div>
+
+</div>
+
 
 
     <div class="container-fluid">

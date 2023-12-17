@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Fatura;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,12 +22,29 @@ class FaturaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    // como n esta o only aqui , quer dizer q tudo é proibido
+                    'rules' => [
+                        [
+                            'actions' => ['error'], // so tem acesso quem esta logado
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                        [
+                            'actions' => ['update', 'view', 'index', 'delete'],
+                            'allow' => true,
+                            'roles' => ['permissionBackoffice'], //admin e funcionario
+                        ],
+
+                        'verbs' => [
+                            'class' => VerbFilter::className(),
+                            'actions' => [
+                                'delete' => ['POST'],
+                            ],
+                        ],
+                    ]
+                ]
             ]
         );
     }
@@ -147,15 +165,11 @@ class FaturaController extends Controller
         $model = $this->findModel($id);
 
         if ($model !== null) {
-            // Verifique o estado atual antes de fazer alterações
             if ($model->estado === 'Emitida') {
-                // Altera o estado para "Paga"
                 $model->estado = 'Paga';
             } elseif ($model->estado === 'Paga') {
-                // Altera o estado para "Emitida"
                 $model->estado = 'Emitida';
             }
-            // Salva o modelo
             $model->save();
         }
         return $this->redirect(['index']);
