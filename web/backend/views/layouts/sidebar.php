@@ -103,6 +103,15 @@ use common\models\Perfil;
                         ]
                     ],
 
+                    [
+                        'label' => 'Avaliações',
+                        'icon' => 'th',
+                        'badge' => '<span class="right badge badge-info"></span>',
+                        'items' => [
+                            ['label' => 'Ver todas', 'url' => ['avaliacao/index'], 'iconStyle' => 'far'],
+                        ]
+                    ],
+
                     // linha de separador
                     ['label' => 'Empresa', 'header' => true],
 
