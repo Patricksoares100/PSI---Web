@@ -183,7 +183,13 @@ class ArtigoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $podeApagar = Artigo::canDeleteArtigo($id);
+        if($podeApagar == false){// false= nao pode apagar
+            \Yii::$app->session->setFlash('error',"Não pode remover o Artigo devido já estar relacionado com uma ou mais fatura(s)!");
+        }else{
+            $this->findModel($id)->delete();
+        }
+
 
         return $this->redirect(['index']);
     }

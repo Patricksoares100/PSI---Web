@@ -190,5 +190,13 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Imagem::class, ['artigo_id' => 'id']);
     }
+    public static function canDeleteArtigo($id)
+    {
+        // ver se existe algum artigo relacionado
+        $faturasRelacionadas = LinhaFatura::find()->where(['artigo_id' => $id])->one();
+
+        // Se existir, retorna false senao  true
+        return $faturasRelacionadas ? false : true;
+    }
 
 }
