@@ -23,6 +23,8 @@ class ArtigoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                // Metemos aqui tudo publico?
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -53,18 +55,14 @@ class ArtigoController extends Controller
 
     public function search($params)
     {
-        $query = Artigo::find(); // substitua pelo nome do seu modelo
+        $query = Artigo::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        // Carrega os dados do formulário de pesquisa para validar e aplicar as condições de pesquisa
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-
-        // Adicione condições de pesquisa conforme necessário
 
         return $dataProvider;
     }

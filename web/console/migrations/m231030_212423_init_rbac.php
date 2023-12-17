@@ -20,6 +20,8 @@ class m231030_212423_init_rbac extends Migration
         $auth->add($rule);
         $rule = new AlterarPasswordRule;
         $auth->add($rule);
+        $rule = new PermissoesProprioCliente;
+        $auth->add($rule);
 
         // Criar os roles - $auth->createRole();
         $role_admin = $auth->createRole('Admin');
@@ -31,6 +33,7 @@ class m231030_212423_init_rbac extends Migration
         $role_cliente = $auth->createRole('Cliente');
         $auth->add($role_cliente);
 
+        //////////////////////// PERMISSÕES BACK-OFFICE
         //Criar permissões - $auth->createPermission();
         $permission_edit_roles = $auth->createPermission('editRoles');
         $permission_edit_roles->description = 'Permissão para editar os roles';
@@ -44,15 +47,9 @@ class m231030_212423_init_rbac extends Migration
         $permission_edit_empresa->description = 'Permissão para editar os dados da empresa';
         $auth->add($permission_edit_empresa);
 
-
         $permission_backoffice = $auth->createPermission('permissionBackoffice');
         $permission_backoffice->description = 'Permissão para entrar no backoffice';
         $auth->add($permission_backoffice);
-
-        $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
-        $permission_frontoffice->description = 'Permissão para entrar no front office';
-        $auth->add($permission_frontoffice);
-
 
         $permissaoDadosPessoais = $auth->createPermission('updateDadosPessoais');
         $permissaoDadosPessoais->description = 'Atualizar dados pessoais';
@@ -65,6 +62,17 @@ class m231030_212423_init_rbac extends Migration
         $permissaoAlterarPassword->ruleName = 'isAuthorPassword'; // Nome da regra
         $auth->add($permissaoAlterarPassword);
 
+        //////////////////////// PERMISSÕES FRONT-OFFICE
+        $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
+        $permission_frontoffice->description = 'Permissão para entrar no front office';
+        $auth->add($permission_frontoffice);
+
+        $permission_VerClientesFront = $auth->createPermission('verClientesFront');
+        $permission_VerClientesFront->description = 'Permissão para ver os seus Favoritos/Carrinho/Faturas como cliente';
+        $permission_VerClientesFront->ruleName = 'isClientPermission';
+        $auth->add($permission_VerClientesFront);
+
+
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
@@ -73,6 +81,7 @@ class m231030_212423_init_rbac extends Migration
 
         $auth->addChild($role_cliente, $permissaoDadosPessoais);
         $auth->addChild($role_cliente, $permissaoAlterarPassword);
+        $auth->addChild($role_cliente, $permission_VerClientesFront);
 
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $permission_edit_empresa);

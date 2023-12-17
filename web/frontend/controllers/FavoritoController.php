@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Favorito;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,18 @@ class FavoritoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['update', 'create', 'view'],
+                    'rules' => [
+                        [
+                            'actions' => ['update', 'view', 'create'],
+                            'allow' => true,
+                            'roles' => ['permissionFrontoffice'],
+                        ],
+                    ],
+                ],
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

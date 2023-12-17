@@ -25,6 +25,7 @@ class LinhafaturaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
