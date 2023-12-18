@@ -46,5 +46,8 @@ return [
         ],
         */
     ],
-    'params' => $params,
+    'params' => array_merge(
+        $params,
+        ['caminhoBackend' => 'http://brindeszorro-back.test']
+    ),
 ];
