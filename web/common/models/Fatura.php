@@ -74,4 +74,13 @@ class Fatura extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
+
+    public function canDeleteFatura()
+    {
+        // ver se existe alguma fatura no estado EMITIDA
+        $estadoFatura = $this->estado;
+
+        if ($estadoFatura == 'Emitida') // Se existir, retorna true senao false
+            return $estadoFatura ? true : false;
+    }
 }
