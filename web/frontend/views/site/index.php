@@ -264,7 +264,12 @@ $this->title = 'My Yii Application';
                         </div>
                     </div>
                 <?php else: ?>
-                    <h3 class="text-white mb-3">A definir categoria</h3>
+                    <div class="product-offer mb-30" style="height: 300px;">
+                        <img class="img-fluid" src="img/mochila.jpg" alt="">
+                        <div class="offer-text">
+                            <h3 class="text-white mb-3">A definir categoria</h3>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
             <div class="col-md-6">
@@ -279,7 +284,11 @@ $this->title = 'My Yii Application';
                            class="btn btn-primary">Shop Now</a>
                     </div>
                     <?php else: ?>
-                        <h3 class="text-white mb-3">A definir categoria</h3>
+                    <div class="product-offer mb-30" style="height: 300px;">
+                        <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
+                        <div class="offer-text">
+                            <h3 class="text-white mb-3">A definir categoria</h3>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
