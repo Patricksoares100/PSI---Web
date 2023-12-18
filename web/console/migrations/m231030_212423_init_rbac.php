@@ -57,11 +57,19 @@ class m231030_212423_init_rbac extends Migration
         $permissaoDadosPessoais->ruleName = 'isAuthorDadosPessoais'; // Nome da regra
         $auth->add($permissaoDadosPessoais);
 
-
         $permissaoAlterarPassword = $auth->createPermission('updatePassword');
         $permissaoAlterarPassword->description = 'Alterar Password';
         $permissaoAlterarPassword->ruleName = 'isAuthorPassword'; // Nome da regra
         $auth->add($permissaoAlterarPassword);
+
+        $permissaoEliminarAvaliacao = $auth->createPermission('deleteAvaliacao');
+        $permissaoEliminarAvaliacao->description = 'Eliminar Avaliacao';
+        $auth->add($permissaoEliminarAvaliacao);
+
+        $permissaoEliminarFornecedor = $auth->createPermission('deleteFornecedor');
+        $permissaoEliminarFornecedor->description = 'Eliminar Fornecedor';
+        $auth->add($permissaoEliminarFornecedor);
+
 
         //////////////////////// PERMISSÕES FRONT-OFFICE
         $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
@@ -73,12 +81,12 @@ class m231030_212423_init_rbac extends Migration
         $permission_VerClientesFront->ruleName = 'isClientPermission';
         $auth->add($permission_VerClientesFront);
 
-
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
         $auth->addChild($role_funcionario, $permissaoDadosPessoais);
         $auth->addChild($role_funcionario, $permissaoAlterarPassword);
+        $auth->addChild($role_funcionario, $permissaoEliminarFornecedor);
 
         $auth->addChild($role_cliente, $permissaoDadosPessoais);
         $auth->addChild($role_cliente, $permissaoAlterarPassword);
@@ -86,6 +94,7 @@ class m231030_212423_init_rbac extends Migration
 
         $auth->addChild($role_admin, $permission_edit_roles);
         $auth->addChild($role_admin, $permission_edit_empresa);
+        $auth->addChild($role_admin, $permissaoEliminarAvaliacao);
         $auth->addChild($role_admin, $role_funcionario);
 
         // o primeiro utilizador vai ser ADMIN

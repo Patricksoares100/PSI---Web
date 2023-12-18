@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Avaliacao;
+use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -139,8 +140,11 @@ class AvaliacaoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        if(!\Yii::$app->user->can('deleteAvaliacao')){
+            \Yii::$app->session->setFlash('error',"Não tem permissão para remover a Avaliação, contacte o Administrador!");
+        }else{
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 

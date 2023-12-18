@@ -22,7 +22,7 @@ class FornecedorController extends Controller
     {
         return array_merge(
             parent::behaviors(),
-            [   'access' => [
+            ['access' => [
                 'class' => AccessControl::class,
                 // como n esta o only aqui , quer dizer q tudo é proibido
                 'rules' => [
@@ -32,7 +32,7 @@ class FornecedorController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index', 'view','update', 'delete', 'create'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
                         'allow' => true,
                         'roles' => ['permissionBackoffice'],
                     ],
@@ -139,9 +139,9 @@ class FornecedorController extends Controller
     public function actionDelete($id)
     {
         $podeApagar = Fornecedor::canDeleteFornecedor($id);
-        if($podeApagar == false){// false= nao pode apagar
-            \Yii::$app->session->setFlash('error',"Não pode remover o Fornecedor devido já estar relacionado com um ou mais artigo(s)!");
-        }else{
+        if ($podeApagar == false) {// false= nao pode apagar
+            \Yii::$app->session->setFlash('error', "Não pode remover o Fornecedor devido já estar relacionado com um ou mais artigo(s)!");
+        } else if (\Yii::$app->user->can('deleteFornecedor')) {
             $this->findModel($id)->delete();
         }
         return $this->redirect(['index']);
