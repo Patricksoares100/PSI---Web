@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <table class="table table-light table-borderless table-hover text-center mb-0">
                 <thead class="thead-dark">
                 <tr>
-                    <th>Products</th>
+                    <th> </th>
+                    <th>Nome Artigo</th>
                     <th>Preço</th>
                     <th>Carrinho</th>
                     <th>Remove</th>
@@ -31,13 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($dataProvider->models as $model) : ?>
                     <tbody class="align-middle">
                     <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> <?= $model->artigo->nome ?>
+                        <td class="align-middle"><img src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->artigo->imagens[0]->image_path?>" alt="" style="width: 50px;">
                         </td>
-                        <td class="align-middle">Product Name</td>
+                        <td class="align-middle"><?= $model->artigo->nome ?></td>
+                        <td class="align-middle"><?= $model->artigo->preco ?></td>
                         <td class="align-middle">
                             <a class="btn btn-outline-dark btn-square"
-                               href="<?= Url::to(['linhacarrinho/create', 'id' => $model->artigo_id]) ?>"><i
-                                        class="fa fa-shopping-cart"></i></a>    <!-- Aqui fica $model->artigo_id porque queremos o id do artigo selecionado -->
+                               href="<?= Url::to(['linhacarrinho/create', 'id' => $model->artigo_id]) ?>">
+                                <i class="fa fa-shopping-cart"></i></a>    <!-- Aqui fica $model->artigo_id porque queremos o id do artigo selecionado -->
                         </td>
                         <td class="align-middle">
                             <?= Html::a('X', ['/favorito/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger', 'data-method' => 'post']) ?>
