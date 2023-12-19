@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4">
                                 <div class="product-img position-relative overflow-hidden">
-                                    <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[0]->image_path?>" alt="Imagem do artigo">
+                                    <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[0]->image_path?>" style="width: 5cm; height: 5cm;"  alt="Imagem do artigo">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['linhacarrinho/create', 'id' => $model->id])?>"><i class="fa fa-shopping-cart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['favorito/create', 'id' => $model->id])?>"><i class="far fa-heart"></i></a>

@@ -180,7 +180,7 @@ $this->title = 'My Yii Application';
                     <a class="text-decoration-none" href="">
                         <div class="cat-item d-flex align-items-center mb-4">
                             <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                                <img class="img-fluid" src="img/cat-1.jpg" alt="">
+                                <img class="img-fluid"  alt="">
                             </div>
                             <div class="flex-fill pl-3">
                                 <h6><?= Html::a($categoria->nome, ['artigo/categorias', 'id' => $categoria->id]) ?></h6>
@@ -212,13 +212,11 @@ $this->title = 'My Yii Application';
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $artigo->imagens[0]->image_path?>" alt="">
+                            <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $artigo->imagens[0]->image_path?>" style="width: 5cm; height: 5cm;"  alt="Imagem do <?= $artigo->nome?>">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                             class="fa fa-shopping-cart"></i></a>
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
@@ -231,14 +229,7 @@ $this->title = 'My Yii Application';
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5><?= number_format($artigo->preco, 2) ?>€</h5>
                             </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
-                            </div>
+
                         </div>
                     </div>
                 </div>

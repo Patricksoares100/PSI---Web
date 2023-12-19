@@ -62,7 +62,7 @@ class Fatura extends \yii\db\ActiveRecord
      */
     public function getLinhasFaturas()
     {
-        return $this->hasMany(LinhasFaturas::class, ['fatura_id' => 'id']);
+        return $this->hasMany(LinhasFatura::class, ['fatura_id' => 'id']);
     }
 
     /**

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Fatura $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Faturas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Fatura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'data',
             'valor_fatura',
             'estado',
