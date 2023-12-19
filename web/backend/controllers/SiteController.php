@@ -5,8 +5,10 @@ namespace backend\controllers;
 use backend\models\AuthAssignment;
 use backend\models\SignupForm;
 use common\models\Artigo;
+use common\models\Avaliacao;
 use common\models\Categoria;
 use common\models\Empresa;
+use common\models\Fatura;
 use common\models\Fornecedor;
 use common\models\LoginForm;
 use Yii;
@@ -91,6 +93,9 @@ class SiteController extends Controller
                 'numeroFuncionarios' => AuthAssignment::getNumeroFuncionarios(),
                 'numeroClientes' => AuthAssignment::getNumeroClientes(),
                 'empresa' => Empresa::find()->one(),
+                'numeroFaturasPagas' => Fatura::getNumeroFaturasPagas(),
+                'numeroAvaliacoes' => Avaliacao::getNumeroAvaliacoes(),
+                'numeroFaturasEmitidas' => Fatura::getNumeroFaturasEmitidas(),
             ]);
         }
 

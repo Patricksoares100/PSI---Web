@@ -83,4 +83,14 @@ class Fatura extends \yii\db\ActiveRecord
         if ($estadoFatura == 'Emitida') // Se existir, retorna true senao false
             return $estadoFatura ? true : false;
     }
+
+    public static function getNumeroFaturasPagas()
+    {
+        return static::find()->andWhere(['estado' => 'Paga'])->count();
+    }
+
+    public static function getNumeroFaturasEmitidas()
+    {
+        return static::find()->andWhere(['Estado' => 'Emitida'])->count();
+    }
 }
