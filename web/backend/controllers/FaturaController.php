@@ -141,10 +141,10 @@ class FaturaController extends Controller
     {
         $fatura = $this->findModel($id);
 
-        if ($fatura->canDeleteFatura()) {// true = pode apagar
+        if ($fatura->canDeleteFatura()) { // SE TIVER PERMISSÃO PARA APAGAR, APAGA A FATURA
             $fatura->delete();
         } else {
-            \Yii::$app->session->setFlash('error', "Não pode remover a Fatura criada!");
+            \Yii::$app->session->setFlash('error', "Não pode remover a Fatura já paga, contacte o Administrador!");
         }
         return $this->redirect(['index']);
     }
