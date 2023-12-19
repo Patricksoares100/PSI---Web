@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($dataProvider->models as $model) : ?>
                     <tbody class="align-middle">
                     <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"></td>
+                        <td class="align-middle"><img src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->artigo->imagens[0]->image_path?>" alt="" style="width: 50px;"></td>
                         <td class="align-middle"><?= $model->artigo->nome ?> </td>
                         <td class="align-middle"><?= $model->artigo->preco ?> €</td>
                         <!-- vai buscar ao modelo o getArtigo - MASTER DETAIL-->
