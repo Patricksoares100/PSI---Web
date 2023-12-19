@@ -57,34 +57,34 @@ if ($error) {
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => 'XXX',
-            'text' => 'Total de encomendas anual',
+            'title' => $numeroFaturasPagas,
+            'text' => 'Total Faturas Pagas',
             'icon' => 'fas fa-shopping-cart',
             'theme' => 'gradient-success'
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?= \hail812\adminlte\widgets\SmallBox::widget([
-            'title' => 'XXX',
-            'text' => 'Artigos em Carrinho',
+            'title' => $numeroAvaliacoes,
+            'text' => 'Total Avaliações',
             'icon' => 'fas fa-shopping-cart',
         ]) ?>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
         <?php $smallBox = \hail812\adminlte\widgets\SmallBox::begin([
-            'title' => 'XXX',
-            'text' => 'Artigos nos favoritos',
+            'title' => $numeroFaturasEmitidas ,
+            'text' => 'Total Faturas por Pagar',
             'icon' => 'fas fa-shopping-cart',
             'theme' => 'success'
         ]) ?>
         <?php \hail812\adminlte\widgets\SmallBox::end() ?>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-        <?= \hail812\adminlte\widgets\SmallBox::widget([
+    <!--<div class="col-lg-4 col-md-6 col-sm-6 col-12">
+        <//?= \hail812\adminlte\widgets\SmallBox::widget([
             'title' => 'XXX',
             'text' => 'Artigo mais vendido',
             'icon' => 'fas fa-user-plus',
             'theme' => 'gradient-success'
         ]) ?>
-    </div>
+    </div>-->
 </div>

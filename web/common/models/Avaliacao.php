@@ -74,4 +74,9 @@ class Avaliacao extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
     }
+
+    public static function getNumeroAvaliacoes()
+    {
+        return static::find()->count();
+    }
 }
