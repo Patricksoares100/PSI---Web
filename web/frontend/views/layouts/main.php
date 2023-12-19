@@ -89,9 +89,9 @@ AppAsset::register($this);
                                 // Mostra o botão de login
                                 echo Html::a('Login', Url::to(['site/login']), ['class' => 'btn btn-primary']);
                             } else {
-                                echo '<div class="btn-group show">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="true">' . Yii::$app->user->identity->username . '</button>
-                                <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
+                                echo '<div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' . Yii::$app->user->identity->username . '</button>
+                                <div class="dropdown-menu dropdown-menu-right" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
                                     ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                     ' . Html::a('Alterar Dados', ['/perfil/update', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                      ' . Html::a('Minhas Avaliações', ['/avaliacao/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
@@ -171,9 +171,8 @@ AppAsset::register($this);
                 </div>
                 <div class="col-lg-9">
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                        <a href="" class="text-decoration-none d-block d-lg-none">
-                            <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
-                            <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+                        <a href="<?= Url::to(['/site/index']) ?>" class="text-decoration-none d-block d-lg-none">
+                            <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
                         </a>
                         <button type="button" class="navbar-toggler" data-toggle="collapse"
                                 data-target="#navbarCollapse">
