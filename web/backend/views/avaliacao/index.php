@@ -35,6 +35,7 @@ if ($error) {
             'perfil_id',
             [
                 'class' => ActionColumn::className(),
+                'template' => Yii::$app->user->can('deleteAvaliacao') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Avaliacao $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

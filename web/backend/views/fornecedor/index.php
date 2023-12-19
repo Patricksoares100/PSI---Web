@@ -39,6 +39,7 @@ if ($error) {
             //'morada',
             [
                 'class' => ActionColumn::className(),
+                'template' => Yii::$app->user->can('deleteFornecedor') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Fornecedor $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
