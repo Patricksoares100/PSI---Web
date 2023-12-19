@@ -72,16 +72,17 @@ AppAsset::register($this);
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center h-100">
                         <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/about']) ?>">About</a>
-                        <?php
-                        if (Yii::$app->user->isGuest) {
-                            echo '<a class="text-body mr-3" href="' . \yii\helpers\Url::to(['/site/signup']) . '">Registar</a>';
-                        }
-                        ?>
+                        <a class="text-body mr-3" href="<?= \yii\helpers\Url::to(['/site/contact']) ?>">Entre em Contacto</a>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
                         <div class="btn-group">
+                            <?php
+                            if (Yii::$app->user->isGuest) {
+                                echo '<a class="btn btn-primary" href="' . \yii\helpers\Url::to(['/site/signup']) . '">Registo</a>';
+                            }
+                            ?>
                             <?php
                             $idUser = Yii::$app->user->id;
                             // Verifica se o usuário está logado
