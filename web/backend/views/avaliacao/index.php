@@ -28,11 +28,13 @@ if ($error) {
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'comentario',
             'classificacao',
-            'artigo_id',
-            'perfil_id',
+            //'artigo_id',
+            'artigo.nome',
+            //'perfil_id',
+            'perfil.nome',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Avaliacao $model, $key, $index, $column) {

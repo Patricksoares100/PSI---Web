@@ -48,10 +48,12 @@ class Avaliacao extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'comentario' => 'Comentario',
-            'classificacao' => 'Classificacao',
+            'comentario' => 'Comentário',
+            'classificacao' => 'Classificação',
             'artigo_id' => 'Artigo ID',
             'perfil_id' => 'Perfil ID',
+            'artigo.nome' => 'Nome do Artigo',
+            'perfil.nome' => 'Nome do Cliente'
         ];
     }
 
