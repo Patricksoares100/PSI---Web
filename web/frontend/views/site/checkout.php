@@ -124,8 +124,9 @@ $user = User::find()->where(['id' => $userId])->one();
                 <h5 class="section-title position-relative text-uppercase mb-3"><span
                             class="bg-secondary pr-3">Payment</span></h5>
                 <div class="bg-light p-30">
-                    <a href="<?= Url::to(['fatura/index', 'id' => $model->id]) ?>"
-                       class="btn btn-block btn-primary font-weight-bold py-3">Fazer Pagamento</a>
+                    <a href="<?= Url::to(['linhafatura/create', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Fazer Pagamento</a>
+
+
                 </div>
             </div>
         </div>
