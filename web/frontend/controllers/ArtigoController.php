@@ -53,36 +53,21 @@ class ArtigoController extends Controller
         ]);
     }
 
-    public function search($params)
+    public function actionCategorias($id)
     {
-        $query = Artigo::find();
+        $searchModel = new ArtigoSearch();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        if (!($this->load($params) && $this->validate())) {
-            return $dataProvider;
+        if ($id != null) {
+            $searchModel->categoria_id = $id;
         }
 
-        return $dataProvider;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
-
-
-       public function actionCategorias($id)
-       {
-           $searchModel = new ArtigoSearch();
-
-           if ($id != null) {
-               $searchModel->categoria_id = $id;
-           }
-
-           $dataProvider = $searchModel->search($this->request->queryParams);
-
-           return $this->render('index', [
-               'searchModel' => $searchModel,
-               'dataProvider' => $dataProvider,
-           ]);
-       }
 
     /**
      * Displays a single Artigos model.

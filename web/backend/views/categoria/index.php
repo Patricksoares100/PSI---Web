@@ -36,6 +36,7 @@ if ($error) {
             'nome',
             [
                 'class' => ActionColumn::className(),
+                'template' => Yii::$app->user->can('deleteCategoria') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Categoria $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

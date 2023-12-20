@@ -50,6 +50,7 @@ if ($error) {
             'percentagem',
             [
                 'class' => ActionColumn::className(),
+                'template' => Yii::$app->user->can('deleteIva') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Iva $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }

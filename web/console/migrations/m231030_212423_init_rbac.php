@@ -74,6 +74,18 @@ class m231030_212423_init_rbac extends Migration
         $permissaoEliminarFatura->description = 'Eliminar Fatura';
         $auth->add($permissaoEliminarFatura);
 
+        $permissaoEliminarArtigo = $auth->createPermission('deleteArtigo');
+        $permissaoEliminarArtigo->description = 'Eliminar Artigo';
+        $auth->add($permissaoEliminarArtigo);
+
+        $permissaoEliminarIva = $auth->createPermission('deleteIva');
+        $permissaoEliminarIva->description = 'Eliminar Iva';
+        $auth->add($permissaoEliminarIva);
+
+        $permissaoEliminarCategoria = $auth->createPermission('deleteCategoria');
+        $permissaoEliminarCategoria->description = 'Eliminar Categorias';
+        $auth->add($permissaoEliminarCategoria);
+
 
         //////////////////////// PERMISSÕES FRONT-OFFICE
         $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
@@ -90,7 +102,6 @@ class m231030_212423_init_rbac extends Migration
         $auth->addChild($role_funcionario, $permission_backoffice);
         $auth->addChild($role_funcionario, $permissaoDadosPessoais);
         $auth->addChild($role_funcionario, $permissaoAlterarPassword);
-        $auth->addChild($role_funcionario, $permissaoEliminarFornecedor);
 
         $auth->addChild($role_cliente, $permissaoDadosPessoais);
         $auth->addChild($role_cliente, $permissaoAlterarPassword);
@@ -100,6 +111,9 @@ class m231030_212423_init_rbac extends Migration
         $auth->addChild($role_admin, $permission_edit_empresa);
         $auth->addChild($role_admin, $permissaoEliminarAvaliacao);
         $auth->addChild($role_admin, $permissaoEliminarFatura);
+        $auth->addChild($role_admin, $permissaoEliminarFornecedor);
+        $auth->addChild($role_admin, $permissaoEliminarIva);
+        $auth->addChild($role_admin, $permissaoEliminarCategoria);
         $auth->addChild($role_admin, $role_funcionario);
 
         // o primeiro utilizador vai ser ADMIN

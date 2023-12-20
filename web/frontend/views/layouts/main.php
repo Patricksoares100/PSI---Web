@@ -4,6 +4,7 @@
 
 /** @var string $content */
 
+use app\models\ArtigoSearch;
 use common\models\Avaliacao;
 use common\models\Categoria;
 use common\models\Empresa;
@@ -14,6 +15,7 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 
 AppAsset::register($this);
@@ -116,17 +118,28 @@ AppAsset::register($this);
                             <?php } ?>
                         </a>
                     </div>
+                    <?php
+
+                    $searchModel = new ArtigoSearch();
+
+                    ?>
+
                     <div class="col-lg-4 col-6 text-left">
-                        <form action="">
+                        <?php $form = ActiveForm::begin([
+                            'action' => ['artigo/index'],
+                            'method' => 'get',
+                            'options' => ['class' => 'form-inline'],
+                        ]); ?>
+                        <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search for products">
-                                <div class="input-group-append">
-                                    <span class="input-group-text bg-transparent text-primary">
-                                        <i class="fa fa-search"></i>
-                                    </span>
-                                </div>
+                                <?= $form->field($searchModel, 'nome')->textInput(['maxlength' => true])->label(false)  ?>
                             </div>
-                        </form>
+                            <span class="text-primary" style="margin-left: 10px;">
+                                    <?= Html::submitButton('Pesquisar', ['class' => 'btn btn-primary']) ?>
+                                </span>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+
                     </div>
                     <div class="col-lg-4 col-6 text-right">
 
