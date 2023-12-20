@@ -13,12 +13,14 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'api' => [
-            'class' => 'app\modules\api\APIModule',
+            'class' => 'backend\modules\api\APIModule',
         ],
     ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -44,8 +46,10 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
             ],
         ],
 

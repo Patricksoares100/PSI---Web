@@ -1,8 +1,9 @@
 <?php
 
-namespace app\modules\api\controllers;
+namespace backend\modules\api\controllers;
+use yii\rest\ActiveController;
 
-class UserController extends \yii\web\ActiveController
+class UserController extends ActiveController
 {
     public $modelClass = 'common\models\User';
 }

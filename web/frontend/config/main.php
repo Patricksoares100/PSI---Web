@@ -44,7 +44,7 @@ return [
             'rules' => [
             ],
         ],
-        
+
     ],
     'params' => array_merge(
         $params,
