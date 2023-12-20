@@ -186,7 +186,11 @@ AppAsset::register($this);
                 <div class="col-lg-9">
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                         <a href="<?= Url::to(['/site/index']) ?>" class="text-decoration-none d-block d-lg-none">
-                            <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1"><?= $empresa->nome ?></span>
+                            <?php if ($empresa) {
+                            echo '<span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">$empresa->nome </span>';
+                            }else{
+                            echo '<span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Insira uma Empresa</span>';
+                            }?>
                         </a>
                         <button type="button" class="navbar-toggler" data-toggle="collapse"
                                 data-target="#navbarCollapse">
