@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "faturas".
  *
  * @property int $id
- * @property string $data
+ * @property DateTime $data
  * @property float $valor_fatura
  * @property string|null $estado
  * @property int $perfil_id
@@ -73,6 +73,34 @@ class Fatura extends \yii\db\ActiveRecord
     public function getPerfil()
     {
         return $this->hasOne(Perfil::class, ['id' => 'perfil_id']);
+    }
+
+// No modelo Fatura (common\models\Fatura)
+
+    public function createFatura($iduser, $valorTotal)
+    {
+        $dataAtual = new \DateTime("now");
+        $fatura = new Fatura();
+        $fatura->data = $dataAtual->format('Y-m-d H:i:s');
+        $fatura->valor_fatura = $valorTotal;
+        $fatura->perfil_id = $iduser;
+        $fatura->estado = 'Emitida';
+        $fatura->save();
+
+        return $fatura;
+    }
+
+
+    public function updateFatura($id)
+    {
+        $fatura = Fatura::findOne($id);
+        $valorArtigosSiva = LinhaFatura::find()->sum('valor');
+        $valorIva = LinhaFatura::find()->sum('valor_iva');
+        $valorFatura = $valorArtigosSiva + $valorIva;
+        $fatura->valor_fatura = $valorFatura;
+        $fatura->save();
+
+        return $fatura;
     }
 
     public function canDeleteFatura()

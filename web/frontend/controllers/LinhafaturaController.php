@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Artigo;
 use common\models\Fatura;
 use common\models\LinhaCarrinho;
 use common\models\LinhaFatura;
@@ -41,10 +42,11 @@ class LinhafaturaController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($iduser)
     {
+
         $dataProvider = new ActiveDataProvider([
-            'query' => LinhaFatura::find(),
+            'query' => LinhaFatura::find($iduser),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -80,47 +82,43 @@ class LinhafaturaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id)
+    public function actionCreate($iduser)
     {
-        $dataAtual = new \DateTime();
-        $valorArtigosSiva = LinhaFatura::find()->sum('valor');
-        $valorIva = LinhaFatura::find()->sum('valor_iva');
-        $valorFatura = $valorArtigosSiva + $valorIva;
+        $linhasCarrinho = LinhaCarrinho::find()->where(['perfil_id' => $iduser])->all();
+        $valorSemIva = 0;
+        $valorIva = 0;
 
+        foreach ($linhasCarrinho as $linhaCarrinho) {
+            $artigo = $linhaCarrinho->artigo;
+            if ($linhaCarrinho->perfil_id == $iduser && $artigo) {
+                $valorSemIva += $linhaCarrinho->quantidade * $artigo->preco;
+                $valorIva += $linhaCarrinho->quantidade * (($artigo->iva->percentagem * $artigo->preco) / 100);
+            }
+        }
+        // vai correr todas as linhas carrinho para depois as somar e somar ao valor total da datura
         $fatura = new Fatura();
-        $fatura->data = $dataAtual->format('Y-m-d H:i:s');
-        $fatura->valor_fatura = $valorFatura;
-        $fatura->perfil_id = $id;
+        $fatura->data = (new \DateTime())->format('Y-m-d H:i:s');
+        $fatura->valor_fatura = $valorSemIva + $valorIva;
+        $fatura->perfil_id = $iduser;
         $fatura->estado = 'Emitida';
         $fatura->save();
 
-        // Obtém o ID da fatura criada
         $faturaId = $fatura->id;
-
-        LinhaFatura::deleteAll();
-        $linhasCarrinho = LinhaCarrinho::find()->where(['perfil_id' => $id])->all();
+        // aqui depois de criar a fatura vai crar as linhas
         foreach ($linhasCarrinho as $linhaCarrinho) {
-            $linhaFaturaExistente = LinhaFatura::find()
-                ->where(['artigo_id' => $linhaCarrinho->artigo_id, 'fatura_id' => $faturaId])->exists();
-
-
-            $linhaFaturaArtigoExistente = LinhaFatura::find()->where(['artigo_id' => $linhaCarrinho->artigo_id])->exists();
-
-            if (!$linhaFaturaExistente && !$linhaFaturaArtigoExistente) {
                 $linhaFatura = new LinhaFatura();
                 $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-                $linhaFatura->valor = $linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco;
-                $linhaFatura->valor_iva = $linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100);
+                $linhaFatura->valor = number_format(($linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco), 2);
+                $linhaFatura->valor_iva = number_format($linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100), 2);
                 $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
                 $linhaFatura->fatura_id = $faturaId;
                 $linhaFatura->save();
-            }
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['fatura/view', 'id' => $faturaId, 'iduser' => $iduser]);
     }
 
-    
+
     /**
      * Updates an existing LinhaFatura model.
      * If update is successful, the browser will be redirected to the 'view' page.

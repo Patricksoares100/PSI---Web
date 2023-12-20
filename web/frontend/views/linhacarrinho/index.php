@@ -137,9 +137,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5>Total</h5>
                         <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
                     </div>
-                    <a href="<?= Url::to(['/linhafatura/create', 'id' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
-
-
+                    <?php if (!empty($dataProvider->models)) : ?>
+                        <a href="<?= Url::to(['/site/checkout', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -151,19 +151,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-<!-- Contact Javascript File -->
-<script src="mail/jqBootstrapValidation.min.js"></script>
-<script src="mail/contact.js"></script>
-
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
 </body>
 
 </html>

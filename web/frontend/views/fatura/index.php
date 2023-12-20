@@ -20,7 +20,14 @@ $this->params['breadcrumbs'][] = $this->title;
            // ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'data',
+            [
+                'attribute' => 'data',
+                'value' => function ($model, $key, $index, $column) {
+                    return $model->data;
+                },
+                'format' => ['date', 'php:d/m/Y']
+
+            ],
             'valor_fatura',
             'estado',
             'perfil_id',
