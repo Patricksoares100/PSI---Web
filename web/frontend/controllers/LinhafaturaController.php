@@ -106,14 +106,22 @@ class LinhafaturaController extends Controller
         $faturaId = $fatura->id;
         // aqui depois de criar a fatura vai crar as linhas
         foreach ($linhasCarrinho as $linhaCarrinho) {
-                $linhaFatura = new LinhaFatura();
-                $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-                $linhaFatura->valor = number_format(($linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco), 2);
-                $linhaFatura->valor_iva = number_format($linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100), 2);
-                $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
-                $linhaFatura->fatura_id = $faturaId;
-                $linhaFatura->save();
+            $linhaFatura = new LinhaFatura();
+            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+            $linhaFatura->valor = number_format(($linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco), 2);
+            $linhaFatura->valor_iva = number_format($linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100), 2);
+            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+            $linhaFatura->fatura_id = $faturaId;
+            $linhaFatura->save();
+
+
+
+            $artigo = Artigo::findOne($linhaCarrinho->artigo_id);
+            $artigo->stock_atual -= $linhaCarrinho->quantidade;
+            $artigo->save();
+
         }
+
 
         return $this->redirect(['fatura/view', 'id' => $faturaId, 'iduser' => $iduser]);
     }
