@@ -121,6 +121,7 @@ class LinhafaturaController extends Controller
             $artigo->save();
 
         }
+        LinhaCarrinho::deleteAll(['perfil_id' => $iduser]);
 
 
         return $this->redirect(['fatura/view', 'id' => $faturaId, 'iduser' => $iduser]);

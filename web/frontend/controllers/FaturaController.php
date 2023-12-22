@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Empresa;
 use common\models\Fatura;
 use common\models\LinhaFatura;
 use Yii;
@@ -74,6 +75,9 @@ class FaturaController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'empresa' => Empresa::find()->one(),
+            'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
+
         ]);
     }
 
