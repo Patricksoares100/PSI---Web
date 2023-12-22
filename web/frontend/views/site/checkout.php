@@ -35,11 +35,6 @@ GridView::widget([
     ],
 ]);
 ?>
-<?php
-$userId = Yii::$app->user->id; // vai receber o ID do utilizador logado
-$perfil = Perfil::find()->where(['id' => $userId])->one();
-$user = User::find()->where(['id' => $userId])->one();
-?>
 
 <!-- Checkout Start -->
 <div class="container-fluid">
@@ -50,7 +45,7 @@ $user = User::find()->where(['id' => $userId])->one();
             <div class="bg-light p-30 mb-5">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Primeiro Nome</label>
+                        <label>Nome</label>
                         <input class="form-control" type="text" value="<?= $perfil->nome ?>">
                     </div>
                     <div class="col-md-6 form-group">
@@ -70,12 +65,12 @@ $user = User::find()->where(['id' => $userId])->one();
                         <input class="form-control" type="text" value="<?= $perfil->morada ?>">
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Localidade</label>
-                        <input class="form-control" type="text" value="<?= $perfil->localidade ?>">
-                    </div>
-                    <div class="col-md-6 form-group">
                         <label>Codigo Postal</label>
                         <input class="form-control" type="text" value="<?= $perfil->codigo_postal ?>">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Localidade</label>
+                        <input class="form-control" type="text" value="<?= $perfil->localidade ?>">
                     </div>
                 </div>
             </div>
@@ -124,7 +119,7 @@ $user = User::find()->where(['id' => $userId])->one();
                 <h5 class="section-title position-relative text-uppercase mb-3"><span
                             class="bg-secondary pr-3">Payment</span></h5>
                 <div class="bg-light p-30">
-                    <a href="<?= Url::to(['linhafatura/create', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Fazer Pagamento</a>
+                    <a href="<?= Url::to(['linhafatura/create', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Emitir Fatura</a>
 
 
                 </div>

@@ -15,6 +15,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Perfil;
+use common\models\User;
 
 /**
  * Site controller
@@ -96,7 +98,12 @@ class SiteController extends Controller
 
     public function actionCheckout()
     {
-        return $this->render('checkout');
+        $userId =  Yii::$app->user->id;
+        return $this->render('checkout',[
+        'userId' => $userId,
+        'perfil' => Perfil::find()->where(['id' => $userId])->one(),
+        'user' => User::find()->where(['id' => $userId])->one(),
+        ]);
     }
 
 
