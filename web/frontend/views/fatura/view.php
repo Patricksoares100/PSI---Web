@@ -60,8 +60,13 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php $subTotalSemIva = 0;
+                        $ivaTotal = 0; ?>
                 <?php foreach ($linhasFaturas as $linha) { ?>
 
+                   <?php  $subTotalSemIva += $linha->artigo->preco * $linha->quantidade;
+                    $ivaTotal += ($linha->artigo->iva->percentagem * ($linha->artigo->preco * $linha->quantidade)) / 100;
+?>
                     <tr>
 
                         <td><?php echo $linha->quantidade; ?></td><!-- Qtd -->
@@ -85,10 +90,10 @@
 
         <div class="col-6">
             <p class="lead">Payment Methods:</p>
-            <img src="../../dist/img/credit/visa.png" alt="Visa">
-            <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-            <img src="../../dist/img/credit/american-express.png" alt="American Express">
-            <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+            <img src="/img/visa.png" alt="Visa">
+            <img src="/img/mastercard.png" alt="Mastercard">
+            <img src="/img/american-express.png" alt="American Express">
+            <img src="/img/paypal2.png" alt="Paypal">
 
         </div>
 
@@ -103,11 +108,11 @@
                     </tr>
                     <tr>
                         <th style="width:50%">Subtotal:</th>
-                        <td>aqui so o totalsem iva €</td>
+                        <td><?= $subTotalSemIva ?> €</td>
                     </tr>
                     <tr>
                         <th>IVA Total:</th>
-                        <td>$10.34 €</td>
+                        <td><?=$ivaTotal?> €</td>
                     </tr>
 
                     <tr>
@@ -123,12 +128,11 @@
 
     <div class="row no-print">
         <div class="col-12">
-            <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-            <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                Payment
-            </button>
+            <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Imprimir</a>
+            <?php if($model->estado == 'Emitida') :?> <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Pagar </button>
+            <?php endif;  ?>
             <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                <i class="fas fa-download"></i> Generate PDF
+                <i class="fas fa-download"></i> Gerar PDF
             </button>
         </div>
     </div>
