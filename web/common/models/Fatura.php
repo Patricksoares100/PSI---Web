@@ -51,7 +51,7 @@ class Fatura extends \yii\db\ActiveRecord
             'data' => 'Data',
             'valor_fatura' => 'Valor Fatura',
             'estado' => 'Estado',
-            'perfil_id' => 'Perfil ID',
+            'perfil.nome' => 'Nome do Cliente',
         ];
     }
 

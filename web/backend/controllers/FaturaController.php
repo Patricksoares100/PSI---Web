@@ -32,7 +32,7 @@ class FaturaController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['update', 'view', 'index', 'delete'],
+                            'actions' => ['update', 'view', 'index', 'delete', 'atualizarstatus'],
                             'allow' => true,
                             'roles' => ['permissionBackoffice'], //admin e funcionario
                         ],

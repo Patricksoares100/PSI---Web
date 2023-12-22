@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data',
             'valor_fatura',
             'estado',
-            'perfil_id',
+            'perfil.nome',
         ],
     ]) ?>
 
