@@ -164,6 +164,12 @@ class FavoritoController extends Controller
 
         return $this->redirect(['index']);
     }
+    public function actionEnviarcarrinho($id, $idFav){
+        Favorito::deleteAll(['id'=> $idFav]);
+        return $this->redirect(['linhacarrinho/create',
+            'id' => $id,
+            ]);
+    }
 
     //COLOCAR ESTA CONFIRMAÇÃO NO BOTAO DE REMOVER DOS FAVORITOS??????
 

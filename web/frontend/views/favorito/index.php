@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="align-middle"><?= $model->artigo->preco ?></td>
                         <td class="align-middle">
                             <a class="btn btn-outline-dark btn-square"
-                               href="<?= Url::to(['linhacarrinho/create', 'id' => $model->artigo_id]) ?>">
+                               href="<?= Url::to(['enviarcarrinho', 'id' => $model->artigo_id, 'idFav'=> $model->id]) ?>">
                                 <i class="fa fa-shopping-cart"></i></a>    <!-- Aqui fica $model->artigo_id porque queremos o id do artigo selecionado -->
                         </td>
                         <td class="align-middle">
