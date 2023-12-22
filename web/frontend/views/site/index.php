@@ -168,30 +168,7 @@ $this->title = 'My Yii Application';
 
 
     <!-- Categories Start -->
-    <div class="container-fluid pt-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categorias</span>
-        </h2>
-        <div class="row px-xl-5 pb-3">
-            <?php
-            $categorias = Categoria::find()->all(); // vai buscar todas as categorias
-            foreach ($categorias as $categoria) { // mostra todas as categorias
-                ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                    <a class="text-decoration-none" href="">
-                        <div class="cat-item d-flex align-items-center mb-4">
-                            <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                                <img class="img-fluid"  alt="">
-                            </div>
-                            <div class="flex-fill pl-3">
-                                <h6><?= Html::a($categoria->nome, ['artigo/categorias', 'id' => $categoria->id]) ?></h6>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            <?php } ?>
-        </div>
 
-    </div>
     <!-- Categories End -->
 
 

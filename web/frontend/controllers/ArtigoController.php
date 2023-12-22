@@ -159,12 +159,12 @@ class ArtigoController extends Controller
     {
         $model = $this->findModel($id);
         $avaliacoes = Avaliacao::findAll(['artigo_id' => $model->id]);
-        //$avaliacao = new Avaliacao ();
+        $avaliacao = new Avaliacao ();
 
         return $this->render('detail', [
             'model' => $model,
             'avaliacoes' => $avaliacoes,
-            //'avaliacao' => $avaliacao,
+            'avaliacao' => $avaliacao,
             'id'=> $id,
         ]);
     }
