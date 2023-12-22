@@ -22,7 +22,7 @@ $this->title = 'My Yii Application';
                 <div class="carousel-inner">
 
                     <?php
-                    $categoria1 = Categoria::find()->orderBy('RAND()')->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
+                     //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
                     if ($categoria1): ?>
                         <div class="carousel-item position-relative active" style="height: 430px;">
                             <img class="position-absolute w-100 h-100" src="img/pen_wallpaper_index.jpg"
@@ -50,7 +50,7 @@ $this->title = 'My Yii Application';
                         </div>
                     <?php endif; ?>
 
-                    <?php $categoria2 = Categoria::find()->orderBy('RAND()')->one();
+                    <?php
                     if ($categoria2): ?>
                     <div class="carousel-item position-relative" style="height: 430px;">
                         <img class="position-absolute w-100 h-100" src="img/agenda.jpg" style="object-fit: cover;">
@@ -76,7 +76,7 @@ $this->title = 'My Yii Application';
                             <h6 class="text-white text-uppercase">A definir categoria</h6>
                             <?php endif; ?>
                         </div>
-                        <?php $categoria3 = Categoria::find()->orderBy('RAND()')->one();
+                        <?php
                         if ($categoria3): ?>
                             <div class="carousel-item position-relative" style="height: 430px;">
                                 <img class="position-absolute w-100 h-100" src="img/acessorios_homem.jpg"
@@ -102,7 +102,7 @@ $this->title = 'My Yii Application';
                     <div class="offer-text">
                         <div class="offer-text">
                             <?php
-                            $categoria = Categoria::find()->orderBy('RAND()')->one(); //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
+                            //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
                             if ($categoria): ?>
                                 <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
                                 <h3 class="text-white mb-3">Ofertas Especiais</h3>
@@ -118,7 +118,7 @@ $this->title = 'My Yii Application';
                     <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
                     <div class="offer-text">
                         <?php
-                        $categoria = Categoria::find()->orderBy('RAND()')->one();
+
                         if ($categoria): ?>
                             <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
                             <h3 class="text-white mb-3">Ofertas Especiais</h3>
@@ -178,8 +178,6 @@ $this->title = 'My Yii Application';
         </h2>
         <div class="row px-xl-5">
             <?php
-
-            $artigos = Artigo::find()->all(); // vai buscar todas as categorias
             if ($artigos != null) {
                 $artigos = array_slice($artigos, 0, 12); // Limita a apresentação a 20 artigos para nao ficar estupidamente grande
                 $indicesAleatorios = array_rand($artigos, count($artigos));  // Obtém índices aleatórios
@@ -191,9 +189,9 @@ $this->title = 'My Yii Application';
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $artigo->imagens[0]->image_path?>" style="width: 5cm; height: 5cm;"  alt="Imagem do <?= $artigo->nome?>">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i
+                                <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['linhacarrinho/create', 'id' => $artigo->id])?>"><i
                                             class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['favorito/create', 'id' => $artigo->id])?>"><i class="far fa-heart"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
@@ -221,7 +219,6 @@ $this->title = 'My Yii Application';
         <div class="row px-xl-5">
             <div class="col-md-6">
                 <?php
-                $categoriaFooter = Categoria::find()->orderBy('RAND()')->one();
                 if ($categoriaFooter): ?>
                     <div class="product-offer mb-30" style="height: 300px;">
                         <img class="img-fluid" src="img/mochila.jpg" alt="">
@@ -242,7 +239,6 @@ $this->title = 'My Yii Application';
             </div>
             <div class="col-md-6">
                 <?php
-                $categoriaFooter2 = Categoria::find()->orderBy('RAND()')->one();
                 if ($categoriaFooter2): ?>
                 <div class="product-offer mb-30" style="height: 300px;">
                     <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
