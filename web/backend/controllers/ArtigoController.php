@@ -104,6 +104,8 @@ class ArtigoController extends Controller
     public function actionCreate()
     {
         $model = new Artigo();
+        //https://stackoverflow.com/questions/29449019/yii2-validate-only-create-action
+        $model->scenario = 'create';
 
         $fornecedores = Fornecedor::find()->all();
         $ivas = Iva::find()->all();
@@ -155,7 +157,6 @@ class ArtigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
