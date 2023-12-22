@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Avaliacaos';
+$this->title = 'Avaliações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             'comentario',
             'classificacao',
-            //'artigo_id',
+            'artigo.nome',
             //'perfil_id',
             [
                 'class' => ActionColumn::className(),

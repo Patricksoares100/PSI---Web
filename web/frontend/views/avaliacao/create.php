@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Avaliacao $model */
 
-$this->title = 'Create Avaliacao';
+$this->title = 'Registar Avaliação';
 $this->params['breadcrumbs'][] = ['label' => 'Avaliacaos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
