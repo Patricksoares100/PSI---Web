@@ -124,6 +124,12 @@ class FaturaController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionPagar($id){
+        $model = $this->findModel($id);
+        $model->estado = "Paga";
+        $model->save();
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
 
     /**
      * Deletes an existing Fatura model.
