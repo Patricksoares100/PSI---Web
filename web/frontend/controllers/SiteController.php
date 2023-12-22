@@ -17,6 +17,8 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Perfil;
 use common\models\User;
+use common\models\Artigo;
+use common\models\Categoria;
 
 /**
  * Site controller
@@ -78,7 +80,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index',[
+            'artigos' => Artigo::find()->all(),
+            'categoria' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoria1' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoria2' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoria3' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoriaFooter' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoriaFooter2' => Categoria::find()->orderBy('RAND()')->one(),
+        ]);
     }
 
     public function actionArtigo()
