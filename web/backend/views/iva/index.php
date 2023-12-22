@@ -53,7 +53,12 @@ if ($error) {
                 'template' => Yii::$app->user->can('deleteIva') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Iva $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return $model->em_vigor == 'Não';
+                    },
+                ]
             ],
         ],
     ]); ?>

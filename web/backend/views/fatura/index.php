@@ -31,27 +31,37 @@ if ($error) {
             'data',
             'valor_fatura',
             'estado' => [
-                'attribute' => 'status',
+                'attribute' => 'estado',
                 'format' => 'raw',
                 'value' => function ($model) {
                     $buttonColorClass = ($model->estado == 'Emitida') ? 'btn btn-danger' : 'btn btn-success'; // ver se esta ativo ou não e dar uma cor
 
-                    return Html::a(
-                        $model->estado,
-                        ['fatura/atualizarstatus', 'id' => $model->id],
-                        ['class' => $buttonColorClass]
-                    );
+                    if ($model->estado == 'Emitida'){
+                        return Html::a(
+                            $model->estado,
+                            ['atualizarstatus', 'id' => $model->id],
+                            ['class' => $buttonColorClass]
+                        );
+                    }
+                    return $model->estado;
                 },
             ],
-            'perfil_id',
+            'perfil.nome',
             [
                 'class' => ActionColumn::className(),
                 'template' => Yii::$app->user->can('deleteFatura') ? '{view} {update} {delete}' : '{view} {update}',
                 'urlCreator' => function ($action, Fatura $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 },
-
-
+                },
+                //https://stackoverflow.com/questions/27142206/hide-yii2-gridview-action-buttons
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return $model->estado != 'Paga';
+                    },
+                    'delete' => function ($model) {
+                        return $model->estado != 'Paga';
+                    },
+                ]
             ],
         ],
     ]); ?>

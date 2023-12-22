@@ -86,6 +86,10 @@ class m231030_212423_init_rbac extends Migration
         $permissaoEliminarCategoria->description = 'Eliminar Categorias';
         $auth->add($permissaoEliminarCategoria);
 
+        $permissaoEditarAvaliacao = $auth->createPermission('updateAvaliacao');
+        $permissaoEditarAvaliacao->description = 'Editar Avaliacao';
+        $auth->add($permissaoEditarAvaliacao);
+
 
         //////////////////////// PERMISSÕES FRONT-OFFICE
         $permission_frontoffice = $auth->createPermission('permissionFrontoffice');
