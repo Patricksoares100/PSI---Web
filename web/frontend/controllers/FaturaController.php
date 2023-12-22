@@ -127,6 +127,7 @@ class FaturaController extends Controller
     public function actionPagar($id){
         $model = $this->findModel($id);
         $model->estado = "Paga";
+        $model->data = (new \DateTime())->format('Y-m-d H:i:s');
         $model->save();
         return $this->redirect(['view', 'id' => $model->id]);
     }
