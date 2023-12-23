@@ -98,7 +98,8 @@ AppAsset::register($this);
                                     ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                     ' . Html::a('Alterar Dados', ['/perfil/update', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                     ' . Html::a('Minhas Avaliações', ['/avaliacao/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
-                                    ' . Html::a('Minhas Faturas', ['/fatura/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
+                                    ' . Html::a('Minhas Faturas', ['/fatura/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
+                                    ' . Html::a('Alterar Password', ['/perfil/alterar-password'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
                                     ' . Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                 </div>
                             </div>';

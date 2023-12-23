@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -24,9 +25,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
+
     <div class="form-group">
+        <a class="btn btn-outline-dark "
+           href="<?= Url::to(['perfil/alterar-password', 'id' => Yii::$app->user->id]) ?>"><i
+                    class="fa fa-key"></i> Alterar Password</a>
+
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
+
 
     <?php ActiveForm::end(); ?>
 
