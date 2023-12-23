@@ -86,9 +86,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                        class="form-control form-control-sm bg-secondary border-0 text-center"
                                        value="<?= $model->quantidade ?>">
                                 <div class="input-group-btn">
+                                    <?php if($model->quantidade < $model->artigo->stock_atual ){
+                                    echo Html::a('+', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '+'], ['class' => 'btn btn-sm btn-primary btn-plus', 'data-method' => 'post']);
+                                           } else{
+                                            echo Html::a('+', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '+'], ['class' => 'btn btn-sm btn-secondary disabled btn-plus', 'data-method' => 'post']);
+                                        }
 
-                                    <?= Html::a('+', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '+'], ['class' => 'btn btn-sm btn-primary btn-plus', 'data-method' => 'post']) ?>
-
+                                    ?>
                                 </div>
                             </div>
                         </td>
