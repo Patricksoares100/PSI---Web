@@ -32,9 +32,14 @@ class FaturaController extends Controller
                             'roles' => ['@'],
                         ],
                         [
-                            'actions' => ['update', 'view', 'index', 'delete', 'atualizarstatus'],
+                            'actions' => ['update', 'view', 'index', 'atualizarstatus'],
                             'allow' => true,
                             'roles' => ['permissionBackoffice'], //admin e funcionario
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['deleteFatura'], //admin, e dentro da action só deixa apagar as emitidas
                         ],
 
                         'verbs' => [

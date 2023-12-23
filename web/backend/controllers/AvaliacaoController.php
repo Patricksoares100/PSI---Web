@@ -33,9 +33,14 @@ class AvaliacaoController extends Controller
                             'roles' => ['permissionBackoffice'],
                         ],
                         [
-                            'actions' => ['index', 'view', 'update', 'delete'],
+                            'actions' => ['index', 'view'],//update não esta pq não faz sentido ter update de uma avaliação
                             'allow' => true,
                             'roles' => ['permissionBackoffice'],
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['deleteAvaliacao'],
                         ],
                     ],
                 ],
