@@ -97,7 +97,8 @@ AppAsset::register($this);
                                 <div class="dropdown-menu dropdown-menu-right" style="position: absolute; transform: translate3d(-56px, 31px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
                                     ' . Html::a('Ver Perfil', ['/perfil/view', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                     ' . Html::a('Alterar Dados', ['/perfil/update', 'id' => $idUser], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
-                                     ' . Html::a('Minhas Avaliações', ['/avaliacao/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
+                                    ' . Html::a('Minhas Avaliações', ['/avaliacao/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
+                                    ' . Html::a('Minhas Faturas', ['/fatura/index'], ['class' => 'dropdown-item', 'data-method' => 'post']) . ' 
                                     ' . Html::a('Logout', ['/site/logout'], ['class' => 'dropdown-item', 'data-method' => 'post']) . '
                                 </div>
                             </div>';
@@ -204,12 +205,12 @@ AppAsset::register($this);
                                 <a href="<?= Url::to(['/artigo/index']) ?>"
                                    class="nav-item nav-link active">Artigos</a>
                             </div>
-                            <div class="navbar-nav mr-auto py-0">
-                                <?php if (!Yii::$app->user->isGuest) : ?>
-                                    <a href="<?= Url::to(['/fatura/index']) ?>"
+                           <!-- <div class="navbar-nav mr-auto py-0">
+                                <?php// if (!Yii::$app->user->isGuest) : ?>
+                                    <a href="<?php//tirar o php e meter o = antes do comentario Url::to(['/fatura/index']) ?>"
                                        class="nav-item nav-link active">Faturas</a>
-                                <?php endif; ?>
-                            </div>
+                                <?//php endif; ?>
+                            </div>-->
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                                 <a href="<?= Url::to(['/favorito/index']) //favorito/algo
                                 ?>" class="btn px-0">

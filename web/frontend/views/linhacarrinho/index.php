@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>Remover</th>
                 </tr>
                 </thead>
-                <?php foreach ($dataProvider as $model) : ?>
+                <?php foreach ($dataProvider->models as $model) : ?>
                     <tbody class="align-middle">
                     <tr>
                         <td class="align-middle"><img src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->artigo->imagens[0]->image_path?>" alt="" style="width: 50px;"></td>
@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h6>Total s/ IVA</h6>
                         <?php
                         $valorTotal = 0;
-                        foreach ($dataProvider as $model) : ?>
+                        foreach ($dataProvider->models as $model) : ?>
                             <?php
                             $valorTotal += $model->quantidade * $model->artigo->preco;
                             ?>
@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h6 class="font-weight-medium">Valor IVA</h6>
                         <?php
                         $totalIvas = 0;
-                        foreach ($dataProvider as $model) : ?>
+                        foreach ($dataProvider->models as $model) : ?>
                             <?php
                             $totalIvas += $model->quantidade * (($model->artigo->iva->percentagem * $model->artigo->preco) / 100);
                             ?>
@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5>Total</h5>
                         <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
                     </div>
-                    <?php if (!empty($dataProvider)) : ?>
+                    <?php if (!empty($dataProvider->models)) : ?>
                         <a href="<?= Url::to(['/site/checkout', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                     <?php endif; ?>
                 </div>
