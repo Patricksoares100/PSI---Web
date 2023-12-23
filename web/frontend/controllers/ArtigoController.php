@@ -32,7 +32,7 @@ class ArtigoController extends Controller
                         [
                             'actions' => ['create', 'update', 'delete', 'view'],
                             'allow' => false,
-                            'roles' => ['?'], // qualquer utilizador
+                            'roles' => ['permissionFrontoffice'], // qualquer utilizador do FrontOffice
                         ],
                     ],
                 ],
