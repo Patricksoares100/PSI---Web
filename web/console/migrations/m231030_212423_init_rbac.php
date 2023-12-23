@@ -4,6 +4,8 @@ use yii\db\Migration;
 use console\models\AuthorDadosPessoaisRule;
 use console\models\AlterarPasswordRule;
 use console\models\PermissoesProprioClienteRule;
+use console\models\DeleteRuleProprioCliente;
+use console\models\UpdateRuleProprioCliente;
 /**
  * Class m231030_212423_init_rbac
  */
@@ -22,6 +24,10 @@ class m231030_212423_init_rbac extends Migration
         $rule = new AlterarPasswordRule;
         $auth->add($rule);
         $rule = new PermissoesProprioClienteRule;
+        $auth->add($rule);
+        $rule = new DeleteRuleProprioCliente;
+        $auth->add($rule);
+        $rule = new UpdateRuleProprioCliente;
         $auth->add($rule);
 
         // Criar os roles - $auth->createRole();
@@ -101,6 +107,16 @@ class m231030_212423_init_rbac extends Migration
         $permission_VerClientesFront->ruleName = 'isClientPermission';
         $auth->add($permission_VerClientesFront);
 
+        $permissaoUpdateProprioCliente = $auth->createPermission('updateProprioCliente');
+        $permissaoUpdateProprioCliente->description = 'Update Proprio Cliente';
+        $permissaoUpdateProprioCliente->ruleName = 'isUpdateProprioCliente'; // Nome da regra
+        $auth->add($permissaoUpdateProprioCliente);
+
+        $permissaoDeleteProprioCliente = $auth->createPermission('deleteProprioCliente');
+        $permissaoDeleteProprioCliente->description = 'Delete Proprio Cliente';
+        $permissaoDeleteProprioCliente->ruleName = 'isDeleteProprioCliente'; // Nome da regra
+        $auth->add($permissaoDeleteProprioCliente);
+
         // dar heranças addChild
         $auth->addChild($role_funcionario, $permission_gerir_produtos);
         $auth->addChild($role_funcionario, $permission_backoffice);
@@ -108,6 +124,8 @@ class m231030_212423_init_rbac extends Migration
         $auth->addChild($role_funcionario, $permissaoAlterarPassword);
 
         $auth->addChild($role_cliente, $permissaoDadosPessoais);
+        $auth->addChild($role_cliente, $permissaoUpdateProprioCliente);
+        $auth->addChild($role_cliente, $permissaoDeleteProprioCliente);
         $auth->addChild($role_cliente, $permissaoAlterarPassword);
         $auth->addChild($role_cliente, $permission_VerClientesFront);
 

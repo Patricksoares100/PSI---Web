@@ -28,9 +28,19 @@ class LinhacarrinhoController extends Controller
                     'only' => ['create', 'view','delete','index','update'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'view','delete','index','update'],
+                            'actions' => ['create', 'view', 'index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => ['updateProprioCliente'],
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],

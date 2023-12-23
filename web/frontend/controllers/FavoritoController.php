@@ -27,9 +27,19 @@ class FavoritoController extends Controller
                     'only' => ['update', 'create', 'view','delete','index'],
                     'rules' => [
                         [
-                            'actions' => ['update', 'view', 'create','delete','index'],
+                            'actions' => ['view', 'create', 'index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => ['updateProprioCliente'],
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],

@@ -30,9 +30,14 @@ class PerfilController extends Controller
                 'only' => ['update', 'view', 'alterar-password'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
-                        'actions' => ['update', 'view', 'alterar-password'],
+                        'actions' => [ 'view', 'alterar-password'],
                         'allow' => true,
                         'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
+                    ],
+                    [
+                        'actions' => ['update'],
+                        'allow' => true,
+                        'roles' => ['updateProprioCliente'],
                     ],
                 ],
             ],

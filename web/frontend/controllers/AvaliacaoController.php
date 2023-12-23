@@ -29,9 +29,19 @@ class AvaliacaoController extends Controller
                     'only' => ['update', 'create','view','delete','index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['update', 'view', 'create','delete','index'],
+                            'actions' => ['view', 'create', 'index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => ['updateProprioCliente'],
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],
