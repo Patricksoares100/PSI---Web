@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Categoria;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -99,8 +100,16 @@ class CategoriaController extends Controller
         $model = new Categoria();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $existeCategoria = Categoria::findOne(['nome' => $model->nome]);
+
+                if ($existeCategoria) {
+                    \Yii::$app->session->setFlash('error', 'Indicou uma categoria que já existe. Introduza uma categoria diferente');
+                } else {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
             }
         } else {
             $model->loadDefaultValues();
