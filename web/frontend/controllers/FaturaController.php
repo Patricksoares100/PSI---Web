@@ -30,12 +30,12 @@ class FaturaController extends Controller
                     'only' => ['update', 'create', 'view', 'delete','pagar','index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'pagar','index'],
+                            'actions' => ['view', 'create', 'index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
                         [
-                            'actions' => ['update'],
+                            'actions' => ['update', 'pagar'],
                             'allow' => true,
                             'roles' => ['updateProprioCliente'],
                         ],
