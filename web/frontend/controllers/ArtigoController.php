@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Artigo;
 use app\models\ArtigoSearch;
 use common\models\Avaliacao;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,7 +25,17 @@ class ArtigoController extends Controller
             parent::behaviors(),
             [
                 // Metemos aqui tudo publico?
-
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'update', 'delete', 'view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'update', 'delete', 'view'],
+                            'allow' => false,
+                            'roles' => ['?'], // qualquer utilizador
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -112,7 +123,7 @@ class ArtigoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    /*public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -123,7 +134,7 @@ class ArtigoController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Deletes an existing Artigos model.
