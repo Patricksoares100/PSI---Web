@@ -56,7 +56,7 @@ class FaturaController extends Controller
     {
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Fatura::find(),
+            'query' => Fatura::find()->where(['perfil_id' => Yii::$app->user->id]),
         ]);
 
         return $this->render('index', [
