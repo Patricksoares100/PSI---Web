@@ -33,7 +33,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['logout', 'signup', 'checkout', 'faturas'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -41,7 +41,7 @@ class SiteController extends Controller
                         'roles' => ['?'], // qualquer utilizador
                     ],
                     [
-                        'actions' => ['logout',],
+                        'actions' => ['logout','checkout','faturas'],
                         'allow' => true,
                         'roles' => ['@'], // utilizador logado
                     ],

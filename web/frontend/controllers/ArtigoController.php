@@ -32,7 +32,7 @@ class ArtigoController extends Controller
                         [
                             'actions' => ['create', 'update', 'delete', 'view'],
                             'allow' => false,
-                            'roles' => ['permissionFrontoffice'], // qualquer utilizador do FrontOffice
+                            'roles' => ['permissionFrontoffice','?','@'], // qualquer utilizador do FrontOffice
                         ],
                     ],
                 ],
@@ -123,7 +123,7 @@ class ArtigoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    /*public function actionUpdate($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -134,7 +134,7 @@ class ArtigoController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }*/
+    }
 
     /**
      * Deletes an existing Artigos model.

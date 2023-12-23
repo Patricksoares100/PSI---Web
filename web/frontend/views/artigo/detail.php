@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <i class="fa fa-shopping-cart mr-1"></i> Add Carrinho
                     </a>
                     <?php else: ?>
-                        <a class="btn btn-primary mr-4" href=""> Sem Stock </a>
+                        <a class="btn btn-secondary disabled mr-4" href=""> Sem Stock </a>
                     <?php endif; ?>
                     <a class="btn btn-primary mr-4" href="<?= Url::to(['favorito/create', 'id' => $model->id]) ?>">
                         <i class="fa far fa-heart mr-1"></i> Add Favoritos
