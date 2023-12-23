@@ -102,15 +102,13 @@ class CategoriaController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $existeCategoria = Categoria::findOne(['nome' => $model->nome]);
-
                 if ($existeCategoria) {
                     \Yii::$app->session->setFlash('error', 'Indicou uma categoria que já existe. Introduza uma categoria diferente');
                 } else {
-                    if ($model->save()) {
-                        return $this->redirect(['view', 'id' => $model->id]);
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
-            }
         } else {
             $model->loadDefaultValues();
         }
