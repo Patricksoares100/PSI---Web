@@ -26,10 +26,10 @@ class AvaliacaoController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'create','view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['update', 'create','view','delete','index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['update', 'view', 'create'],
+                            'actions' => ['update', 'view', 'create','delete','index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
                         ],

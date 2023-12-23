@@ -27,12 +27,12 @@ class FaturaController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'create', 'view'],
+                    'only' => ['update', 'create', 'view', 'delete','pagar','index'],
                     'rules' => [
                         [
-                            'actions' => ['update', 'view', 'create'],
+                            'actions' => ['update', 'view', 'create','delete','pagar','index'],
                             'allow' => true,
-                            'roles' => ['permissionFrontoffice'],
+                            'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
                     ],
                 ],

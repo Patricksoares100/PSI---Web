@@ -24,10 +24,10 @@ class FavoritoController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'create', 'view'],
+                    'only' => ['update', 'create', 'view','delete','index'],
                     'rules' => [
                         [
-                            'actions' => ['update', 'view', 'create'],
+                            'actions' => ['update', 'view', 'create','delete','index'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],
                         ],

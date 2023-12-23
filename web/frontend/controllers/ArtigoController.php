@@ -27,10 +27,10 @@ class ArtigoController extends Controller
                 // Metemos aqui tudo publico?
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['create', 'update', 'delete', 'view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['create', 'update', 'delete', 'view','index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'update', 'delete', 'view'],
+                            'actions' => ['create', 'update', 'delete', 'view','index'],
                             'allow' => false,
                             'roles' => ['permissionFrontoffice','?','@'], // qualquer utilizador do FrontOffice
                         ],

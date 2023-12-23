@@ -27,7 +27,7 @@ class PerfilController extends Controller
             parent::behaviors(),
             [   'access' => [
                 'class' => AccessControl::class,
-                'only' => ['update', 'view'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['update', 'view', 'alterar-password'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['update', 'view', 'alterar-password'],
