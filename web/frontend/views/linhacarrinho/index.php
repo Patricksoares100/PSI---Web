@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $valorTotal += $model->quantidade * $model->artigo->preco;
                             ?>
                         <?php endforeach; ?>
-                        <h6><?= $valorTotal ?></h6>
+                        <h6><?= $valorTotal ?> €</h6>
 
                     </div>
                     <div class="d-flex justify-content-between">
@@ -129,13 +129,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             $totalIvas += $model->quantidade * (($model->artigo->iva->percentagem * $model->artigo->preco) / 100);
                             ?>
                         <?php endforeach; ?>
-                        <h6 class="font-weight-medium"><?= number_format($totalIvas, 2) ?></h6>
+                        <h6 class="font-weight-medium"><?= number_format($totalIvas, 2) ?> €</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5><?= number_format($totalIvas + $valorTotal, 2) ?></h5>
+                        <h5><?= number_format($totalIvas + $valorTotal, 2) ?> €</h5>
                     </div>
                     <?php if (!empty($dataProvider->models)) : ?>
                         <a href="<?= Url::to(['/site/checkout', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>

@@ -93,7 +93,7 @@ GridView::widget([
                             ?>
                             <div class="d-flex justify-content-between">
                                 <p><?= $model->quantidade ?> - <?= $artigo->nome ?></p>
-                                <p><?= number_format(($model->quantidade * $artigo->preco), 2) ?></p>
+                                <p><?= number_format(($model->quantidade * $artigo->preco), 2) ?> €</p>
                             </div>
                             <?php
                             $valorSemIva += $model->quantidade * $artigo->preco;
@@ -105,13 +105,13 @@ GridView::widget([
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h6>Total Iva</h6>
-                        <h6 class="font-weight-medium"><?= number_format($valorIva, 2) ?></h6>
+                        <h6 class="font-weight-medium"><?= number_format($valorIva, 2) ?> €</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5><?= number_format($valorSemIva + $valorIva, 2) ?></h5>
+                        <h5><?= number_format($valorSemIva + $valorIva, 2) ?> €</h5>
                     </div>
                 </div>
             </div>
