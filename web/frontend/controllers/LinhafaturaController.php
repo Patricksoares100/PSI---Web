@@ -88,6 +88,7 @@ class LinhafaturaController extends Controller
         $valorSemIva = 0;
         $valorIva = 0;
 
+
         foreach ($linhasCarrinho as $linhaCarrinho) {
             $artigo = $linhaCarrinho->artigo;
             if ($linhaCarrinho->perfil_id == $iduser && $artigo) {
@@ -95,32 +96,37 @@ class LinhafaturaController extends Controller
                 $valorIva += $linhaCarrinho->quantidade * (($artigo->iva->percentagem * $artigo->preco) / 100);
             }
         }
-        // vai correr todas as linhas carrinho para depois as somar e somar ao valor total da datura
-        $fatura = new Fatura();
-        $fatura->data = (new \DateTime())->format('Y-m-d H:i:s');
-        $fatura->valor_fatura = $valorSemIva + $valorIva;
-        $fatura->perfil_id = $iduser;
-        $fatura->estado = 'Emitida';
-        $fatura->save();
 
-        $faturaId = $fatura->id;
-        // aqui depois de criar a fatura vai crar as linhas
-        foreach ($linhasCarrinho as $linhaCarrinho) {
-            $linhaFatura = new LinhaFatura();
-            $linhaFatura->quantidade = $linhaCarrinho->quantidade;
-            $linhaFatura->valor = number_format(($linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco), 2);
-            $linhaFatura->valor_iva = number_format($linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100), 2);
-            $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
-            $linhaFatura->fatura_id = $faturaId;
-            $linhaFatura->save();
-
-
-
-            $artigo = Artigo::findOne($linhaCarrinho->artigo_id);
+        $artigo = Artigo::findOne($linhaCarrinho->artigo_id);
+        if ($artigo->stock_atual >= $linhaCarrinho->quantidade){
             $artigo->stock_atual -= $linhaCarrinho->quantidade;
             $artigo->save();
 
+            // vai correr todas as linhas carrinho para depois as somar e somar ao valor total da datura
+            $fatura = new Fatura();
+            $fatura->data = (new \DateTime())->format('Y-m-d H:i:s');
+            $fatura->valor_fatura = $valorSemIva + $valorIva;
+            $fatura->perfil_id = $iduser;
+            $fatura->estado = 'Emitida';
+            $fatura->save();
+
+            $faturaId = $fatura->id;
+            // aqui depois de criar a fatura vai crar as linhas
+            foreach ($linhasCarrinho as $linhaCarrinho) {
+                $linhaFatura = new LinhaFatura();
+                $linhaFatura->quantidade = $linhaCarrinho->quantidade;
+                $linhaFatura->valor = number_format(($linhaCarrinho->quantidade * $linhaCarrinho->artigo->preco), 2);
+                $linhaFatura->valor_iva = number_format($linhaCarrinho->quantidade * (($linhaCarrinho->artigo->iva->percentagem * $linhaCarrinho->artigo->preco) / 100), 2);
+                $linhaFatura->artigo_id = $linhaCarrinho->artigo_id;
+                $linhaFatura->fatura_id = $faturaId;
+                $linhaFatura->save();
+
+            }
+
+        }else{
+            \Yii::$app->session->setFlash('error','Não existe stock em um dos artigos que pretende comprar');
         }
+
         LinhaCarrinho::deleteAll(['perfil_id' => $iduser]);
 
 
