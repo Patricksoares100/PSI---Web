@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\LinhaCarrinho;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -128,7 +129,11 @@ class LinhacarrinhoController extends Controller
     {
         $model = $this->findModel($id);
         if($sinal == '+'){
-            $model->quantidade++;
+            if ($model->quantidade >= $model->quantidade + 1) { // seguindo a logica da linha faturas, aqui coloquei +1 para a quantidade do artigo na base de dados nao assumr valor negativo
+                $model->quantidade++;
+            }else{
+                Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+            }
         }
 
         else{
