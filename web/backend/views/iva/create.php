@@ -13,6 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php
+    $error = Yii::$app->session->getFlash('error');
+    if ($error) {
+        echo '<div class="alert alert-danger">' . $error . '</div>';
+    }
+    ?>
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

@@ -106,8 +106,15 @@ class IvaController extends Controller
         $model = new Iva();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())){
+                $existeIva = Iva::findOne(['percentagem'=>$model->percentagem]);
+                if ($existeIva){
+                    \Yii::$app->session->setFlash('error', 'Indicou uma percentagem de Iva que já existe. Introduza um valor diferente');
+                }
+                else{
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
