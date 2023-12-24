@@ -7,6 +7,7 @@
 
 use common\models\Artigo;
 use common\models\Avaliacao;
+use common\models\Fatura;
 use common\models\Perfil;
 use common\models\LinhaFatura;
 use yii\helpers\Html;
@@ -166,14 +167,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             <?php $artigoId = $model->id;
-                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId])->exists();
+                            $userId = Yii::$app->user->id;
+                            $faturaId = Fatura::find()->where(['perfil_id'=> $userId])->one();
+                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_Id'=> $faturaId])->exists();
                             ?>
                         </div>
                         <?php if (!Yii::$app->user->isGuest && $comprouArtigo) { ?>
                         <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
-                            <small>Your email address will not be published. Required fields are marked *</small>
-
+                            <h4 class="mb-4">Deixe uma avaliação</h4>
                             <form method="post"
                                   action="<?= Yii::$app->urlManager->createUrl(['avaliacao/create', 'id' => $id]) ?>">
                                 <?php $form = ActiveForm::begin(['id' => $id]); ?>
@@ -183,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?= $form->field($avaliacao, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',]) ?>
 
                                 <div class="form-group">
-                                    <?= Html::submitButton('Leave Your Review', ['class' => 'btn btn-primary']) ?>
+                                    <?= Html::submitButton('Deixe a sua avaliação', ['class' => 'btn btn-primary']) ?>
                                 </div>
 
                                 <?php ActiveForm::end(); ?>
