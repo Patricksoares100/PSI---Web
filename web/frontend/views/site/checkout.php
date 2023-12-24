@@ -3,10 +3,12 @@
 use common\models\LinhaCarrinho;
 use common\models\Perfil;
 use common\models\User;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+use yii\widgets\ActiveForm;
 
 
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -36,6 +38,25 @@ GridView::widget([
 ]);
 ?>
 
+<?php
+// Verifique se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Receba os dados do formulário
+$perfil->nome = $_POST['nome'];
+$perfil->nif = $_POST['nif'];
+$perfil->telefone = $_POST['telefone'];
+$perfil->morada = $_POST['morada'];
+$perfil->codigo_postal = $_POST['codigo_postal'];
+$perfil->localidade = $_POST['localidade'];
+
+// Salve os dados no banco de dados
+if ($perfil->save()) {
+echo "Dados atualizados com sucesso!";
+} else {
+echo "Erro ao atualizar os dados: " . print_r($perfil->errors, true);
+}
+} ?>
+
 <!-- Checkout Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
@@ -43,36 +64,37 @@ GridView::widget([
             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Morada de faturação</span>
             </h5>
             <div class="bg-light p-30 mb-5">
+                <?php $form = ActiveForm::begin(); ?>
                 <div class="row">
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-12 form-group">
                         <label>Nome</label>
-                        <input class="form-control" type="text" value="<?= $perfil->nome ?>">
+                        <?= Html::textInput('nome', $perfil->nome, ['class' => 'form-control']) ?>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Nif</label>
-                        <input class="form-control" type="text" value="<?= $perfil->nif ?>">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>E-mail</label>
-                        <input class="form-control" type="text" value="<?= $user->email ?>">
+                        <?= Html::textInput('nif', $perfil->nif, ['class' => 'form-control']) ?>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Telefone</label>
-                        <input class="form-control" type="text" value="<?= $perfil->telefone ?> ">
+                        <?= Html::textInput('telefone', $perfil->telefone, ['class' => 'form-control']) ?>
                     </div>
                     <div class="col-md-12 form-group">
                         <label>Endereço</label>
-                        <input class="form-control" type="text" value="<?= $perfil->morada ?>">
+                        <?= Html::textInput('morada', $perfil->morada, ['class' => 'form-control']) ?>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Codigo Postal</label>
-                        <input class="form-control" type="text" value="<?= $perfil->codigo_postal ?>">
+                        <?= Html::textInput('codigo_postal', $perfil->codigo_postal, ['class' => 'form-control']) ?>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Localidade</label>
-                        <input class="form-control" type="text" value="<?= $perfil->localidade ?>">
+                        <?= Html::textInput('localidade', $perfil->localidade, ['class' => 'form-control']) ?>
                     </div>
                 </div>
+
+                <?= Html::submitButton('Salvar', ['class' => 'btn btn-primary']) ?>
+
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
 
