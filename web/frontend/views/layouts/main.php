@@ -217,7 +217,7 @@ AppAsset::register($this);
                                 ?>" class="btn px-0">
                                     <i class="fas fa-heart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
-                                          style="padding-bottom: 2px;"><?php $numberFav = \common\models\Favorito::find()->count(); ?>
+                                          style="padding-bottom: 2px;"><?php $numberFav = \common\models\Favorito::find()->where(['perfil_id' => Yii::$app->user->id])->count(); ?>
                                         <?= $numberFav ?>
                                     </span>
                                 </a>
@@ -225,7 +225,7 @@ AppAsset::register($this);
                                 ?>" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
-                                          style="padding-bottom: 2px;"><?php $numberCar = \common\models\LinhaCarrinho::find()->count(); ?>
+                                          style="padding-bottom: 2px;"><?php $numberCar = \common\models\LinhaCarrinho::find()->where(['perfil_id' => Yii::$app->user->id])->count(); ?>
                                         <?= $numberCar ?>
                                     </span>
                                 </a>
