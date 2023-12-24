@@ -189,8 +189,10 @@ $this->title = 'My Yii Application';
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $artigo->imagens[0]->image_path?>" style="width: 5cm; height: 5cm;"  alt="Imagem do <?= $artigo->nome?>">
                             <div class="product-action">
+                                <?php if ($artigo->stock_atual > 0): ?>
                                 <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['linhacarrinho/create', 'id' => $artigo->id])?>"><i
                                             class="fa fa-shopping-cart"></i></a>
+                                <?php endif; ?>
                                 <a class="btn btn-outline-dark btn-square" href="<?= Url::to(['favorito/create', 'id' => $artigo->id])?>"><i class="far fa-heart"></i></a>
                             </div>
                         </div>
@@ -258,49 +260,6 @@ $this->title = 'My Yii Application';
             </div>
         </div>
     </div>
-    <!-- Offer End -->
-
-
-    <!-- Products Start -->
-
-    <!-- Products End -->
-
-
-    <!-- Vendor Start -->
-    <div class="container-fluid py-5">
-        <div class="row px-xl-5">
-            <div class="col">
-                <div class="owl-carousel vendor-carousel">
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-1.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-2.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-3.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-4.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-5.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-6.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-7.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-8.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Vendor End -->
-
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
