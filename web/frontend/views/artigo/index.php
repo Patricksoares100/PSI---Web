@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Artigos;
+use common\models\Avaliacao;
 use common\models\Categoria;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -35,15 +36,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="text-center py-4">
                                     <?= Html::a(Html::encode($model->nome), ['/artigo/detail', 'id' => $model->id], ['class' => 'h6 text-decoration-none text-truncate']) ?>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5><?= number_format($model->preco ,2) ?>€</h5>
+                                        <h5><?= number_format($model->preco, 2) ?>€</h5>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                    <?php
+                                    $avaliacoes = Avaliacao::find()->where(['artigo_id' => $model->id])->all();
+                                    $somaTotal = 0;
+                                    foreach ($avaliacoes as $avaliacao) : ?>
+                                        <?php $somaTotal += $avaliacao->classificacao; ?>
+                                    <?php endforeach; ?>
+
+                                    <?php
+                                    $valorMedioReview = 0;
+                                    if (count($avaliacoes) > 0) {
+                                        $valorMedioReview = number_format($somaTotal / count($avaliacoes), 1);
+                                    } ?>
+                                    <div class="d-flex mb-3">
+                                        <small class="pt-1"><?= $valorMedioReview ?></small>
+                                        <div class="text-primary mr-2">
+                                            <?php
+                                            for ($i = 0; $i < 5; $i++) {
+                                                echo '<i class="' . ($i < floor($valorMedioReview) ? 'fas' : 'far') . ' fa-star"></i>';
+                                            }
+                                            ?>
+                                        </div>
+                                        <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
