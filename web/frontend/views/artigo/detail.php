@@ -8,6 +8,7 @@
 use common\models\Artigo;
 use common\models\Avaliacao;
 use common\models\Perfil;
+use common\models\LinhaFatura;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -164,22 +165,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-
+                            <?php $artigoId = $model->id;
+                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId])->exists();
+                            ?>
                         </div>
-                        <?php if (!Yii::$app->user->isGuest) { ?>
+                        <?php if (!Yii::$app->user->isGuest && $comprouArtigo) { ?>
                         <div class="col-md-6">
                             <h4 class="mb-4">Leave a review</h4>
                             <small>Your email address will not be published. Required fields are marked *</small>
-                            <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Your Rating * :</p>
-                                <div class="text-primary">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
 
                             <form method="post"
                                   action="<?= Yii::$app->urlManager->createUrl(['avaliacao/create', 'id' => $id]) ?>">
@@ -187,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <?= $form->field($avaliacao, 'comentario')->textInput(['maxlength' => true]) ?>
 
-                                <?= $form->field($avaliacao, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',], ['prompt' => '']) ?>
+                                <?= $form->field($avaliacao, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',]) ?>
 
                                 <div class="form-group">
                                     <?= Html::submitButton('Leave Your Review', ['class' => 'btn btn-primary']) ?>
