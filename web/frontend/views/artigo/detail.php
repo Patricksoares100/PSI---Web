@@ -8,6 +8,7 @@
 use common\models\Artigo;
 use common\models\Avaliacao;
 use common\models\Fatura;
+use common\models\Imagem;
 use common\models\Perfil;
 use common\models\LinhaFatura;
 use yii\helpers\Html;
@@ -36,17 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+                        <img class="w-100 h-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[0]->image_path?>" alt="Image">
                     </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
+
+                    <?php for ( $i =1; $i< $numeroImagens; $i++ ): ?>
+                        <div class="carousel-item">
+                        <img class="w-100 h-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[$i]->image_path?>" alt="Image">
                     </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="img/product-3.jpg" alt="Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
-                    </div>
+                    <?php endfor; ?>
+
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -72,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $valorMedioReview = number_format($somaTotal / count($avaliacoes), 1);
                 } ?>
                 <div class="d-flex mb-3">
-                    <small class="pt-1"><?= $valorMedioReview ?></small>
+                    <small class="pt-1"></small>
                     <div class="text-primary mr-2">
                         <?php
                         for ($i = 0; $i < 5; $i++) {

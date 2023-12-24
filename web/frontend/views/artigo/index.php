@@ -39,29 +39,29 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <h5><?= number_format($model->preco, 2) ?>€</h5>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <?php
-                                    $avaliacoes = Avaliacao::find()->where(['artigo_id' => $model->id])->all();
-                                    $somaTotal = 0;
-                                    foreach ($avaliacoes as $avaliacao) : ?>
-                                        <?php $somaTotal += $avaliacao->classificacao; ?>
-                                    <?php endforeach; ?>
+                                        <?php
+                                        $avaliacoes = Avaliacao::find()->where(['artigo_id' => $model->id])->all();
+                                        $somaTotal = 0;
+                                        foreach ($avaliacoes as $avaliacao) : ?>
+                                            <?php $somaTotal += $avaliacao->classificacao; ?>
+                                        <?php endforeach; ?>
 
-                                    <?php
-                                    $valorMedioReview = 0;
-                                    if (count($avaliacoes) > 0) {
-                                        $valorMedioReview = number_format($somaTotal / count($avaliacoes), 1);
-                                    } ?>
-                                    <div class="d-flex mb-3">
-                                        <small class="pt-1"><?= $valorMedioReview ?></small>
-                                        <div class="text-primary mr-2">
-                                            <?php
-                                            for ($i = 0; $i < 5; $i++) {
-                                                echo '<i class="' . ($i < floor($valorMedioReview) ? 'fas' : 'far') . ' fa-star"></i>';
-                                            }
-                                            ?>
+                                        <?php
+                                        $valorMedioReview = 0;
+                                        if (count($avaliacoes) > 0) {
+                                            $valorMedioReview = number_format($somaTotal / count($avaliacoes), 1);
+                                        } ?>
+                                        <div class="d-flex mb-3">
+                                            <small class="pt-1"></small>
+                                            <div class="text-primary mr-2">
+                                                <?php
+                                                for ($i = 0; $i < 5; $i++) {
+                                                    echo '<i class="' . ($i < floor($valorMedioReview) ? 'fas' : 'far') . ' fa-star"></i>';
+                                                }
+                                                ?>
+                                            </div>
+                                            <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
                                         </div>
-                                        <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
