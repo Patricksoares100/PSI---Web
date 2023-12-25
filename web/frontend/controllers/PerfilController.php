@@ -27,10 +27,10 @@ class PerfilController extends Controller
             parent::behaviors(),
             [   'access' => [
                 'class' => AccessControl::class,
-                'only' => ['update', 'view', 'alterar-password'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['update', 'view', 'alterar-password', 'confirmardados'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
-                        'actions' => [ 'view', 'alterar-password','update'],
+                        'actions' => [ 'view', 'alterar-password','update', 'confirmardados'],
                         'allow' => true,
                         'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
                     ],
@@ -61,7 +61,16 @@ class PerfilController extends Controller
         ]);
         }
     }
-
+    public function actionConfirmardados()
+    {
+        $model = $this->findModel(Yii::$app->user->id);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['linhafatura/create', 'iduser' => $model->id]);
+            }
+        }
+        return $this->redirect('site/checkout');
+    }
     /**
      * Updates an existing Perfil model.
      * If update is successful, the browser will be redirected to the 'view' page.
