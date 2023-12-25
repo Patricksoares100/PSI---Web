@@ -70,7 +70,7 @@ class FaturaController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('updateDadosPessoais', ['perfil'=> Yii::$app->user->id])) {
+        if(Yii::$app->user->can('verClientesFront', ['perfil'=> Yii::$app->user->id])) {
         return $this->render('view', [
             'model' => $this->findModel($id),
             'empresa' => Empresa::find()->one(),

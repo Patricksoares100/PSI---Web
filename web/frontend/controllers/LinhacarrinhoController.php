@@ -25,10 +25,10 @@ class LinhacarrinhoController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['create', 'view','delete','index','update'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['create','delete','index','update'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'view', 'index','update','delete'],
+                            'actions' => ['create', 'index','update','delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
                         ],
