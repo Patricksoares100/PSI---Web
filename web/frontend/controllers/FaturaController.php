@@ -30,19 +30,9 @@ class FaturaController extends Controller
                     'only' => ['update', 'create', 'view', 'delete','pagar','index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'index'],
+                            'actions' => ['view', 'create', 'index','update', 'pagar','delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
-                        ],
-                        [
-                            'actions' => ['update', 'pagar'],
-                            'allow' => true,
-                            'roles' => ['updateProprioCliente'],
-                        ],
-                        [
-                            'actions' => ['delete'],
-                            'allow' => true,
-                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],
@@ -125,20 +115,22 @@ class FaturaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
     }
     public function actionPagar($id){
-        $model = $this->findModel($id);
-        $model->estado = "Paga";
-        $model->data = (new \DateTime())->format('Y-m-d H:i:s');
-        $model->save();
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model = $this->findModel($id);
+            $model->estado = "Paga";
+            $model->data = (new \DateTime())->format('Y-m-d H:i:s');
+            $model->save();
+        }
         return $this->redirect(['view', 'id' => $model->id]);
     }
 
@@ -151,8 +143,17 @@ class FaturaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model = $this->findModel($id);
+            if($model->canDeleteFatura()){//se for emitida apaga
+            $model->delete();
+                Yii::$app->session->setFlash('success', 'Fatura removida com sucesso!');
+        }else{
+                Yii::$app->session->setFlash('error', 'Não pode remover uma fatura PAGA!');
+            }
+        }else{
+            Yii::$app->session->setFlash('error', 'Não tem permissões!');
+        }
         return $this->redirect(['index']);
     }
 
