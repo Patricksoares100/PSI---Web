@@ -27,10 +27,10 @@ class FaturaController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'create', 'view', 'delete','pagar','index'],
+                    'only' => ['update', 'view', 'delete','pagar','index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'index','update', 'pagar','delete'],
+                            'actions' => ['view', 'index','update', 'pagar','delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
@@ -70,7 +70,7 @@ class FaturaController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('updateDadosPessoais', ['perfil'=> $id])) {
+        if(Yii::$app->user->can('updateDadosPessoais', ['perfil'=> Yii::$app->user->id])) {
         return $this->render('view', [
             'model' => $this->findModel($id),
             'empresa' => Empresa::find()->one(),
