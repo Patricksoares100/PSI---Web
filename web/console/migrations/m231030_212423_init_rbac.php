@@ -32,12 +32,15 @@ class m231030_212423_init_rbac extends Migration
 
         // Criar os roles - $auth->createRole();
         $role_admin = $auth->createRole('Admin');
+        $role_admin->description = 'Role de Administrador';
         $auth->add($role_admin);
 
         $role_funcionario = $auth->createRole("Funcionario");
+        $role_funcionario->description = 'Role de Funcionario';
         $auth->add($role_funcionario);
 
         $role_cliente = $auth->createRole('Cliente');
+        $role_cliente->description = 'Role de Cliente';
         $auth->add($role_cliente);
 
         //////////////////////// PERMISSÕES BACK-OFFICE
