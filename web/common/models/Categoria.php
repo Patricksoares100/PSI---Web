@@ -36,7 +36,7 @@ class Categoria extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'required','message' => 'O Campo não pode estar vazio!'],
+            [['nome','imageFiles'], 'required','message' => 'O Campo não pode estar vazio!','on' => ['create', 'update']],
             [['nome'], 'string', 'max' => 255],
             [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];

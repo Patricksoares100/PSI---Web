@@ -109,8 +109,8 @@ class CategoriaController extends Controller
                 if ($existeCategoria) {
                     \Yii::$app->session->setFlash('error', 'Indicou uma categoria que já existe. Introduza uma categoria diferente');
                 } else {
+                    $model->save();
                     $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-                    //$model->save();
                     if ($model->upload()) {
 
                         return $this->redirect(['view', 'id' => $model->id]);

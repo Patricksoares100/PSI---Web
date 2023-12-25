@@ -27,8 +27,8 @@ class Imagem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['artigo_id', 'image_path'], 'required'],
-            [['artigo_id'], 'integer'],
+            [['image_path'], 'required'],
+            [['artigo_id','categoria_id'], 'integer'],
             [['image_path'], 'string', 'max' => 255],
         ];
     }
