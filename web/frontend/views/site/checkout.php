@@ -68,7 +68,7 @@ GridView::widget([
                     </div>
                 </div>
 
-                <?= Html::submitButton('Salvar', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Salvar e Emitir Fatura', ['class' => 'btn btn-primary']) ?>
 
                 <?php ActiveForm::end(); ?>
             </div>
@@ -113,15 +113,7 @@ GridView::widget([
                     </div>
                 </div>
             </div>
-            <div class="mb-5">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span
-                            class="bg-secondary pr-3">Payment</span></h5>
-                <div class="bg-light p-30">
-                    <a href="<?= Url::to(['linhafatura/create', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Emitir Fatura</a>
-
-
-                </div>
-            </div>
+            
         </div>
 
     </div>
