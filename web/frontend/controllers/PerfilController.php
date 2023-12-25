@@ -60,11 +60,15 @@ class PerfilController extends Controller
             'model' => $this->findModel($id),
         ]);
         }
+        Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar os dados de outro cliente!');
+        return $this->render('view', [
+            'model' => $this->findModel(Yii::$app->user->id),
+        ]);
     }
     public function actionConfirmardados()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => $model->id])) {
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['linhafatura/create', 'iduser' => $model->id]);
             }
@@ -81,15 +85,22 @@ class PerfilController extends Controller
     public function actionUpdate($id)
     {
 
-        $model = $this->findModel($id);
-        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+        $model = $this->findModel(Yii::$app->user->id);
+
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => $id])) {
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
+        Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar os dados de outro cliente!');
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
