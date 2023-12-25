@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Artigo;
 use app\models\ArtigoSearch;
 use common\models\Avaliacao;
+use common\models\Imagem;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -175,14 +176,13 @@ class ArtigoController extends Controller
     public function actionDetail($id)
     {
         $model = $this->findModel($id);
-        $avaliacoes = Avaliacao::findAll(['artigo_id' => $model->id]);
-        $avaliacao = new Avaliacao ();
 
         return $this->render('detail', [
             'model' => $model,
-            'avaliacoes' => $avaliacoes,
-            'avaliacao' => $avaliacao,
+            'avaliacoes' => Avaliacao::findAll(['artigo_id' => $model->id]),
+            'avaliacao' => new Avaliacao (),
             'id'=> $id,
+            'numeroImagens' => Imagem::find()->where(['artigo_id' => $id])->count(),
         ]);
     }
 }
