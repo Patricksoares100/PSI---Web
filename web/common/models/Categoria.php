@@ -1,6 +1,8 @@
 <?php
 
 namespace common\models;
+use yii\web\UploadedFile;
+use common\models\Imagem;
 
 use Yii;
 
@@ -17,6 +19,12 @@ class Categoria extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    /**
+     * @var UploadedFile[]
+     */
+
+    public $imageFiles;
     public static function tableName()
     {
         return 'categorias';
@@ -30,7 +38,29 @@ class Categoria extends \yii\db\ActiveRecord
         return [
             [['nome'], 'required','message' => 'O Campo não pode estar vazio!'],
             [['nome'], 'string', 'max' => 255],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
+    }
+
+    public function upload()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        foreach ($this->imageFiles as $file) {
+            $timestamp = date('YmdHis');
+            $path = 'uploads/' . $file->baseName . '_' . $timestamp . '.' . $file->extension;
+            $file->saveAs($path);
+
+
+            $imagem = new Imagem();
+            $imagem->categoria_id = $this->id;
+            $imagem->image_path = $path;
+            $imagem->save();
+        }
+
+        return true;
     }
 
     /**
@@ -41,7 +71,13 @@ class Categoria extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome da Categoria',
+            'imagem.image_path' => 'Imagens',
         ];
+    }
+
+    public function getImagens()
+    {
+        return $this->hasMany(Imagem::class, ['categoria_id' => 'id']);
     }
 
     /**

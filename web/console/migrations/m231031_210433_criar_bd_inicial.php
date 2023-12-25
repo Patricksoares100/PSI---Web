@@ -74,7 +74,8 @@ class m231031_210433_criar_bd_inicial extends Migration
 
         $this->createTable('imagens', [
             'id' => $this->primaryKey(),
-            'artigo_id' => $this->integer()->notNull(),
+            'artigo_id' => $this->integer(),
+            "categoria_id" => $this->integer(),
             'image_path' => $this->string()->notNull(),
         ], 'ENGINE=InnoDB');
 

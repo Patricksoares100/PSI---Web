@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CategoriaController implements the CRUD actions for Categoria model.
@@ -85,8 +86,11 @@ class CategoriaController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $imagens = $model->imagens;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'imagens' => $imagens,
         ]);
     }
 
@@ -105,10 +109,14 @@ class CategoriaController extends Controller
                 if ($existeCategoria) {
                     \Yii::$app->session->setFlash('error', 'Indicou uma categoria que já existe. Introduza uma categoria diferente');
                 } else {
-                    $model->save();
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                    //$model->save();
+                    if ($model->upload()) {
+
+                        return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
+            }
         } else {
             $model->loadDefaultValues();
         }
