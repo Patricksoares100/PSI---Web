@@ -10,6 +10,8 @@ use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
 ?>
+
+
 <!-- Carousel Start -->
 <div class="container-fluid mb-3">
     <div class="row px-xl-5">
@@ -21,25 +23,26 @@ $this->title = 'My Yii Application';
                     <li data-target="#header-carousel" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-
-                    <?php
-                     //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
-                    if ($categoria1): ?>
-                        <div class="carousel-item position-relative active" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="img/pen_wallpaper_index.jpg"
-                                 style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria1->nome ?> </h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Explore o mundo da
-                                        escrita com a nossa exclusiva coleção de canetas personalizadas</p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                       href="<?= Url::to(['artigo/categorias', 'id' => $categoria1->id]) ?>">Compra
-                                        Agora</a>
+                    <?php if (!empty($categorias)) : ?>
+                        <?php foreach ($categorias as $categoria) : ?>
+                            <div class="carousel-item position-relative <?= $categoria->id === $categorias[0]->id ? 'active' : '' ?>" style="height: 430px;">
+                                 <!-- foi necessário comparar o id da categoria  a primeira imagem da categoria, porque precisa definir qual a imagem que é apresentada-->
+                                <!-- vai sempre assumir os primeiros ids das categorias -->
+                                <img class="position-absolute w-100 h-100"
+                                     src="<?= Yii::$app->params['caminhoBackend'] . '/' . $categoria->imagens[0]->image_path ?>"
+                                     style="width: 5cm; height: 5cm;" alt="Imagem do <?= $categoria->nome ?>"
+                                     style="object-fit: cover;">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria->nome ?> </h1>
+                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                                           href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>">Compra
+                                            Agora</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php else: ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
                         <div class="carousel-item position-relative active" style="height: 430px;">
                             <img class="position-absolute w-100 h-100" src="img/pen_wallpaper_index.jpg"
                                  style="object-fit: cover;">
@@ -50,80 +53,19 @@ $this->title = 'My Yii Application';
                             </div>
                         </div>
                     <?php endif; ?>
-
-                    <?php
-                    if ($categoria2): ?>
-                    <div class="carousel-item position-relative" style="height: 430px;">
-                        <img class="position-absolute w-100 h-100" src="img/agenda.jpg" style="object-fit: cover;">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria2->nome ?> </h1>
-                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">A indicar mensgaem que
-                                    queremos</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                   href="<?= Url::to(['artigo/categorias', 'id' => $categoria2->id]) ?>">Compra
-                                    Agora</a>
-                            </div>
-                        </div>
-                        <?php else: ?>
-                        <div class="carousel-item position-relative" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="img/agenda.jpg" style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"></h1>
-                                    <h6 class="text-white text-uppercase">A definir categoria</h6>
-                                </div>
-                            </div>
-                            <h6 class="text-white text-uppercase">A definir categoria</h6>
-                            <?php endif; ?>
-                        </div>
-                        <?php
-                        if ($categoria3): ?>
-                            <div class="carousel-item position-relative" style="height: 430px;">
-                                <img class="position-absolute w-100 h-100" src="img/acessorios_homem.jpg"
-                                     style="object-fit: cover;">
-                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                    <div class="p-3" style="max-width: 700px;">
-                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria3->nome ?> </h1>
-                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Elevamos o estilo
-                                            masculino com a nossa seleção de acessórios cuidadosamente escolhidos</p>
-                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                           href="<?= Url::to(['artigo/categorias', 'id' => $categoria3->id]) ?>">Compra
-                                            Agora</a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="img/mochila.jpg" alt="">
+        </div>
+        <div class="col-lg-4">
+            <div class="product-offer mb-30" style="height: 200px;">
+                <?php
+                if ($categoriaAleatoria): ?>
+                <img class="img-fluid" src="<?= Yii::$app->params['caminhoBackend'] . '/' . $categoriaAleatoria->imagens[0]->image_path ?>" alt="">
+                <div class="offer-text">
                     <div class="offer-text">
-                        <div class="offer-text">
-                            <?php
-                            //tem de levar condição if para nao rebentar qndo a base de dados nao tiver categorias
-                            if ($categoria): ?>
-                                <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
-                                <h3 class="text-white mb-3">Ofertas Especiais</h3>
-                                <a href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>"
-                                   class="btn btn-primary">Compra Agora</a>
-                            <?php else: ?>
-                                <h6 class="text-white text-uppercase">A definir categoria</h6>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
-                    <div class="offer-text">
-                        <?php
-
-                        if ($categoria): ?>
-                            <h6 class="text-white text-uppercase"><?= $categoria->nome ?></h6>
+                            <h6 class="text-white text-uppercase"><?= $categoriaAleatoria->nome ?></h6>
                             <h3 class="text-white mb-3">Ofertas Especiais</h3>
-                            <a href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>"
+                            <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaAleatoria->id]) ?>"
                                class="btn btn-primary">Compra Agora</a>
                         <?php else: ?>
                             <h6 class="text-white text-uppercase">A definir categoria</h6>
@@ -131,9 +73,25 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
             </div>
+            <div class="product-offer mb-30" style="height: 200px;">
+                <?php
+                if ($categoriaAleatoria2): ?>
+                <img class="img-fluid" src="<?= Yii::$app->params['caminhoBackend'] . '/' . $categoriaAleatoria2->imagens[0]->image_path ?>" alt="">
+                <div class="offer-text">
+                    <div class="offer-text">
+                        <h6 class="text-white text-uppercase"><?= $categoriaAleatoria2->nome ?></h6>
+                        <h3 class="text-white mb-3">Ofertas Especiais</h3>
+                        <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaAleatoria2->id]) ?>"
+                           class="btn btn-primary">Compra Agora</a>
+                    <?php else: ?>
+                        <h6 class="text-white text-uppercase">A definir categoria</h6>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Carousel End -->
+</div>
+<!-- Carousel End -->
 
 
     <!-- Featured Start -->
@@ -249,12 +207,12 @@ $this->title = 'My Yii Application';
         <div class="row px-xl-5">
             <div class="col-md-6">
                 <?php
-                if ($categoriaFooter): ?>
+                if ($categoriaAleatoria): ?>
                     <div class="product-offer mb-30" style="height: 300px;">
-                        <img class="img-fluid" src="img/mochila.jpg" alt="">
+                        <img class="img-fluid" src="<?=Yii::$app->params['caminhoBackend']. '/'. $categoriaAleatoria->imagens[0]->image_path?>" alt="">
                         <div class="offer-text">
-                            <h3 class="text-white mb-3"><?= $categoriaFooter->nome ?></h3>
-                            <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaFooter->id]) ?>"
+                            <h3 class="text-white mb-3"><?= $categoriaAleatoria->nome ?></h3>
+                            <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaAleatoria->id]) ?>"
                                class="btn btn-primary">Shop Now</a>
                         </div>
                     </div>
@@ -269,12 +227,12 @@ $this->title = 'My Yii Application';
             </div>
             <div class="col-md-6">
                 <?php
-                if ($categoriaFooter2): ?>
+                if ($categoriaAleatoria2): ?>
                 <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
+                    <img class="img-fluid" src="<?=Yii::$app->params['caminhoBackend']. '/'. $categoriaAleatoria2->imagens[0]->image_path?>" alt="">
                     <div class="offer-text">
-                        <h3 class="text-white mb-3"><?= $categoriaFooter2->nome ?></h3>
-                        <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaFooter2->id]) ?>"
+                        <h3 class="text-white mb-3"><?= $categoriaAleatoria2->nome ?></h3>
+                        <a href="<?= Url::to(['artigo/categorias', 'id' => $categoriaAleatoria2->id]) ?>"
                            class="btn btn-primary">Shop Now</a>
                     </div>
                     <?php else: ?>

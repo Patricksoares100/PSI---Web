@@ -82,12 +82,9 @@ class SiteController extends Controller
     {
         return $this->render('index',[
             'artigos' => Artigo::find()->all(),
-            'categoria' => Categoria::find()->orderBy('RAND()')->one(),
-            'categoria1' => Categoria::find()->orderBy('RAND()')->one(),
-            'categoria2' => Categoria::find()->orderBy('RAND()')->one(),
-            'categoria3' => Categoria::find()->orderBy('RAND()')->one(),
-            'categoriaFooter' => Categoria::find()->orderBy('RAND()')->one(),
-            'categoriaFooter2' => Categoria::find()->orderBy('RAND()')->one(),
+            'categorias' => Categoria::find()->all(),
+            'categoriaAleatoria' => Categoria::find()->orderBy('RAND()')->one(),
+            'categoriaAleatoria2' => Categoria::find()->orderBy('RAND()')->one(),
         ]);
     }
 
