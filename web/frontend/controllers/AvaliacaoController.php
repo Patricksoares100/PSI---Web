@@ -26,22 +26,12 @@ class AvaliacaoController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'create','view','delete','index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['update', 'create', 'view', 'delete', 'index'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'index'],
+                            'actions' => ['view', 'create', 'index', 'update', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
-                        ],
-                        [
-                            'actions' => ['update'],
-                            'allow' => true,
-                            'roles' => ['updateProprioCliente'],
-                        ],
-                        [
-                            'actions' => ['delete'],
-                            'allow' => true,
-                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],
@@ -134,11 +124,11 @@ class AvaliacaoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -153,7 +143,13 @@ class AvaliacaoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Avaliação removida com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Você não tem permissão para remover esta avaliação.');
+        }
 
         return $this->redirect(['index']);
     }

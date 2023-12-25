@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Favorito;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -27,19 +28,9 @@ class FavoritoController extends Controller
                     'only' => ['update', 'create', 'view','delete','index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'index'],
+                            'actions' => ['view', 'create', 'index', 'update', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],
-                        ],
-                        [
-                            'actions' => ['update'],
-                            'allow' => true,
-                            'roles' => ['updateProprioCliente'],
-                        ],
-                        [
-                            'actions' => ['delete'],
-                            'allow' => true,
-                            'roles' => ['deleteProprioCliente'],
                         ],
                     ],
                 ],
@@ -146,15 +137,14 @@ class FavoritoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public
-    function actionUpdate($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -167,13 +157,19 @@ class FavoritoController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public
-    function actionDelete($id)
+    public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Artigo removido dos favoritos com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Você não tem permissão para remover este artigo dos favoritos.');
+        }
 
         return $this->redirect(['index']);
     }
+
     public function actionEnviarcarrinho($id, $idFav){
         Favorito::deleteAll(['id'=> $idFav]);
         return $this->redirect(['linhacarrinho/create',

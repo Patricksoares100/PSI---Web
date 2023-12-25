@@ -144,11 +144,11 @@ class LinhafaturaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -163,7 +163,13 @@ class LinhafaturaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Linha de fatura removida com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Você não tem permissão para remover esta linha da fatura.');
+        }
 
         return $this->redirect(['index']);
     }
