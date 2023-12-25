@@ -37,26 +37,6 @@ GridView::widget([
     ],
 ]);
 ?>
-
-<?php
-// Verifique se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-// Receba os dados do formulário
-$perfil->nome = $_POST['nome'];
-$perfil->nif = $_POST['nif'];
-$perfil->telefone = $_POST['telefone'];
-$perfil->morada = $_POST['morada'];
-$perfil->codigo_postal = $_POST['codigo_postal'];
-$perfil->localidade = $_POST['localidade'];
-
-// Salve os dados no banco de dados
-if ($perfil->save()) {
-echo "Dados atualizados com sucesso!";
-} else {
-echo "Erro ao atualizar os dados: " . print_r($perfil->errors, true);
-}
-} ?>
-
 <!-- Checkout Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
@@ -64,35 +44,31 @@ echo "Erro ao atualizar os dados: " . print_r($perfil->errors, true);
             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Morada de faturação</span>
             </h5>
             <div class="bg-light p-30 mb-5">
-                <?php $form = ActiveForm::begin(); ?>
+                <?php $form = ActiveForm::begin([
+                    'action' => Url::to(['perfil/confirmardados']),
+                ]); ?>
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <label>Nome</label>
-                        <?= Html::textInput('nome', $perfil->nome, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'nome') ?>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Nif</label>
-                        <?= Html::textInput('nif', $perfil->nif, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'nif') ?>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Telefone</label>
-                        <?= Html::textInput('telefone', $perfil->telefone, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'telefone') ?>
                     </div>
                     <div class="col-md-12 form-group">
-                        <label>Endereço</label>
-                        <?= Html::textInput('morada', $perfil->morada, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'morada') ?>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Codigo Postal</label>
-                        <?= Html::textInput('codigo_postal', $perfil->codigo_postal, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'codigo_postal') ?>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Localidade</label>
-                        <?= Html::textInput('localidade', $perfil->localidade, ['class' => 'form-control']) ?>
+                        <?= $form->field($perfil, 'localidade') ?>
                     </div>
                 </div>
 
-                <?= Html::submitButton('Salvar', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Salvar e Emitir Fatura', ['class' => 'btn btn-primary']) ?>
 
                 <?php ActiveForm::end(); ?>
             </div>
@@ -137,15 +113,7 @@ echo "Erro ao atualizar os dados: " . print_r($perfil->errors, true);
                     </div>
                 </div>
             </div>
-            <div class="mb-5">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span
-                            class="bg-secondary pr-3">Payment</span></h5>
-                <div class="bg-light p-30">
-                    <a href="<?= Url::to(['linhafatura/create', 'iduser' => Yii::$app->user->id]) ?>" class="btn btn-block btn-primary font-weight-bold py-3">Emitir Fatura</a>
-
-
-                </div>
-            </div>
+            
         </div>
 
     </div>

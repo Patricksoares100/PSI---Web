@@ -54,15 +54,12 @@ class FaturaController extends Controller
      */
     public function actionIndex()
     {
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => Fatura::find()->where(['perfil_id' => Yii::$app->user->id]),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-
+            $dataProvider = new ActiveDataProvider([
+                'query' => Fatura::find()->where(['perfil_id' => Yii::$app->user->id]),
+            ]);
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+            ]);
     }
 
     /**
@@ -73,12 +70,17 @@ class FaturaController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->can('updateDadosPessoais', ['perfil'=> $id])) {
         return $this->render('view', [
             'model' => $this->findModel($id),
             'empresa' => Empresa::find()->one(),
             'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
 
         ]);
+        }else{
+            Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar uma fatura de outro cliente!');
+            return $this->redirect(['index']);
+        }
     }
 
     /**
