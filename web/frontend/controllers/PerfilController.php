@@ -30,14 +30,9 @@ class PerfilController extends Controller
                 'only' => ['update', 'view', 'alterar-password'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
-                        'actions' => [ 'view', 'alterar-password'],
+                        'actions' => [ 'view', 'alterar-password','update'],
                         'allow' => true,
                         'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['updateProprioCliente'],
                     ],
                 ],
             ],
@@ -78,11 +73,11 @@ class PerfilController extends Controller
     {
 
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
