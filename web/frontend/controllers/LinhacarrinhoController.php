@@ -128,25 +128,27 @@ class LinhacarrinhoController extends Controller
     public function actionUpdate($id, $sinal)
     {
         $model = $this->findModel($id);
-        if($sinal == '+'){
-            if ($model->quantidade < $model->artigo->stock_atual ) { // seguindo a logica da linha faturas, aqui coloquei +1 para a quantidade do artigo na base de dados nao assumr valor negativo
-                $model->quantidade++;
-            }else{
-                Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            if ($sinal == '+') {
+                if ($model->quantidade < $model->artigo->stock_atual) { // seguindo a logica da linha faturas, aqui coloquei +1 para a quantidade do artigo na base de dados nao assumr valor negativo
+                    $model->quantidade++;
+                    Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+                }
+            } else {
+                $model->quantidade--;
+                Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
+                if ($model->quantidade <= 0) {
+                    $this->findModel($id)->delete();
+                    Yii::$app->session->setFlash('success', 'Artigo removido do carrinho com sucesso!');
+                }
+            }
+
+            if ($this->request->isPost && $model->save()) {
+                return $this->redirect(['index', 'id' => $model->id]);
             }
         }
-
-        else{
-            $model->quantidade--;
-            if($model->quantidade <= 0){
-                $this->findModel($id)->delete();
-            }
-        }
-
-        if ($this->request->isPost && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
-        }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -162,7 +164,7 @@ class LinhacarrinhoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id, 'model' => $model])) {
+        if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model->delete();
             Yii::$app->session->setFlash('success', 'Artigo removido com sucesso.');
         } else {
