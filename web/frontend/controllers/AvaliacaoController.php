@@ -79,9 +79,19 @@ class AvaliacaoController extends Controller
      */
     public function actionView($id)
     {
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model = $this->findModel($id);
+            if ($model->perfil_id == Yii::$app->user->id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                'model' => $this->findModel($id),
         ]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Não tem permissões!');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Não tem permissões!');
+        }
+        return $this->redirect(['index']);
     }
 
     /**
@@ -125,13 +135,18 @@ class AvaliacaoController extends Controller
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->perfil_id == Yii::$app->user->id) {
+                if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
+            Yii::$app->session->setFlash('error', 'Não tem permissões para editar avaliações de outros clientes!');
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        Yii::$app->session->setFlash('error', 'Não tem permissões para editar avaliações de outros clientes!');
+        return $this->redirect(['index']);
     }
 
     /**
