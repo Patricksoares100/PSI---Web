@@ -30,7 +30,7 @@ class FaturaController extends Controller
                     'only' => ['update', 'view', 'delete', 'pagar', 'index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'index', 'update', 'pagar', 'delete'],
+                            'actions' => ['view', 'index', 'pagar', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
@@ -119,18 +119,24 @@ class FaturaController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+   /* public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if($model->perfil_id == Yii::$app->user->id){
+                if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }else{
+                Yii::$app->session->setFlash('error', 'Não pode fazer update da fatura de outro cliente!');
+                return $this->redirect(['index']);
             }
+        }else{
+            Yii::$app->session->setFlash('error', 'Não tem permissões!');
+            return $this->redirect(['index']);
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+        return $this->redirect('index' );
+    }*/
 
     public function actionPagar($id)
     {
