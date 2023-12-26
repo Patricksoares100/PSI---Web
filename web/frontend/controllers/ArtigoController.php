@@ -33,12 +33,12 @@ class ArtigoController extends Controller
                     'only' => ['create', 'update', 'delete', 'view', 'index', 'detail', 'adicionarcarrinho'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'update', 'delete', 'view', 'adicionarcarrinho'],
+                            'actions' => ['create', 'update', 'delete', 'view'],
                             'allow' => false,
                             'roles' => ['permissionFrontoffice', '?', '@'], // qualquer utilizador do FrontOffice
                         ],
                         [
-                            'actions' => ['index', 'detail'],
+                            'actions' => ['index', 'detail', 'adicionarcarrinho'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice', '?', '@'], // qualquer utilizador do FrontOffice
                         ],
