@@ -28,7 +28,7 @@ class FavoritoController extends Controller
                     'only' => ['update', 'create', 'view','delete','index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'create', 'index', 'update', 'delete'],
+                            'actions' => ['view', 'create', 'index', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],
                         ],
@@ -137,7 +137,7 @@ class FavoritoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+  /*  public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
@@ -148,7 +148,7 @@ class FavoritoController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Deletes an existing Favorito model.
