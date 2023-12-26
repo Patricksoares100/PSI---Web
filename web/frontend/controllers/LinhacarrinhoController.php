@@ -136,29 +136,33 @@ class LinhacarrinhoController extends Controller
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
-            if ($sinal == '+') {
-                if ($model->quantidade < $model->artigo->stock_atual) { // seguindo a logica da linha faturas, aqui coloquei +1 para a quantidade do artigo na base de dados nao assumr valor negativo
-                    $model->quantidade++;
-                    Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
+            if ($this->request->isPost) {
+                if ($sinal == '+') {
+                    if ($model->quantidade < $model->artigo->stock_atual) { // seguindo a logica da linha faturas, aqui coloquei +1 para a quantidade do artigo na base de dados nao assumr valor negativo
+                        $model->quantidade++;
+                        Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
+                    } else {
+                        Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+                    }
                 } else {
-                    Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+                    $model->quantidade--;
+                    Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
+                    if ($model->quantidade <= 0) {
+                        $this->findModel($id)->delete();
+                        Yii::$app->session->setFlash('success', 'Artigo removido do carrinho com sucesso!');
+                    }
                 }
-            } else {
-                $model->quantidade--;
-                Yii::$app->session->setFlash('success', 'Quantidade atualizada com sucesso!');
-                if ($model->quantidade <= 0) {
-                    $this->findModel($id)->delete();
-                    Yii::$app->session->setFlash('success', 'Artigo removido do carrinho com sucesso!');
-                }
+                $model->save();
+                return $this->redirect('index');
+            }
+            else {
+            Yii::$app->session->setFlash('error', 'Método tem de ser POST');
+                return $this->redirect('index');
             }
 
-            if ($this->request->isPost && $model->save()) {
-                return $this->redirect(['index', 'id' => $model->id]);
-            }
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        Yii::$app->session->setFlash('error', 'Não tem permissões');
+        return $this->redirect('index' );
     }
 
     /**
