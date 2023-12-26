@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Artigo;
 use common\models\LinhaCarrinho;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -25,10 +26,10 @@ class LinhacarrinhoController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['create','delete','index','update'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['create', 'delete', 'index', 'update'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'index','update','delete'],
+                            'actions' => ['create', 'index', 'update', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'], // criar regra para apenas o propio
                         ],
@@ -97,9 +98,15 @@ class LinhacarrinhoController extends Controller
 
         // Verifica se já existe uma linha com o mesmo artigo_id e perfil_id
         $existeModel = LinhaCarrinho::findOne(['artigo_id' => $artigo_id, 'perfil_id' => $perfil_id]);
+        $artigo = Artigo::findOne(['id' => $id]);
 
         if ($existeModel) { // se encontrar uma linha com o mesmo artigo_id com o id logado
             $existeModel->quantidade += $quantidade; // Se já existe, incrementa a quantidade
+
+            // VERIFICA SE A QUANTIDADE ADICIONADA É EXCEDIDA, SE FOR ADICIONA O TOTAL EM STOCK
+            if ($existeModel->quantidade > $artigo->stock_atual) {
+                $existeModel->quantidade = $artigo->stock_atual;
+            }
             if ($existeModel->save()) {
                 return $this->redirect(['index', 'id' => $existeModel->id]);
             }
