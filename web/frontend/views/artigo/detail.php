@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3><?= $model->nome ?></h3>
                 <?php
                 $somaTotal = 0;
-                foreach ($avaliacoes as $avaliacao) : ?>
-                    <?php $somaTotal += $avaliacao->classificacao; ?>
+                foreach ($avaliacoes as $a) : ?>
+                    <?php $somaTotal += $a->classificacao; ?>
                 <?php endforeach; ?>
 
                 <?php
@@ -151,23 +151,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-md-6">
                             <h4 class="mb-4"> <?= count($avaliacoes) ?> Review</h4>
                             <?php if ($avaliacoes !== null) : ?>
-                                <?php foreach ($avaliacoes as $avaliacao) : ?>
+                                <?php foreach ($avaliacoes as $a) : ?>
                                     <div class="media mb-4">
                                         <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
                                              style="width: 45px;">
                                         <div class="media-body">
-                                            <?php $utilizador = $avaliacao->perfil; ?>
+                                            <?php $utilizador = $a->perfil; ?>
                                             <?php if ($utilizador) : ?>
                                                 <h6><?= $utilizador->nome ?></h6>
                                                 <div class="text-primary mb-2">
                                                     <?php
-                                                    $valorUnicoReview = $avaliacao->classificacao;
+                                                    $valorUnicoReview = $a->classificacao;
                                                     for ($i = 0; $i < 5; $i++) {
                                                         echo '<i class="' . ($i < floor($valorUnicoReview) ? 'fas' : 'far') . ' fa-star"></i>';
                                                     }
                                                     ?>
                                                 </div>
-                                                <p><?= $avaliacao->comentario ?></p>
+                                                <p><?= $a->comentario ?></p>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <?= $form->field($avaliacao, 'comentario')->textInput(['maxlength' => true]) ?>
 
-                                <?= $form->field($avaliacao, 'classificacao')->dropDownList([1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5',]) ?>
+                                <?= $form->field($avaliacao, 'classificacao')->dropDownList([5 => '5', 4 => '4', 3 => '3', 2 => '2', 1 => '1',]) ?>
 
                                 <div class="form-group">
                                     <?= Html::submitButton('Deixe a sua avaliação', ['class' => 'btn btn-primary']) ?>
