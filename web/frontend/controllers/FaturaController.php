@@ -27,10 +27,10 @@ class FaturaController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'view', 'delete','pagar','index'],
+                    'only' => ['update', 'view', 'delete', 'pagar', 'index'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'index','update', 'pagar','delete'],
+                            'actions' => ['view', 'index', 'update', 'pagar', 'delete'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
@@ -54,12 +54,12 @@ class FaturaController extends Controller
      */
     public function actionIndex()
     {
-            $dataProvider = new ActiveDataProvider([
-                'query' => Fatura::find()->where(['perfil_id' => Yii::$app->user->id]),
-            ]);
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-            ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Fatura::find()->where(['perfil_id' => Yii::$app->user->id]),
+        ]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -70,17 +70,22 @@ class FaturaController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('verClientesFront', ['perfil'=> Yii::$app->user->id])) {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'empresa' => Empresa::find()->one(),
-            'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model = $this->findModel($id);
+            if ($model->perfil_id == Yii::$app->user->id) {
+                return $this->render('view', [
+                    'model' => $model,
+                    'empresa' => Empresa::find()->one(),
+                    'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
 
-        ]);
-        }else{
+                ]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar uma fatura de outro cliente!');
+            }
+        } else {
             Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar uma fatura de outro cliente!');
-            return $this->redirect(['index']);
         }
+        return $this->redirect(['index']);
     }
 
     /**
@@ -126,14 +131,23 @@ class FaturaController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionPagar($id){
+
+    public function actionPagar($id)
+    {
+        $model = $this->findModel($id);
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
-            $model = $this->findModel($id);
-            $model->estado = "Paga";
-            $model->data = (new \DateTime())->format('Y-m-d H:i:s');
-            $model->save();
+            if ($model->perfil_id == Yii::$app->user->id) {
+                $model->estado = "Paga";
+                $model->data = (new \DateTime())->format('Y-m-d H:i:s');
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->session->setFlash('error', 'Não tem permissões para pagar faturas de outro cliente!');
+            }
+        }else{
+            Yii::$app->session->setFlash('error', 'Não tem permissões para pagar faturas de outro cliente!');
         }
-        return $this->redirect(['view', 'id' => $model->id]);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -147,13 +161,13 @@ class FaturaController extends Controller
     {
         if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model = $this->findModel($id);
-            if($model->canDeleteFatura()){//se for emitida apaga
-            $model->delete();
+            if ($model->canDeleteFatura()) {//se for emitida apaga
+                $model->delete();
                 Yii::$app->session->setFlash('success', 'Fatura removida com sucesso!');
-        }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Não pode remover uma fatura PAGA!');
             }
-        }else{
+        } else {
             Yii::$app->session->setFlash('error', 'Não tem permissões!');
         }
         return $this->redirect(['index']);
