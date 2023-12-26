@@ -102,6 +102,7 @@ class CategoriaController extends Controller
     public function actionCreate()
     {
         $model = new Categoria();
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
