@@ -6,6 +6,8 @@ use common\models\Artigo;
 use app\models\ArtigoSearch;
 use common\models\Avaliacao;
 use common\models\Imagem;
+use common\models\LinhaCarrinho;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,17 +30,17 @@ class ArtigoController extends Controller
                 // Metemos aqui tudo publico?
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['create', 'update', 'delete', 'view','index','detail'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                    'only' => ['create', 'update', 'delete', 'view', 'index', 'detail', 'adicionarcarrinho'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                     'rules' => [
                         [
-                            'actions' => ['create', 'update', 'delete', 'view'],
+                            'actions' => ['create', 'update', 'delete', 'view', 'adicionarcarrinho'],
                             'allow' => false,
-                            'roles' => ['permissionFrontoffice','?','@'], // qualquer utilizador do FrontOffice
+                            'roles' => ['permissionFrontoffice', '?', '@'], // qualquer utilizador do FrontOffice
                         ],
                         [
-                            'actions' => ['index','detail'],
+                            'actions' => ['index', 'detail'],
                             'allow' => true,
-                            'roles' => ['permissionFrontoffice','?','@'], // qualquer utilizador do FrontOffice
+                            'roles' => ['permissionFrontoffice', '?', '@'], // qualquer utilizador do FrontOffice
                         ],
 
                     ],
@@ -173,7 +175,7 @@ class ArtigoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionDetail($id)
+    public function actionDetail($id, $quantidade = 1)
     {
         $model = $this->findModel($id);
 
@@ -181,8 +183,38 @@ class ArtigoController extends Controller
             'model' => $model,
             'avaliacoes' => Avaliacao::findAll(['artigo_id' => $model->id]),
             'avaliacao' => new Avaliacao (),
-            'id'=> $id,
+            'id' => $id,
             'numeroImagens' => Imagem::find()->where(['artigo_id' => $id])->count(),
+            'quantidade' => $quantidade,
         ]);
     }
+
+    public function actionAdicionarcarrinho($id, $quantidade, $sinal)
+    {
+        $quantidade = intval($quantidade);
+        $model = $this->findModel($id);
+        if ($sinal == '+') {
+            if ($quantidade < $model->stock_atual) {
+                $quantidade++;
+                Yii::$app->session->setFlash('success', 'Quantidade adicionada com sucesso!');
+            } else {
+                Yii::$app->session->setFlash('error', 'Não temos em stock as quantidades de artigo que quer adicionar');
+            }
+
+        } else {
+            $quantidade--;
+            if ($quantidade <= 0) {
+                Yii::$app->session->setFlash('error', 'Quantidade não pode ser inferior ou igual a 0');
+                $quantidade = 1;
+            } else {
+
+                Yii::$app->session->setFlash('success', 'Quantidade removida com sucesso!');
+            }
+        }
+        return $this->redirect(['detail',
+            'id' => $model->id,
+            'quantidade' => $quantidade,
+        ]);
+    }
+
 }

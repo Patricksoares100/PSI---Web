@@ -37,13 +37,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[0]->image_path?>" alt="Image">
+                        <img class="w-100 h-100"
+                             src="<?= Yii::$app->params['caminhoBackend'] . '/' . $model->imagens[0]->image_path ?>"
+                             alt="Image">
                     </div>
 
-                    <?php for ( $i =1; $i< $numeroImagens; $i++ ): ?>
+                    <?php for ($i = 1; $i < $numeroImagens; $i++): ?>
                         <div class="carousel-item">
-                        <img class="w-100 h-100" src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->imagens[$i]->image_path?>" alt="Image">
-                    </div>
+                            <img class="w-100 h-100"
+                                 src="<?= Yii::$app->params['caminhoBackend'] . '/' . $model->imagens[$i]->image_path ?>"
+                                 alt="Image">
+                        </div>
                     <?php endfor; ?>
 
                 </div>
@@ -87,22 +91,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="mb-4"><?= $model->descricao ?></p>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
+
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
+                            <?= Html::a('-', ['adicionarcarrinho', 'id' => $model->id, 'quantidade' => $quantidade, 'sinal' => '-'], ['class' => 'btn btn-primary btn-minus', 'data-method' => 'post']) ?>
                         </div>
-                        <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                        <input type="text" class="form-control bg-secondary border-0 text-center"
+                               value="<?= $quantidade ?>">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                            <?php if ($quantidade < $model->stock_atual) {
+                                echo Html::a('+', ['adicionarcarrinho', 'id' => $model->id, 'quantidade' => $quantidade, 'sinal' => '+'], ['class' => 'btn btn-primary btn-plus', 'data-method' => 'post']);
+                            } else {
+                                echo Html::a('+', ['adicionarcarrinho', 'id' => $model->id, 'quantidade' => $quantidade, 'sinal' => '+'], ['class' => 'btn btn-secondary disabled btn-plus', 'data-method' => 'post']);
+                            } ?>
                         </div>
+
                     </div>
                     <?php if ($model->stock_atual > 0): ?>
-                    <a class="btn btn-primary mr-4" href="<?= Url::to(['linhacarrinho/create', 'id' => $model->id]) ?>">
-                        <i class="fa fa-shopping-cart mr-1"></i> Add Carrinho
-                    </a>
+                        <a class="btn btn-primary mr-4"
+                           href="<?= Url::to(['linhacarrinho/create', 'id' => $model->id, 'quantidade' => $quantidade]) ?>">
+                            <i class="fa fa-shopping-cart mr-1"></i> Add Carrinho
+                        </a>
                     <?php else: ?>
                         <a class="btn btn-secondary disabled mr-4" href=""> Sem Stock </a>
                     <?php endif; ?>
@@ -167,8 +175,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php endif; ?>
                             <?php $artigoId = $model->id;
                             $userId = Yii::$app->user->id;
-                            $faturaId = Fatura::find()->where(['perfil_id'=> $userId])->one();
-                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_Id'=> $faturaId])->exists();
+                            $faturaId = Fatura::find()->where(['perfil_id' => $userId])->one();
+                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_Id' => $faturaId])->exists();
                             ?>
                         </div>
                         <?php if (!Yii::$app->user->isGuest && $comprouArtigo) { ?>

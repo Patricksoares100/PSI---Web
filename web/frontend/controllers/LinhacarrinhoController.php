@@ -90,7 +90,7 @@ class LinhacarrinhoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id)
+    public function actionCreate($id, $quantidade = 1)
     {
         $artigo_id = intval($id);
         $perfil_id = \Yii::$app->user->id;
@@ -99,13 +99,13 @@ class LinhacarrinhoController extends Controller
         $existeModel = LinhaCarrinho::findOne(['artigo_id' => $artigo_id, 'perfil_id' => $perfil_id]);
 
         if ($existeModel) { // se encontrar uma linha com o mesmo artigo_id com o id logado
-            $existeModel->quantidade += 1; // Se já existe, incrementa a quantidade
+            $existeModel->quantidade += $quantidade; // Se já existe, incrementa a quantidade
             if ($existeModel->save()) {
                 return $this->redirect(['index', 'id' => $existeModel->id]);
             }
         } else { // aqui deixei igual, apenas coloquei a condição antes
             $model = new LinhaCarrinho();
-            $model->quantidade = 1;
+            $model->quantidade = $quantidade;
             $model->artigo_id = intval($id); // converte string to int em php
             $model->perfil_id = \Yii::$app->user->id;
             if ($model->save()) {
