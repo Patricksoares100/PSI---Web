@@ -40,26 +40,38 @@ class LoginCest
 
         $I->see('APR');
         $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
     }
     public function loginErrado(FunctionalTester $I)
     {
         $I->amOnRoute('/site/login');
         $I->amGoingTo('Tentar entrar com os dados errados');
-        $I->fillField('LoginForm[username]', 'Vaifalhar');
-        $I->fillField('LoginForm[password]', '1234');
-        $I->click('Login');
+        $I->fillField('Username', 'Vaifalhar');
+        $I->fillField('Password', '1234');
+        $I->click('login-button');
+
         $I->see('Incorrect username or password.');
     }
     public function loginEmBranco(FunctionalTester $I)
     {
         $I->amOnRoute('/site/login');
         $I->amGoingTo('Tentar entrar sem com os dados em branco');
-        $I->fillField('LoginForm[username]', '');
-        $I->fillField('LoginForm[password]', '');
-        $I->click('Login');
+        $I->fillField('Username', '');
+        $I->fillField('Password', '');
+        $I->click('login-button');
+
         $I->see('Username cannot be blank.');
         $I->see('Password cannot be blank.');
+    }
+    public function loginUserInativo(FunctionalTester $I){
+        $I->amOnRoute('/site/login');
+        $I->amGoingTo('Tentar entrar com user inativo');
+        $I->fillField('Username', 'userInativo9');
+        $I->fillField('Password', 'teste123');
+        $I->click('login-button');
+
+        $I->see('Incorrect username or password.');
+        $I->dontSeeLink('Home');
+        $I->see('Login');
     }
 
 }
