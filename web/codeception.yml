@@ -1,15 +1,13 @@
-namespace: Tests
-support_namespace: Support
+include:
+  - common
+  - frontend
+  - backend
+
 paths:
-    tests: tests
-    output: tests/_output
-    data: tests/Support/Data
-    support: tests/Support
-    envs: tests/_envs
-actor_suffix: Tester
-extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
+  output: console/runtime/output
+
 config:
-    Db:
-        dsn: 'mysql:host=localhost;dbname=seu_banco_de_dados_de_teste'
+  namespace: Tests
+  support_namespace: Support
+  Db:
+    dsn: 'mysql:host=localhost;dbname=bdbrindeszorro'
