@@ -1,2 +1,21 @@
 suite_namespace: backend\tests\unit
 actor: UnitTester
+suite_class: UnitTester
+modules:
+  enabled:
+    - Yii2
+  WebDriver:
+    host: chrome
+    url: http://localhost
+    browser: chrome
+    port: 4444
+    window_size: 1024x768
+    restart: true
+  Db:
+    dsn: 'mysql:localhost=mysql:3306;dbname=bdbrindeszorro_test'
+    user: 'root'
+    password: ''
+    dump: 'tests/_data/dump.sql'
+    populate: true
+    cleanup: true
+    reconnect: true

@@ -10,4 +10,4 @@ config:
   namespace: Tests
   support_namespace: Support
   Db:
-    dsn: 'mysql:host=localhost;dbname=bdbrindeszorro'
+    dsn: 'mysql:host=localhost;dbname=bdbrindeszorro_test'
