@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Empresa;
 use common\models\Fatura;
+use common\models\LinhaFatura;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -88,8 +90,12 @@ class FaturaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model = $this->findModel($id);
+        return $this->render('imprimir', [
+            'model' => $model,
+            'empresa' => Empresa::find()->one(),
+            'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
+
         ]);
     }
 

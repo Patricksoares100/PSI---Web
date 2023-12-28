@@ -1,8 +1,3 @@
-<?php
-
-use yii\helpers\Url;
-
-?>
 
 <div class="invoice p-3 mb-3">
 
@@ -111,10 +106,6 @@ use yii\helpers\Url;
                 <table class="table">
                     <tbody>
                     <tr>
-                        <th>Estado:</th>
-                        <td><?= $model->estado ?></td>
-                    </tr>
-                    <tr>
                         <th style="width:50%">Subtotal:</th>
                         <td><?= number_format($subTotalSemIva, 2, ',', '.') ?> €</td>
                     </tr>
@@ -134,18 +125,4 @@ use yii\helpers\Url;
 
     </div>
 
-
-    <div class="row no-print">
-        <div class="col-12">
-            <a href="<?= Url::to(['imprimir', 'id' => $model->id]) ?>" rel="noopener" target="_blank"
-               class="btn btn-default"><i class="fas fa-print"></i> Imprimir</a>
-            <?php if ($model->estado == 'Emitida') : ?>
-                <a type="button" class="btn btn-success float-right"
-                   href="<?= Url::to(['pagar', 'id' => $model->id]) ?>"><i class="far fa-credit-card"></i> Pagar </a>
-            <?php endif; ?>
-            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                <i class="fas fa-download"></i> Gerar PDF
-            </button>
-        </div>
-    </div>
 </div>
