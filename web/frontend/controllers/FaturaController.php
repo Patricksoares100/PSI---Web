@@ -27,10 +27,10 @@ class FaturaController extends Controller
             [
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['update', 'view', 'delete', 'pagar', 'index'],
+                    'only' => ['update', 'view', 'delete', 'pagar', 'index', 'imprimir'],
                     'rules' => [
                         [
-                            'actions' => ['view', 'index', 'pagar', 'delete'],
+                            'actions' => ['view', 'index', 'pagar', 'delete', 'imprimir'],
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
@@ -119,24 +119,24 @@ class FaturaController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-   /* public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
-            if($model->perfil_id == Yii::$app->user->id){
-                if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }else{
-                Yii::$app->session->setFlash('error', 'Não pode fazer update da fatura de outro cliente!');
-                return $this->redirect(['index']);
-            }
-        }else{
-            Yii::$app->session->setFlash('error', 'Não tem permissões!');
-            return $this->redirect(['index']);
-        }
-        return $this->redirect('index' );
-    }*/
+    /* public function actionUpdate($id)
+     {
+         $model = $this->findModel($id);
+         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+             if($model->perfil_id == Yii::$app->user->id){
+                 if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                     return $this->redirect(['view', 'id' => $model->id]);
+                 }
+             }else{
+                 Yii::$app->session->setFlash('error', 'Não pode fazer update da fatura de outro cliente!');
+                 return $this->redirect(['index']);
+             }
+         }else{
+             Yii::$app->session->setFlash('error', 'Não tem permissões!');
+             return $this->redirect(['index']);
+         }
+         return $this->redirect('index' );
+     }*/
 
     public function actionPagar($id)
     {
@@ -147,10 +147,10 @@ class FaturaController extends Controller
                 $model->data = (new \DateTime())->format('Y-m-d H:i:s');
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Não tem permissões para pagar faturas de outro cliente!');
             }
-        }else{
+        } else {
             Yii::$app->session->setFlash('error', 'Não tem permissões para pagar faturas de outro cliente!');
         }
         return $this->redirect(['index']);
@@ -193,5 +193,27 @@ class FaturaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionImprimir($id)
+    {
+        $this->layout = 'blank';
+
+        if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
+            $model = $this->findModel($id);
+            if ($model->perfil_id == Yii::$app->user->id) {
+                return $this->render('imprimir', [
+                    'model' => $model,
+                    'empresa' => Empresa::find()->one(),
+                    'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),
+
+                ]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar uma fatura de outro cliente!');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Não tem permissões para visualizar uma fatura de outro cliente!');
+        }
+        return $this->redirect(['index']);
     }
 }
