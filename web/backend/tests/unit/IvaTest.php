@@ -1,6 +1,5 @@
 <?php
 
-
 namespace backend\tests\Unit;
 
 use backend\tests\UnitTester;
@@ -27,5 +26,21 @@ class IvaTest extends \Codeception\Test\Unit
 
         $iva->percentagem = null;
         $this->assertFalse($iva->validate(['percentagem']));
+    }
+
+    public function testGuardarArtigoValido()
+    {
+        $iva = new Iva();
+
+        $iva->em_vigor = 'Sim';
+        $iva->percentagem = 10;
+        $iva->descricao = 'ref';
+
+
+        $iva->save();
+
+        $this->test->seeRecord('common\models\Iva', ['percentagem' => 10, 'descricao' => 'ref']);
+
+
     }
 }

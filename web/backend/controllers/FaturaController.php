@@ -91,7 +91,7 @@ class FaturaController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        return $this->render('imprimir', [
+        return $this->render('view', [
             'model' => $model,
             'empresa' => Empresa::find()->one(),
             'linhasFaturas' => LinhaFatura::find()->where(['fatura_id' => $id])->all(),

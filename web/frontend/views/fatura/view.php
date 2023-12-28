@@ -44,7 +44,12 @@ use yii\helpers\Url;
             <b></b><br>
             <br>
             <b>Encomenda Nº:</b> <?= $model->id ?><br>
-            <b>Data da Encomenda:</b> <?= date('d-m-Y H:i', strtotime($model->data)) ?><br>
+            <?php
+            if ($model->estado == 'Emitida'){ ?>
+                <b>Data da Encomenda:</b> <?= date('d-m-Y H:i', strtotime($model->data)) ?><br>
+            <?php } elseif ($model->estado == 'Paga') {?>
+                <b>Data de Pagamento:</b> <?= date('d-m-Y H:i', strtotime($model->data)) ?><br>
+            <?php } ?>
 
         </div>
 
