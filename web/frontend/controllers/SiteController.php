@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Empresa;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -33,7 +34,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup', 'checkout', 'faturas'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
+                'only' => ['logout', 'signup', 'checkout', 'faturas','about'], //tudo publico menos o q esta aqui, rotas afetadas pelo ACF
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -44,6 +45,11 @@ class SiteController extends Controller
                         'actions' => ['logout','checkout','faturas'],
                         'allow' => true,
                         'roles' => ['@'], // utilizador logado
+                    ],
+                    [
+                        'actions' => ['about'],
+                        'allow' => true,
+                        'roles' => ['?','@'], // utilizador logado
                     ],
 
                 ],
@@ -182,7 +188,9 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        return $this->render('about',[
+            'empresa' => Empresa::find()->one(),
+        ]);
     }
 
     /**

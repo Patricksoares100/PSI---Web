@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-about">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php  $empresa = Empresa::find()->one()?>
+
     <?php if ($empresa): ?>
     <p>Nome: <?= $empresa->nome?> </p>
     <p>Email: <?= $empresa->email?> </p>
