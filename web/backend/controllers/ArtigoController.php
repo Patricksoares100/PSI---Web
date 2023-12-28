@@ -105,7 +105,7 @@ class ArtigoController extends Controller
     {
         $model = new Artigo();
         //https://stackoverflow.com/questions/29449019/yii2-validate-only-create-action
-        $model->scenario = 'create';
+        //$model->scenario = 'create';
 
         $fornecedores = Fornecedor::find()->all();
         $ivas = Iva::find()->all();
