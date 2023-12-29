@@ -17,8 +17,9 @@ class ArtigoTest extends \Codeception\Test\Unit
     public function testCamposObrigatorios()
     {
         $artigo = new Artigo();
+        $artigo->scenario = 'create';
 
-        // Configurar dados sem preencher campos obrigatórios
+        // A - Despoletar todas as regras de validação (introduzindo dados erróneos);
         $artigo->nome = '';
         $this->assertFalse($artigo->validate(['nome']));
 
@@ -52,16 +53,24 @@ class ArtigoTest extends \Codeception\Test\Unit
 
     public function testDadosInvalidos()
     {
-        // alinea A FICHA 7
+        //
         $artigo = new Artigo();
 
-        // Preencher campos com dados inválidos
+        // A- Despoletar todas as regras de validação (introduzindo dados erróneos);
+        // Validar int
         $artigo->preco = 'abc';
         $artigo->stock_atual = 'def';
+        // Validar max 255 caracteres
+        $artigo->nome ='tolongnmmmameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+        $artigo->descricao ='tolongnmmmameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+        $artigo->referencia ='tolongnmmmameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
         // Verificar se é inválido
         $this->assertFalse($artigo->validate(['preco']));
         $this->assertFalse($artigo->validate(['stock_atual']));
+        $this->assertFalse($artigo->validate(['nome']));
+        $this->assertFalse($artigo->validate(['descricao']));
+        $this->assertFalse($artigo->validate(['referencia']));
 
         // Verificar se há um erro específico para dados inválidos no campo
         /*$this->assertFalse($artigo->hasErrors('preco'), 'Erro no campo preco para dados inválidos');
@@ -70,7 +79,7 @@ class ArtigoTest extends \Codeception\Test\Unit
 
     public function testGuardarArtigoValido()
     {
-        //alinea B C ficha 7
+        //B - Criar um registo válido e guardar na BD
         $artigo = new Artigo();
 
         $artigo->nome = 'Artigo';
@@ -80,17 +89,18 @@ class ArtigoTest extends \Codeception\Test\Unit
         $artigo->stock_atual = 1;
         $artigo->iva_id = 1;
         $artigo->fornecedor_id = 1;
-        $artigo->categoria_id = 13;
+        $artigo->categoria_id = 1;
         $artigo->perfil_id = 1;
         $artigo->imageFiles = 'imagem';
 
         $artigo->save();
-
+        //C - Ver se o registo válido se encontra na BD
         $this->test->seeRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo']);
     //}
 
     //public function testUpdateArtigo(){
         // alineas D E F e G FIcha7
+        //D - Ler o registo anterior e aplicar um update
         //$old_artigo = $this->test->grabRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo', 'referencia' => 'ref']);
 
         $artigo->nome = 'ABC';
@@ -98,10 +108,13 @@ class ArtigoTest extends \Codeception\Test\Unit
         $artigo->stock_atual = 10;
 
         $artigo->save();
+        //E - Ver se o registo atualizado se encontra na BD
         $this->test->dontSeeRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo', 'referencia' => 'ref']);
         $this->test->seeRecord('common\models\Artigo', ['nome' => 'ABC', 'preco' => 20.00, 'referencia' => 'ref', 'stock_atual' => 10]);
 
+        //F - Apagar o registo
         $artigo->delete();
-        $this->test->dontSeeRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'ABC', 'referencia' => 'ref']);
+        //G - Verificar que o registo não se encontra na BD.
+        $this->test->dontSeeRecord('common\models\Artigo', ['nome' => 'ABC', 'preco' => 20.00, 'referencia' => 'ref', 'stock_atual' => 10]);
     }
 }
