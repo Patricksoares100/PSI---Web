@@ -108,7 +108,7 @@ class EmpresaTest extends \Codeception\Test\Unit
     }
     public function testUpdateDeleteEmpresa(){
         //D - Ler o registo anterior e aplicar um update
-        $empresa = $this->test->grabRecord('common\models\Empresa', ['nome' => 'Loja dos 300','localidade'=>'Leiria']);
+        $empresa = $this->test->grabRecord('common\models\Empresa', ['nome' => 'BrindesZorro','localidade'=>'Leiria']);
 
         $empresa->nome = 'update';
         $empresa->email = 'update@zorro.pt';
