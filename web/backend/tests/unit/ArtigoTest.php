@@ -53,7 +53,6 @@ class ArtigoTest extends \Codeception\Test\Unit
 
     public function testDadosInvalidos()
     {
-        //
         $artigo = new Artigo();
 
         // A- Despoletar todas as regras de validação (introduzindo dados erróneos);
@@ -93,28 +92,29 @@ class ArtigoTest extends \Codeception\Test\Unit
         $artigo->perfil_id = 1;
         $artigo->imageFiles = 'imagem';
 
-        $artigo->save();
+        $this->assertTrue($artigo->save());
         //C - Ver se o registo válido se encontra na BD
         $this->test->seeRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo']);
-    //}
+    }
 
-    //public function testUpdateArtigo(){
+    public function testUpdateArtigo(){
         // alineas D E F e G FIcha7
         //D - Ler o registo anterior e aplicar um update
-        //$old_artigo = $this->test->grabRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo', 'referencia' => 'ref']);
+        $artigo = $this->test->grabRecord('common\models\Artigo', ['descricao' => 'Caneta Preta Potente', 'nome' => 'Caneta Aluminio', 'referencia' => 'CAN001']);
 
-        $artigo->nome = 'ABC';
+        $artigo->nome = 'Update';
         $artigo->preco = 20.00;
         $artigo->stock_atual = 10;
 
-        $artigo->save();
+        $this->assertTrue($artigo->save());
+
         //E - Ver se o registo atualizado se encontra na BD
-        $this->test->dontSeeRecord('common\models\Artigo', ['descricao' => 'Descricao', 'nome' => 'Artigo', 'referencia' => 'ref']);
-        $this->test->seeRecord('common\models\Artigo', ['nome' => 'ABC', 'preco' => 20.00, 'referencia' => 'ref', 'stock_atual' => 10]);
+        $this->test->dontSeeRecord('common\models\Artigo', ['descricao' => 'Caneta Preta Potente', 'nome' => 'Caneta Aluminio', 'referencia' => 'CAN001']);
+        $this->test->seeRecord('common\models\Artigo', ['nome' => 'Update', 'preco' => 20.00, 'referencia' => 'CAN001', 'stock_atual' => 10]);
 
         //F - Apagar o registo
         $artigo->delete();
         //G - Verificar que o registo não se encontra na BD.
-        $this->test->dontSeeRecord('common\models\Artigo', ['nome' => 'ABC', 'preco' => 20.00, 'referencia' => 'ref', 'stock_atual' => 10]);
+        $this->test->dontSeeRecord('common\models\Artigo', ['nome' => 'Update', 'preco' => 20.00, 'referencia' => 'CAN001', 'stock_atual' => 10]);
     }
 }
