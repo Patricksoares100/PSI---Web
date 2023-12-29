@@ -42,8 +42,14 @@ class Perfil extends \yii\db\ActiveRecord
         return [
             [['nome', 'telefone', 'nif', 'morada', 'codigo_postal', 'localidade'], 'required'],
             [['telefone', 'nif'], 'integer'],
-            [['nome', 'morada', 'codigo_postal', 'localidade'], 'string', 'max' => 255],
+            ['telefone', 'string', 'max' => 9, 'message' => 'Número de telefone incorreto'],
+            ['nif', 'string', 'max' => 9, 'message' => 'Este NIF já está a ser usado'],
+            [['nome', 'morada', 'localidade'], 'string', 'max' => 255],
+            [['codigo_postal'], 'string', 'max' => 8, 'message' => 'NIF inválido'],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
+            ['codigo_postal', 'required'],
+            ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Insira o código postal neste formato: xxxx-xxx'],
+
         ];
     }
 
