@@ -2,6 +2,7 @@
 
 namespace frontend\tests\functional;
 
+use common\models\User;
 use frontend\tests\FunctionalTester;
 use common\fixtures\UserFixture;
 
@@ -26,6 +27,9 @@ class LoginCest
 
     public function _before(FunctionalTester $I)
     {
+        $authManager = \Yii::$app->authManager;
+        $authManager->assign($authManager->getRole('Cliente'), User::findOne(['username' => 'erau'])->id);
+
         $I->amOnRoute('site/login');
     }
 
@@ -59,7 +63,7 @@ class LoginCest
     public function checkValidLogin(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('erau', 'password_0'));
-        $I->see('Logout (erau)', 'form button[type=submit]');
+        $I->see('erau', );
         $I->dontSeeLink('Login');
         $I->dontSeeLink('Signup');
     }

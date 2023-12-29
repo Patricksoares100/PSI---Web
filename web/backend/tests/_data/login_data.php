@@ -20,5 +20,15 @@ return [
         'email' => 'teste@a.a',
         'status' => 9,
     ],
+    [
+        'username' => 'admin',
+        'auth_key' => 'OjhXG_8AI23BShbOe8lPy5V3hVZrdy_Y',
+        // teste123
+        'password_hash' => '$2y$13$glggKAwEJRpZa.WIOMISguhK0Tv7UrHkzDW.2SAZ8TwSdUk6THgaK',
+        'created_at' => '1703545520',
+        'updated_at' => '1703595525',
+        'email' => 'testee@a.a',
+        'status' => 10,
+    ],
 
 ];

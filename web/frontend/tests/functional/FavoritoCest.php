@@ -22,7 +22,7 @@ class FavoritoCest
 
     public function _before(FunctionalTester $I)
     {
-        $user = new User();
+        /*$user = new User();
         $auth = \Yii::$app->authManager;
         $user->username = "visitante";
         $user->email = "visitante@a.a";
@@ -30,7 +30,7 @@ class FavoritoCest
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         $user->save();
-        $auth->assign($auth->getRole('cliente'), $user->getId());
+        $auth->assign($auth->getRole('Cliente'), $user->getId());
         $perfil = new Perfil();
         $perfil->nome = "Visitante";
         $perfil->codigo_postal = "2000-123";
@@ -38,7 +38,12 @@ class FavoritoCest
         $perfil->nif = "987987564";
         $perfil->morada = "rua xpto";
         $perfil->localidade = 'Porto';
-        $perfil->save();
+        $perfil->id = $user->id;
+        $perfil->save();*/
+        $authManager = \Yii::$app->authManager;
+        $authManager->assign($authManager->getRole('Cliente'), User::findOne(['username' => 'erau'])->id);
+
+
 
         $I->amOnRoute('/site/login');
 
@@ -55,8 +60,8 @@ class FavoritoCest
     public function verificarAutenticado(FunctionalTester $I)
     {
         $I->see('Login');
-        $I->fillField('Username', 'cliente');
-        $I->fillField('Password', 'teste123');
+        $I->fillField('Username', 'erau');
+        $I->fillField('Password', 'password_0');
         $I->click('login-button');
         $I->see('Logout');
         $I->click('a[id="favorito"]');
@@ -65,6 +70,7 @@ class FavoritoCest
 
     public function adicionarArtigoFavoritosSemLogin(FunctionalTester $I)
     {
+
         $I->amOnRoute('artigo/detail?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Carrinho');
@@ -75,6 +81,7 @@ class FavoritoCest
 
     public function adicionarArtigoFavoritosComLogin(FunctionalTester $I)
     {
+        $I->amLoggedInAs(User::findByUsername('erau'));
         $I->amOnRoute('artigo/detail?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Carrinho');
