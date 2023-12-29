@@ -53,7 +53,6 @@ class ArtigoTest extends \Codeception\Test\Unit
 
     public function testDadosInvalidos()
     {
-        //
         $artigo = new Artigo();
 
         // A- Despoletar todas as regras de validação (introduzindo dados erróneos);

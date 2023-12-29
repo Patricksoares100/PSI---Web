@@ -18,6 +18,7 @@ class AvaliacaoTest extends \Codeception\Test\Unit
     {
         $avaliacao = new Avaliacao();
 
+        // A - Despoletar todas as regras de validação (introduzindo dados erróneos);
         $avaliacao->comentario = '';
         $this->assertFalse($avaliacao->validate(['comentario']));
 
@@ -32,10 +33,13 @@ class AvaliacaoTest extends \Codeception\Test\Unit
     {
         $avaliacao = new Avaliacao();
 
-        // Preencher campos com dados inválidos
+        // A- Despoletar todas as regras de validação (introduzindo dados erróneos);
+        // Validar string e int
         $avaliacao->comentario = 123;
         $avaliacao->artigo_id = 'abc';
         $avaliacao->perfil_id = 'def';
+        /* Validar max 255 caracteres
+        $avaliacao->comentario = 'tolongcommmeeennntttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt';*/
 
         // Verificar se é inválido
         $this->assertFalse($avaliacao->validate(['comentario']));
@@ -45,31 +49,36 @@ class AvaliacaoTest extends \Codeception\Test\Unit
 
     public function testGuardarAvaliacaoValida()
     {
-        //alinea B C ficha 7
+        //B - Criar um registo válido e guardar na BD
         $avaliacao = new Avaliacao();
 
         $avaliacao->comentario = 'Bom Produto';
         $avaliacao->artigo_id = 1;
         $avaliacao->perfil_id = 2;
 
-        $avaliacao->save();
-
+        $this->assertTrue($avaliacao->save());
+        //C - Ver se o registo válido se encontra na BD
         $this->tester->seeRecord('common\models\Avaliacao', ['comentario' => 'Bom Produto', 'artigo_id' => 1, 'perfil_id' => 2]);
-    //}
+    }
 
-    //public function testUpdateAvaliacao(){
+    public function testUpdateAvaliacao(){
         // alineas D E F e G FIcha7
-        //$old_avaliacao = $this->tester->grabRecord('common\models\Avaliacao', ['comentario' => 'Bom Produto', 'artigo_id' => 1, 'perfil_id' => 2]);
+        //D - Ler o registo anterior e aplicar um update
+        $avaliacao = $this->tester->grabRecord('common\models\Avaliacao', ['comentario' => 'ja vi melhores', 'artigo_id' => 1, 'perfil_id' => 3]);
 
-        $avaliacao->comentario = 'Podia ser Melhor';
-        $avaliacao->artigo_id = 2;
+        $avaliacao->comentario = 'excelente artigo';
+        $avaliacao->artigo_id = 1;
         $avaliacao->perfil_id = 3;
 
-        $avaliacao->save();
-        $this->tester->dontSeeRecord('common\models\Avaliacao', ['comentario' => 'Bom Produto', 'artigo_id' => 1, 'perfil_id' => 2]);
-        $this->tester->seeRecord('common\models\Avaliacao', ['comentario' => 'Podia ser Melhor', 'artigo_id' => 2, 'perfil_id' => 3]);
+        $this->assertTrue($avaliacao->save());
 
+        //E - Ver se o registo atualizado se encontra na BD
+        $this->tester->dontSeeRecord('common\models\Avaliacao', ['comentario' => 'ja vi melhores', 'artigo_id' => 1, 'perfil_id' => 3]);
+        $this->tester->seeRecord('common\models\Avaliacao', ['comentario' => 'excelente artigo', 'artigo_id' => 1, 'perfil_id' => 3]);
+
+        //F - Apagar o registo
         $avaliacao->delete();
-        $this->tester->dontSeeRecord('common\models\Avaliacao', ['comentario' => 'Podia ser Melhor', 'artigo_id' => 2, 'perfil_id' => 3]);
+        //G - Verificar que o registo não se encontra na BD.
+        $this->tester->dontSeeRecord('common\models\Avaliacao', ['comentario' => 'excelente artigo', 'artigo_id' => 1, 'perfil_id' => 3]);
     }
 }
