@@ -62,10 +62,10 @@ class AceitacaoCest
         $I->wait(2);
         $I->see('Caneta Aluminio');
         $I->click('Caneta Aluminio');
-
-        //Adicionar aos Favoritos
         $I->wait(2);
         $I->see('Add Favoritos');
+
+        //Adicionar aos Favoritos
         $I->click('Add Favoritos');
         $I->wait(2);
         //Remover dos Favoritos
@@ -82,10 +82,11 @@ class AceitacaoCest
         $I->click('Add Carrinho');
         $I->see('CART SUMMARY');
         $I->see('Caneta Aluminio');
-        //Remover do carrinho usando o '-'
-        $I->click('-');
+        //Remover do carrinho usando o 'X'
+        $I->click('X');
         $I->wait(2);
         $I->dontSee('Caneta Aluminio');
+
 
         //Adicionar novamente ao carrinho para concluir a compra
         $I->click('Artigos');
@@ -93,21 +94,21 @@ class AceitacaoCest
         $I->wait(2);
         $I->see('Add Carrinho');
         $I->click('Add Carrinho');
+        $I->wait(2);
         $I->see('Caneta Aluminio');
+        //Adicionar + 1 a quantidade do artigo
+        $I->click('+');
+        //$I->see(); quantidade 2, tem que se descobrir como é
         $I->click('Proceed To Checkout');
+        $I->wait(2);
         //Editar e Guardar Dados Fatura
         $I->see('MORADA DE FATURAÇÃO');
-        $I->fillField('Nome','cliente');
-        $I->fillField('NIF','987987987');
-        $I->fillField('Telefone','912345678');
-        $I->fillField('Morada','Rua 1223, n1');
-        $I->fillField('Código Postal','1234-567');
-        $I->fillField('Localidade','Leiria');
-        $I->wait(2);
         //Altera o campo Nome Cliente e
-        $I->fillField('Nome','clienteeeeee');
         $I->see('ORDER TOTAL');
         $I->see('Guardar e Emitir Fatura');
+
+        $I->scrollTo('.btn.btn-primary');
+        $I->wait(2);
         $I->click('Guardar e Emitir Fatura');
         $I->wait(2);
 
