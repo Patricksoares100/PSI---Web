@@ -22,7 +22,6 @@ class CarrinhoCest
     {
         $authManager = \Yii::$app->authManager;
         $authManager->assign($authManager->getRole('Cliente'), User::findOne(['username' => 'erau'])->id);
-
         $I->amOnRoute('/site/login');
     }
 
@@ -47,7 +46,6 @@ class CarrinhoCest
 
     public function adicionarArtigoCarrinhoSemLogin(FunctionalTester $I)
     {
-
         $I->amOnRoute('artigo/detail?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Favoritos');
@@ -108,7 +106,7 @@ class CarrinhoCest
         $I->click('Add Carrinho');
         $I->see('Quantidade');
 
-        $I->amGoingTo('Remover o iten do carrinho');
+        $I->amGoingTo('Remover o item do carrinho');
         $I->amOnRoute('linhacarrinho/index');
         $I->see('valor iva');
         $I->seeLink('Home');
