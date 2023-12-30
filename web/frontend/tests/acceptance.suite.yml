@@ -3,7 +3,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://localhost:8080
-            browser: firefox
+            url: http://brindeszorro-front.test/
+            browser: chrome
         - Yii2:
             part: init

@@ -42,9 +42,6 @@ class FavoritoCest
         $perfil->save();*/
         $authManager = \Yii::$app->authManager;
         $authManager->assign($authManager->getRole('Cliente'), User::findOne(['username' => 'erau'])->id);
-
-
-
         $I->amOnRoute('/site/login');
 
     }
@@ -70,12 +67,10 @@ class FavoritoCest
 
     public function adicionarArtigoFavoritosSemLogin(FunctionalTester $I)
     {
-
         $I->amOnRoute('artigo/detail?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Carrinho');
         $I->click('Add Favoritos');
-
         $I->see('My Login');
     }
 
@@ -86,7 +81,23 @@ class FavoritoCest
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Carrinho');
         $I->click('Add Favoritos');
-
         $I->see('Carrinho');
+    }
+
+    public function removerArtigoFavoritos(FunctionalTester $I)
+    {
+        $I->amLoggedInAs(User::findByUsername('erau'));
+        $I->amOnRoute('artigo/detail?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('Add Carrinho');
+        $I->click('Add Favoritos');
+        $I->see('Caneta Aluminio');
+
+        $I->amGoingTo('Remover o item dos favoritos');
+        $I->amOnRoute('favorito/index');
+        $I->see('carrinho');
+        $I->seeLink('Home');
+        $I->click('X');
+        $I->dontSee('Caneta Aluminio');
     }
 }
