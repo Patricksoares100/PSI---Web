@@ -73,7 +73,6 @@ class CarrinhoCest
         $I->see('Quantidade');
 
         $I->amGoingTo('Adicionar um Artigo');
-        $I->amOnRoute('linhacarrinho/index?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('+');
         $I->click('+');
@@ -90,7 +89,6 @@ class CarrinhoCest
         $I->see('Quantidade');
 
         $I->amGoingTo('Remover um Artigo');
-        $I->amOnRoute('linhacarrinho/index?id=1');
         $I->see('Caneta Aluminio');
         $I->seeLink('-');
         $I->click('-');
