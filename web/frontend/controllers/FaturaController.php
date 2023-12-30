@@ -34,15 +34,16 @@ class FaturaController extends Controller
                             'allow' => true,
                             'roles' => ['permissionFrontoffice'],//tbm só deve apagar as do propio, fazer rule!
                         ],
+
                     ],
                 ],
 
-                'verbs' => [
+               /* 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
-                ],
+                ],*/
             ]
         );
     }
@@ -167,11 +168,15 @@ class FaturaController extends Controller
     {
         if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model = $this->findModel($id);
-            if ($model->canDeleteFatura()) {//se for emitida apaga
-                $model->delete();
-                Yii::$app->session->setFlash('success', 'Fatura removida com sucesso!');
-            } else {
-                Yii::$app->session->setFlash('error', 'Não pode remover uma fatura PAGA!');
+            if ($model->perfil_id == Yii::$app->user->id) {
+                if ($model->canDeleteFatura()) {//se for emitida apaga
+                    $model->delete();
+                    Yii::$app->session->setFlash('success', 'Fatura removida com sucesso!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Não pode remover uma fatura PAGA!');
+                }
+            }else{
+                Yii::$app->session->setFlash('error', 'Não tem permissões!');
             }
         } else {
             Yii::$app->session->setFlash('error', 'Não tem permissões!');

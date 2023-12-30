@@ -68,7 +68,7 @@ GridView::widget([
                     </div>
                 </div>
 
-                <?= Html::submitButton('Salvar e Emitir Fatura', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Guardar e Emitir Fatura', ['class' => 'btn btn-primary']) ?>
 
                 <?php ActiveForm::end(); ?>
             </div>
