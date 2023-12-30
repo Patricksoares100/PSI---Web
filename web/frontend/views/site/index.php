@@ -183,7 +183,7 @@ $this->title = 'My Yii Application';
                                     <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
                                 </div>
                             </div>
-                            <a class="h6 text-decoration-none text-truncate"
+                            <a class="h6 text-decoration-none text-truncate" id="DetalheArtigo"
                                href="<?= Yii::$app->urlManager->createUrl(['artigo/detail', 'id' => $artigo->id]) ?>">
                                 <!-- vai criar o link, indicando o destino e mandando o id por parametro-->
                                 <?= $artigo->nome ?>

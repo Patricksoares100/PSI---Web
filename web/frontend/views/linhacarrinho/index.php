@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= Html::a('-', ['/linhacarrinho/update', 'id' => $model->id, 'sinal' => '-'], ['class' => 'btn btn-sm btn-primary btn-minus', 'data-method' => 'post']) ?>
 
                                 </div>
-                                <input type="text"
+                                <input id='quantidadeArtigo' type="text"
                                        class="form-control form-control-sm bg-secondary border-0 text-center"
                                        value="<?= $model->quantidade ?>">
                                 <div class="input-group-btn">
