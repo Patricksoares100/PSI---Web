@@ -105,7 +105,6 @@ class CarrinhoCest
         $I->see('Quantidade');
 
         $I->amGoingTo('Remover o item do carrinho');
-        $I->amOnRoute('linhacarrinho/index');
         $I->see('valor iva');
         $I->seeLink('Home');
         $I->click('X');

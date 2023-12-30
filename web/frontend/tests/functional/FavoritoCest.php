@@ -94,7 +94,6 @@ class FavoritoCest
         $I->see('Caneta Aluminio');
 
         $I->amGoingTo('Remover o item dos favoritos');
-        $I->amOnRoute('favorito/index');
         $I->see('carrinho');
         $I->seeLink('Home');
         $I->click('X');
