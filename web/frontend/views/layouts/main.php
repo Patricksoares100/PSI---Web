@@ -221,7 +221,7 @@ AppAsset::register($this);
                                         <?= $numberFav ?>
                                     </span>
                                 </a>
-                                <a href="<?= Url::to(['/linhacarrinho/index']) //carrinho/algo
+                                <a id="carrinho" href="<?= Url::to(['/linhacarrinho/index']) //carrinho/algo
                                 ?>" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
