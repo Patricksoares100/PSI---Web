@@ -7,3 +7,5 @@ modules:
             browser: chrome
         - Yii2:
             part: init
+    Db:
+        dsn: 'mysql:host=localhost;dbname=bdbrindeszorro_test'
