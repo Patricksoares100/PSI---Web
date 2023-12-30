@@ -7,9 +7,12 @@ use yii\helpers\Url;
 
 class HomeCest
 {
+    public function _before(AcceptanceTester $I)
+    {
+        $I->maximizeWindow();
+    }
     public function checkHome(AcceptanceTester $I)
     {
-        //$I->amOnRoute(Url::toRoute('/site/index'));
         $I->amOnPage('/');
         $I->see('Login');
 
