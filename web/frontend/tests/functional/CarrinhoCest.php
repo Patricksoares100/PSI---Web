@@ -52,7 +52,6 @@ class CarrinhoCest
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Favoritos');
         $I->click('Add Carrinho');
-
         $I->see('My Login');
     }
 
@@ -63,18 +62,57 @@ class CarrinhoCest
         $I->see('Caneta Aluminio');
         $I->seeLink('Add Favoritos');
         $I->click('Add Carrinho');
-
         $I->see('Quantidade');
+    }
+
+    public function adicionarMaisUmArtigoCarrinho(FunctionalTester $I)
+    {
+        $I->amLoggedInAs(User::findByUsername('erau'));
+        $I->amOnRoute('artigo/detail?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('Add Favoritos');
+        $I->click('Add Carrinho');
+        $I->see('Quantidade');
+
+        $I->amGoingTo('Adicionar um Artigo');
+        $I->amOnRoute('linhacarrinho/index?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('+');
+        $I->click('+');
+        $I->see('2');
+    }
+
+    public function removerUmArtigoCarrinho(FunctionalTester $I)
+    {
+        $I->amLoggedInAs(User::findByUsername('erau'));
+        $I->amOnRoute('artigo/detail?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('Add Favoritos');
+        $I->click('Add Carrinho');
+        $I->see('Quantidade');
+
+        $I->amGoingTo('Remover um Artigo');
+        $I->amOnRoute('linhacarrinho/index?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('-');
+        $I->click('-');
+        $I->see('1');
     }
 
     public function removerArtigoCarrinho(FunctionalTester $I)
     {
         $I->amLoggedInAs(User::findByUsername('erau'));
+        $I->amOnRoute('artigo/detail?id=1');
+        $I->see('Caneta Aluminio');
+        $I->seeLink('Add Favoritos');
+        $I->click('Add Carrinho');
+        $I->see('Quantidade');
+
+        $I->amGoingTo('Remover o iten do carrinho');
         $I->amOnRoute('linhacarrinho/index');
         $I->see('valor iva');
         $I->seeLink('Home');
         $I->click('X');
-
-        $I->see('sucesso');
+        $I->dontSee('Caneta Aluminio');
     }
 }
