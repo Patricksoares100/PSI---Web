@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="align-middle"><img src="<?=Yii::$app->params['caminhoBackend']. '/'. $model->artigo->imagens[0]->image_path?>" alt="" style="width: 50px;">
                         </td>
                         <td class="align-middle"><?= $model->artigo->nome ?></td>
-                        <td class="align-middle"><?= $model->artigo->preco ?></td>
+                        <td class="align-middle"><?= number_format($model->artigo->preco, 2, ',', '.') ?></td>
                         <td class="align-middle">
                             <a class="btn btn-outline-dark btn-square"
                                href="<?= Url::to(['enviarcarrinho', 'id' => $model->artigo_id, 'idFav'=> $model->id]) ?>">
