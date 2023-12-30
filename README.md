@@ -1,4 +1,4 @@
-![IPLeiria](doc/ipleiria.png)
+![IPLeiria](doc/ipl.png)
 
 # PLATAFORMAS DE SISTEMAS DE INFORMAÇÃO
 
@@ -22,7 +22,7 @@ A estrutura da plataforma é composta por um backoffice destinado a administrado
 
 ## Instalação
 
-1. Faça o download da aplicação [aqui](https://github.com/Patricksoares100/PSI_Web.git). Caso não consiga aceder, peça através do Teams pelo número de aluno a um dos desenvolvedores.
+1. Faça o download da aplicação [aqui](https://github.com/Patricksoares100/PSI_Web). Caso não consiga aceder, peça através do Teams pelo número de aluno a um dos desenvolvedores.
 2. Descompacte o arquivo em uma pasta de sua escolha.
 3. Abrir e utilizar.
 
@@ -57,3 +57,5 @@ O uso deste código-fonte está sujeito às leis e regulamentos aplicáveis.
 ## Contato
 
 Os utilizadores podem obter suporte ou fornecer feedback, para tal basta contactar qualquer desenvolvedor através do número de aluno.
+
+
