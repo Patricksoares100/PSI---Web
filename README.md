@@ -22,9 +22,10 @@ A estrutura da plataforma é composta por um back-office destinado a administrad
 ## Instalação
 
 1. Faça o download da aplicação [aqui](https://github.com/Patricksoares100/PSI_Web). Caso não consiga aceder, peça através do Teams pelo número de aluno a um dos desenvolvedores.
+2. Configure a base de dados (bdbrindeszorro.sql). [aqui](https://github.com/Patricksoares100/PSI_Web/tree/77f824ad15cf62353a97b8174d1fbec7a4bb52ad/doc)
    - Possivel de configurar no diretorio de projeto - web/common/config/main-local.php - no campo 'dsn' => 'mysql:host=localhost;dbname=bdbrindeszorro'
-2. Descompacte o arquivo em uma pasta de sua escolha.
-3. Abrir e utilizar.
+3. Descompacte o arquivo em uma pasta de sua escolha.
+4. Abrir e utilizar.
 
 ## Configuração
 
