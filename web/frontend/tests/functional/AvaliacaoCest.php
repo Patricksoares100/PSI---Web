@@ -21,14 +21,20 @@ class AvaliacaoCest
         ];
     }
 
+    protected function formParamsAvaliacao($comentario, $classificacao)
+    {
+        return [
+            'Avaliacao[comentario]' => $comentario,
+            'Avaliacao[classificacao]' => $classificacao,
+        ];
+    }
+
     public function _before(FunctionalTester $I)
     {
         $authManager = \Yii::$app->authManager;
         $authManager->assign($authManager->getRole('Cliente'), User::findOne(['username' => 'erau'])->id);
 
-
     }
-
 
     public function testAtribuirAvaliacao(FunctionalTester $I)
     {
@@ -56,18 +62,12 @@ class AvaliacaoCest
         $I->click('Artigos');
         $I->see('Caneta Aluminio');
         $I->click('Caneta Aluminio');
-
-        //ver o titulo / form e buttom de enviar avaliação
-        $I->see('Deixe uma Avaliação');
-        $I->fillField('Avaliacao[comentario]', 'artigo muito bom');
-        $I->selectOption('Avaliacao[classificacao]', '3');
+        $I->fillfield('Comentário', 'Top');
+        $I->selectOption('Classificação', '4');
         $I->see('Deixe a sua avaliação');
-        $I->click('Deixe a sua avaliação');
-
-       // $I->seeElement('#alterar');
-        //$I->click('#alterar'); // Ele parece passar e nao gravar, continua aparecer a avaliação antiga 'ja vi melhores'
-        $I->see('artigo muito bom');
-        $I->see('ja vi melhores'); // se colocar apenas este see, ele passa o teste, porque como nao gravou o de cima, consegue ver na vista sem erros
+        $I->submitForm('#formAvaliacao', $this->formParamsAvaliacao('Top', '4'));
+        $I->see('Top');
+        $I->see('ja vi melhores');
 
         //$I->see('erau');
         //$I->see('Minhas Avaliações');

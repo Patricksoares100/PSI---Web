@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <small class="pt-1">(<?= count($avaliacoes) ?> Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4"><?= $model->preco ?>€</h3>
+                <h3 class="font-weight-semi-bold mb-4"><?= number_format($model->preco,2,',','.') ?>€</h3>
                 <p class="mb-4"><?= $model->descricao ?></p>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
