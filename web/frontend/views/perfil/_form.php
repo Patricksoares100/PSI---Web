@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <a class="btn btn-outline-dark "
+        <a id="alterar" class="btn btn-outline-dark"
            href="<?= Url::to(['perfil/alterar-password', 'id' => Yii::$app->user->id]) ?>"><i
                     class="fa fa-key"></i> Alterar Password</a>
 
