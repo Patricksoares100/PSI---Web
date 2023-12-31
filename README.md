@@ -11,7 +11,7 @@
 -- Descrição
 
 Este sistema desenvolvido em Plataformas de Sistemas de Informação (PSI), segue as regras e convenções de uma arquitetura MVC, usando mecanismos de controlo de acesso, RBAC e ACF, que regem permissões e privilégios dentro de um sistema com base em funções ou atributos predefinidos.
-O projeto abrange a implementação de um website de venda de brindes publicitários e uma aplicação móvel que se interligam através de uma API para aceder e apresentar dados aos utilizadores. A plataforma web oferece uma conjunto de funcionalidades, incluindo registo e login de utilizadores, visualização de artigos e faturas, carrinho de compras, área pessoal de cliente e a capacidade de avaliar artigos já comprados.
+O projeto abrange a implementação de um website de venda de brindes publicitários com o nome BrindesZorro, plataforma web que oferece um conjunto de funcionalidades, incluindo registo e login de utilizadores, visualização de artigos e faturas, carrinho de compras, área pessoal de cliente e a capacidade de avaliar artigos já comprados.
 A estrutura da plataforma é composta por um backoffice destinado a administradores e funcionários, permitindo-lhes gerir eficientemente os dados e processos internos. Por outro lado, o frontoffice é direcionado para clientes, proporcionando uma experiência intuitiva de navegação e utilização.
 
 ## Requisitos de Sistema
@@ -29,10 +29,10 @@ A estrutura da plataforma é composta por um backoffice destinado a administrado
 ## Configuração
 
 1. É nescessario utilizar o ficheiro da base de dados (bdbrindeszorro.sql) para o programa correr sem erros.
-2. Para ter acesso ao Backoffice deverá ser criada uma Conta de Utilizador **Administrador** para ser possivel administrar todo o conteúdo a apresentar no FrontOffice.
-   - As credenciais são definidas pelo próprio utilizador da plataforma.
-3. O acesso ao Frontoffice é possivel sem registo, mas o acesso aos conteudos de cliente são apenas possiveis após a criação de uma Conta de Utilizador **Cliente**.
-   - As credenciais são definidas pelo próprio utilizador da plataforma.
+2. Para ter acesso ao Backoffice é necessário realizar o login como **Administrador**.
+   - Utilizar credenciais de Utilizador: 'admin' e Password: 'teste123'.
+3. Para ter acesso ao FrontOffice não é necessário obrigaoriamente login, mas as funcionalidades de cliente apenas poderão ser acedidas quando realizadas como **Cliente**.
+   - Utilizar credenciais de Utilizador: 'cliente' e Password: 'teste123'.
 
 ## Execução
 
@@ -57,5 +57,3 @@ O uso deste código-fonte está sujeito às leis e regulamentos aplicáveis.
 ## Contato
 
 Os utilizadores podem obter suporte ou fornecer feedback, para tal basta contactar qualquer desenvolvedor através do número de aluno.
-
-
