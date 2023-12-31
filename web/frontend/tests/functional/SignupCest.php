@@ -45,17 +45,17 @@ class SignupCest
         $I->see('Email is not a valid email address.', '.invalid-feedback');
     }
 
-   /* public function signupSuccessfully(FunctionalTester $I)
+    public function signupSuccessfully(FunctionalTester $I)
     {
         $I->submitForm($this->formId, [
             'SignupForm[username]' => 'tester',
             'SignupForm[email]' => 'tester.email@example.com',
             'SignupForm[password]' => 'tester_password',
-            'SignupForm[nome]' => 'tester_password',
+            'SignupForm[nome]' => 'tester_nome',
             'SignupForm[telefone]' => 987564321,
             'SignupForm[nif]' => 123456789,
-            'SignupForm[morada]' => 'tester_password',
-            'SignupForm[localidade]' => 'tester_password',
+            'SignupForm[morada]' => 'tester_morada',
+            'SignupForm[localidade]' => 'tester_localidade',
             'SignupForm[codigo_postal]' => '2400-025',
         ]);
 
@@ -67,5 +67,5 @@ class SignupCest
 
         $I->seeEmailIsSent();
         $I->see('Thank you for registration. Please check your inbox for verification email.');
-    }*/
+    }
 }
