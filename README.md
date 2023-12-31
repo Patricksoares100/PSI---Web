@@ -11,7 +11,7 @@
 -- Descrição
 
 Este sistema, desenvolvido em Framework Yii2 na unidade de Plataformas de Sistemas de Informação (PSI), segue as regras e convenções de uma arquitetura MVC, usando mecanismos de controlo de acesso, RBAC e ACF, que regem permissões e privilégios dentro de um sistema com base em atributos predefinidos. O projeto abrange a implementação de um website de venda de brindes publicitários com o nome BrindesZorro, plataforma web que oferece um conjunto de funcionalidades, incluindo registo e login de utilizadores, visualização de artigos e faturas, carrinho de compras, área pessoal de cliente e a capacidade de avaliar artigos já comprados.
-A estrutura da plataforma é composta por um back-office destinado a administradores e funcionários, permitindo-lhes gerir eficientemente os dados e processos internos. Por outro lado, o front-office é direcionado para clientes, proporcionando uma experiência intuitiva de navegação e utilização. Para validar o bom funcionamento da plataforma, estão incorporados testes Unitários, Funcionais e de aceitação
+A estrutura da plataforma é composta por um back-office destinado a administradores e funcionários, permitindo-lhes gerir eficientemente os dados e processos internos. Por outro lado, o front-office é direcionado para clientes, proporcionando uma experiência intuitiva de navegação e utilização. Para validar o bom funcionamento da plataforma, estão incorporados testes Unitários, Funcionais e de Aceitação
 
 ## Requisitos de Sistema
 
@@ -54,7 +54,7 @@ A estrutura da plataforma é composta por um back-office destinado a administrad
 
 ## Licença
 
-Este projeto é um trabalho acadêmico desenvolvido para a UC de PLSI.
+Este projeto é um trabalho académico desenvolvido para a UC de PSI.
 O código está disponível apenas para fins educacionais e não deve ser utilizado para fins comerciais.
 O uso deste código-fonte está sujeito às leis e regulamentos aplicáveis.
 
