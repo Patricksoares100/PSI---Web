@@ -10,9 +10,8 @@
 
 -- Descrição
 
-Este sistema desenvolvido em Plataformas de Sistemas de Informação (PSI), segue as regras e convenções de uma arquitetura MVC, usando mecanismos de controlo de acesso, RBAC e ACF, que regem permissões e privilégios dentro de um sistema com base em funções ou atributos predefinidos.
-O projeto abrange a implementação de um website de venda de brindes publicitários com o nome BrindesZorro, plataforma web que oferece um conjunto de funcionalidades, incluindo registo e login de utilizadores, visualização de artigos e faturas, carrinho de compras, área pessoal de cliente e a capacidade de avaliar artigos já comprados.
-A estrutura da plataforma é composta por um backoffice destinado a administradores e funcionários, permitindo-lhes gerir eficientemente os dados e processos internos. Por outro lado, o frontoffice é direcionado para clientes, proporcionando uma experiência intuitiva de navegação e utilização.
+Este sistema, desenvolvido em Framework Yii2 na unidade de Plataformas de Sistemas de Informação (PSI), segue as regras e convenções de uma arquitetura MVC, usando mecanismos de controlo de acesso, RBAC e ACF, que regem permissões e privilégios dentro de um sistema com base em atributos predefinidos. O projeto abrange a implementação de um website de venda de brindes publicitários com o nome BrindesZorro, plataforma web que oferece um conjunto de funcionalidades, incluindo registo e login de utilizadores, visualização de artigos e faturas, carrinho de compras, área pessoal de cliente e a capacidade de avaliar artigos já comprados.
+A estrutura da plataforma é composta por um back-office destinado a administradores e funcionários, permitindo-lhes gerir eficientemente os dados e processos internos. Por outro lado, o front-office é direcionado para clientes, proporcionando uma experiência intuitiva de navegação e utilização. Para validar o bom funcionamento da plataforma, estão incorporados testes Unitários, Funcionais e de aceitação
 
 ## Requisitos de Sistema
 
@@ -23,21 +22,25 @@ A estrutura da plataforma é composta por um backoffice destinado a administrado
 ## Instalação
 
 1. Faça o download da aplicação [aqui](https://github.com/Patricksoares100/PSI_Web). Caso não consiga aceder, peça através do Teams pelo número de aluno a um dos desenvolvedores.
+   - Possivel de configurar no diretorio de projeto - web/common/config/main-local.php - no campo 'dsn' => 'mysql:host=localhost;dbname=bdbrindeszorro'
 2. Descompacte o arquivo em uma pasta de sua escolha.
 3. Abrir e utilizar.
 
 ## Configuração
 
 1. É nescessario utilizar o ficheiro da base de dados (bdbrindeszorro.sql) para o programa correr sem erros.
-2. Para ter acesso ao Backoffice é necessário realizar o login como **Administrador**.
-   - Utilizar credenciais de Utilizador: 'admin' e Password: 'teste123'.
-3. Para ter acesso ao FrontOffice não é necessário obrigaoriamente login, mas as funcionalidades de cliente apenas poderão ser acedidas quando realizadas como **Cliente**.
+2. Para ter acesso ao back-office é necessário realizar o login como **Administrador** ou **Funcionário**.
+   - Utilizar credenciais de Utilizador **Administrador**: 'admin' e Password: 'teste123'.
+   - Utilizar credenciais de Utilizador **Funcionário**: 'funcionario' e Password: 'teste123'.
+3. Para ter acesso ao front-office não é necessário obrigaoriamente login, contudo as funcionalidades de cliente apenas poderão ser acedidas quando realizadas como **Cliente**.
    - Utilizar credenciais de Utilizador: 'cliente' e Password: 'teste123'.
+4. Para os testes funcionais é necessária a base de dados de testes (bdbrindeszorro_test.sql). Possivel de aceder [aqui](https://github.com/Patricksoares100/PSI_Web/tree/77f824ad15cf62353a97b8174d1fbec7a4bb52ad/doc)
+   - Possivel de configurar no diretorio de projeto - web/common/config/test-local.php - no campo 'dsn' => 'mysql:host=localhost;dbname=bdbrindeszorro_test'
 
 ## Execução
 
 1. Navegue até a pasta onde a aplicação foi extraída.
-2. Utilize o ficheiro da base de dados.
+2. Utilize o ficheiro da base de dados (bdbrindeszorro.sql). [aqui](https://github.com/Patricksoares100/PSI_Web/tree/77f824ad15cf62353a97b8174d1fbec7a4bb52ad/doc)
 3. Abra a aplicação atraves do WWW.
 
 ## Execução de Testes de Aceitação
