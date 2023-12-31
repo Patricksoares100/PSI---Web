@@ -182,7 +182,7 @@ class AceitacaoCest
         $I->selectOption('Classificação', '4');
         $I->scrollTo('.btn.btn-primary');
         $I->see('Deixe a sua avaliação');
-        $I->submitForm('#formAvaliacao', $this->formParams('Top', '4'));
+        $I->submitForm('#formAvaliacao', $this->formParamsAvaliacao('Top', '4'));
         $I->see('Caneta Preta Potente');
         $I->see('Top');
         $I->wait(2);
