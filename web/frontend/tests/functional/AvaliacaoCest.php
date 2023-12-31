@@ -47,6 +47,7 @@ class AvaliacaoCest
         $I->click('Add Carrinho');
         $I->see('Quantidade');
 
+        //Finalizar compra do artigo para conseguir deixar avaliação
         $I->amGoingTo('Confirmar os itens do carrinho');
         $I->see('Caneta Aluminio');
         $I->seeLink('Proceed To Checkout');
@@ -62,23 +63,43 @@ class AvaliacaoCest
         $I->click('Artigos');
         $I->see('Caneta Aluminio');
         $I->click('Caneta Aluminio');
+        $I->see('Deixe a sua avaliação');
+
+        //Vai classificar o artigo no form
         $I->fillfield('Comentário', 'Top');
         $I->selectOption('Classificação', '4');
-        $I->see('Deixe a sua avaliação');
         $I->submitForm('#formAvaliacao', $this->formParamsAvaliacao('Top', '4'));
         $I->see('Top');
         $I->see('ja vi melhores');
 
-        //$I->see('erau');
-        //$I->see('Minhas Avaliações');
-        //$I->click('Minhas Avaliações');
-        //$I->see('found');
+        //Acede ao menu do canto superior para ver avaliações
+        $I->see('erau');
+        $I->see('Minhas Avaliações');
+        $I->click('Minhas Avaliações');
+        $I->seeElement('a[title="View"]');
+        $I->seeElement('a[title="Delete"]');
+        //Vê a avaliação que realizou
+        $I->see('Top');
+        $I->see('4');
 
-        //$I->seeElement('a[title="View"]');
-        //$I->seeElement('a[title="Edit"]');
-        //$I->seeElement('a[title="Delete"]');
-        //$I->see('artigo muito bom');
-        //$I->see('5');
+    }
+
+    public function testApagarAvaliacao(FunctionalTester $I)
+    {
+        $I->amLoggedInAs(User::findByUsername('erau'));
+        $I->amOnPage('/');
+        $I->see('erau');
+        $I->see('Minhas Avaliações');
+        $I->click('Minhas Avaliações');
+
+        // pessoal vejam aqui, porque ele crasha por nao estar a ver nenhum simbolo de ver ou eliminar
+        // é sinal que nao ha nenhuma avaliação, nem a que já está por padrao 'ja vi melhores'
+        // se colocar "nome do artigo" consegue ver, é sinal que está a entrar la dentro 
+        $I->see('Nome do Artigo');
+        $I->seeElement('a[title="View"]');
+        $I->seeElement('a[title="Delete"]');
+        $I->click('a[title="Delete"]');
+        $I->dontSee('ja vi melhores');
 
     }
 
@@ -95,7 +116,6 @@ class AvaliacaoCest
         //Testar se aparece o form ou a mensagem de deixar avaliação
         $I->dontSee('Deixe uma Avaliação');
         $I->dontSee('Deixe a sua avaliação');
-
     }
 
     public function testVerPropriasAvaliacoesSemAvaliacoes(FunctionalTester $I)

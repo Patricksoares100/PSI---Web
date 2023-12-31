@@ -182,7 +182,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if (!Yii::$app->user->isGuest && $comprouArtigo) { ?>
                         <div class="col-md-6">
                             <h4 class="mb-4">Deixe uma avaliação</h4>
-                            <form method="post"
+                            <form id="formAvaliacao" method="post"
                                   action="<?= Yii::$app->urlManager->createUrl(['avaliacao/create', 'id' => $id]) ?>">
                                 <?php $form = ActiveForm::begin(['id' => $id]); ?>
 
@@ -190,7 +190,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <?= $form->field($avaliacao, 'classificacao')->dropDownList([5 => '5', 4 => '4', 3 => '3', 2 => '2', 1 => '1',]) ?>
 
-                                <div id="formAvaliacao" class="form-group">
+                                <div  class="form-group">
                                     <?= Html::submitButton('Deixe a sua avaliação', ['class' => 'btn btn-primary']) ?>
                                 </div>
 
