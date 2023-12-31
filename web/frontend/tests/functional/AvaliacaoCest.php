@@ -62,7 +62,10 @@ class AvaliacaoCest
         $I->fillField('Avaliacao[comentario]', 'artigo muito bom');
         $I->selectOption('Avaliacao[classificacao]', '3');
         $I->see('Deixe a sua avaliação');
-        $I->click('Deixe a sua avaliação'); // Ele parece passar e nao gravar, continua aparecer a avaliação antiga 'ja vi melhores'
+        $I->click('Deixe a sua avaliação');
+
+       // $I->seeElement('#alterar');
+        //$I->click('#alterar'); // Ele parece passar e nao gravar, continua aparecer a avaliação antiga 'ja vi melhores'
         $I->see('artigo muito bom');
         $I->see('ja vi melhores'); // se colocar apenas este see, ele passa o teste, porque como nao gravou o de cima, consegue ver na vista sem erros
 
