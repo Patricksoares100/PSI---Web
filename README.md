@@ -46,15 +46,15 @@ A estrutura da plataforma é composta por um back-office destinado a administrad
 
 ## Execução de Testes de Aceitação
 
-1. Instalação do Selenium:
+1. Instalação do Selenium e do chromedriver.exe:
 2. Download do WebDriver correspondente ao navegador que você pretende automatizar:
-   -ChromeDriver
-   -GeckoDriver (Firefox)
+- ChromeDriver 
+- GeckoDriver (Firefox)
 3. Executar o cmd de teste "php vendor/bin/codecept run acceptance -c frontend"
 
 ## Licença
 
-Este projeto é um trabalho acadêmico desenvolvido para a UC de PSI.
+Este projeto é um trabalho acadêmico desenvolvido para a UC de PLSI.
 O código está disponível apenas para fins educacionais e não deve ser utilizado para fins comerciais.
 O uso deste código-fonte está sujeito às leis e regulamentos aplicáveis.
 
