@@ -1,10 +1,12 @@
 <?php
 
 namespace backend\modules\api\controllers;
+use common\models\Perfil;
 use frontend\models\SignupForm;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBasicAuth;
 use backend\models\AuthAssignment;
+use Yii;
 
 class UserController extends ActiveController
 {
@@ -15,7 +17,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view'], //Excluir aos GETs
+            'except' => ['index', 'view','registo'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -48,6 +50,7 @@ class UserController extends ActiveController
                 throw new \yii\web\ForbiddenHttpException("Acesso Negado, entre como cliente!");
             }
             else{*/
+            $perfil = Perfil::findOne($user->id);
                 $responseArray = [
                     'id' => $user->id,
                     'username' => $user->username,
@@ -55,6 +58,12 @@ class UserController extends ActiveController
                     'password_hash' => $user->password_hash,
                     'password_reset_token' => $user->password_reset_token,
                     'email' => $user->email,
+                    'nome' =>$perfil->nome ,
+                    'telefone' => $perfil->telefone ,
+                    'nif'=> $perfil->nif,
+                    'morada'=>$perfil->morada,
+                    'codigo_postal'=>$perfil->codigo_postal,
+                    'localidade'=>$perfil->localidade,
                     //'status' => $user->status,
                     //'created_at' => $user->created_at,
                     //'updated_at' => $user->updated_at,
@@ -63,7 +72,8 @@ class UserController extends ActiveController
                 return json_encode($responseArray);
            // }
         }
-        throw new \yii\web\ForbiddenHttpException('No authentication'); //403
+        //throw new \yii\web\ForbiddenHttpException('No authentication'); //403
+        return ['response' => 'Username e/ou password incorreto.'];
 
     }
     public function actionRegisto(){
@@ -71,9 +81,13 @@ class UserController extends ActiveController
         //guardar os dados (os nomes na app tem q ser iguais ao do form
         //se sucesso retorna sucesso senao retona erro
         $model = new SignupForm();
-        $model->load(Yii::$app->request->post());
+        $model->load(Yii::$app->request->post(),'');
         if ($model->signup()) {
-            return json_encode(["response" => "Registo com sucesso!"]);
+            return ["response" => "Registo com sucesso!"];
+        }
+        else{
+            return ["response" => "Registo sem sucesso!"];
+
         }
 
     }

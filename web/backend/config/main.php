@@ -58,6 +58,14 @@ return [
                     ],
 
                 ],
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/perfil',
+                    'extraPatterns' => [
+                        'PUT atualizar/{id}' => 'atualizar',
+                    ],
+
+                ],
+
             ],
         ],
 

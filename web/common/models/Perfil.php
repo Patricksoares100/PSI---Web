@@ -41,13 +41,19 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'telefone', 'nif', 'morada', 'codigo_postal', 'localidade'], 'required'],
-            [['telefone', 'nif'], 'integer'],
-            ['telefone', 'string', 'max' => 9, 'message' => 'Número de telefone incorreto'],
-            ['nif', 'string', 'max' => 9, 'message' => 'Este NIF já está a ser usado'],
+            ['telefone', 'trim'],
+            ['telefone', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Formato do telefone errado'],
+            ['telefone', 'string', 'max' => 9, 'message' => 'Max 9 digitos'],
+
+            ['nif', 'trim'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Perfil', 'message' => 'NIF já esta a ser utilizado.'],
+            ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Formato do NIF errado'],
+            ['nif', 'string', 'max' => 9, 'message' => 'Max 9 digitos'],
             [['nome', 'morada', 'localidade'], 'string', 'max' => 255],
             [['codigo_postal'], 'string', 'max' => 8, 'message' => 'NIF inválido'],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
             ['codigo_postal', 'required'],
+            ['codigo_postal', 'trim'],
             ['codigo_postal', 'match', 'pattern' => '^\d{4}-\d{3}?$^', 'message' => 'Insira o código postal neste formato: xxxx-xxx'],
 
         ];
