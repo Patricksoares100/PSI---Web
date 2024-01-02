@@ -66,6 +66,14 @@ return [
 
                 ],
 
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/artigo',
+                    'extraPatterns' => [
+                        'GET index' => 'index',
+
+                    ],
+
+                ],
             ],
         ],
 
