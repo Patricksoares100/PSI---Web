@@ -18,7 +18,8 @@ class APIModule extends \yii\base\Module
     public function init()
     {
         parent::init();
-
+        //PPT8 slide 5 e 6
+        \Yii::$app->user->enableSession = false;
         // custom initialization code goes here
     }
 }

@@ -52,8 +52,8 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/user',
                     'extraPatterns' => [
-                        'GET count' => 'count',
-                        'GET user' => 'user',
+                        'GET login' => 'login',
+                        'POST registo' => 'registo',
 
                     ],
 
