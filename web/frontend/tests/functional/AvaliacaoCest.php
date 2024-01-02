@@ -86,8 +86,11 @@ class AvaliacaoCest
         $I->amGoingTo('Testar apagar avaliação');
         $I->see('Minhas Avaliações');
         $I->click('Minhas Avaliações');
-        $I->click('a[title="Delete"]');
-        $I->dontSee('ja vi melhores');
+        $I->click('a[title="Delete"]');// apagar a avaliação Top 4
+        $I->dontSee('ja vi melhores');// avaliação de outro utilizador não deve aparecer na area pessoal de outro
+        $I->dontSeeElement('a[title="Delete"]');
+
+
     }
 
     public function testeEscreverAvaliacaoSemComprar(FunctionalTester $I)
