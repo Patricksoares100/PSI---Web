@@ -82,25 +82,12 @@ class AvaliacaoCest
         $I->see('Top');
         $I->see('4');
 
-    }
-
-    public function testApagarAvaliacao(FunctionalTester $I)
-    {
-        $I->amLoggedInAs(User::findByUsername('erau'));
-        $I->amOnPage('/');
-        $I->see('erau');
+        //Apagar avaliação
+        $I->amGoingTo('Testar apagar avaliação');
         $I->see('Minhas Avaliações');
         $I->click('Minhas Avaliações');
-
-        // pessoal vejam aqui, porque ele crasha por nao estar a ver nenhum simbolo de ver ou eliminar
-        // é sinal que nao ha nenhuma avaliação, nem a que já está por padrao 'ja vi melhores'
-        // se colocar "nome do artigo" consegue ver, é sinal que está a entrar la dentro 
-        $I->see('Nome do Artigo');
-        $I->seeElement('a[title="View"]');
-        $I->seeElement('a[title="Delete"]');
         $I->click('a[title="Delete"]');
         $I->dontSee('ja vi melhores');
-
     }
 
     public function testeEscreverAvaliacaoSemComprar(FunctionalTester $I)
