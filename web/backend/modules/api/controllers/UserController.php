@@ -2,6 +2,8 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Perfil;
+use common\models\User;
+use frontend\models\AlterarPasswordForm;
 use frontend\models\SignupForm;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBasicAuth;
@@ -17,7 +19,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view','registo'], //Excluir aos GETs
+            'except' => ['registo'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -90,6 +92,25 @@ class UserController extends ActiveController
 
         }
 
+    }
+
+    public function actionAtualizarpassword($id){
+
+        $form = new AlterarPasswordForm();
+        $form->load(Yii::$app->request->post(),'');
+       if($form->validate()) {
+          if( $user = User::findOne(['id' => $id])){
+
+              if(Yii::$app->security->validatePassword($form->atualPassword, $user->password_hash)){
+                  $user->setPassword($form->novaPassword);
+                  $user->save();
+                  return ["response" => "Alterada com sucesso!"];
+              }
+              return ["response" => "Password errada!"];
+          }
+           return ["response" => "User não encontrado!"];
+       }
+        return ["response" => "Dados Incorretos!"];
     }
 
 }
