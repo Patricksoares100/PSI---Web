@@ -83,6 +83,12 @@ return [
                         'GET detalhes/{id}' => 'detalhes',
                     ],
                 ],
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carrinho',
+                    'extraPatterns' => [
+                        'GET index/{id}' => 'index',
+                    ],
+                ],
             ],
         ],
 
