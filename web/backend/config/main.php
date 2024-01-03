@@ -54,6 +54,7 @@ return [
                     'extraPatterns' => [
                         'GET login' => 'login',
                         'POST registo' => 'registo',
+                        'PUT atualizarpassword/{id}' => 'atualizarpassword',
 
                     ],
 
