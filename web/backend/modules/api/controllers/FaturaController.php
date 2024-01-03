@@ -64,8 +64,10 @@ class FaturaController extends ActiveController
 
         foreach ($faturas as $fatura) {
             $linhasFatura = LinhaFatura::find()->where(['fatura_id' => $fatura->id])->all();
+            $artigos=[];
             foreach ($linhasFatura as $linhaFatura) {
-                $artigos = Artigo::findOne($linhaFatura->artigo_id);
+                $artigo = Artigo::findOne($linhaFatura->artigo_id);
+                $artigos[] = $artigo;
             }
 
             $data = [

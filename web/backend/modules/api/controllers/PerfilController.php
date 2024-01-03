@@ -29,6 +29,17 @@ class PerfilController extends ActiveController
         }
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
     }
+    public function actions()
+    {
+        $actions = parent::actions();
+        //sem utilização
+        unset($actions['index']);
+        unset($actions['update']);
+        unset($actions['delete']);
+        unset($actions['view']);
+        unset($actions['create']);
+        return $actions;
+    }
 
     public function  actionAtualizar($id)
     {
