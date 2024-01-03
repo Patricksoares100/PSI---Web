@@ -87,7 +87,15 @@ return [
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
                         'GET index/{id}' => 'index',
+                        'POST create' => 'create',
+                       // 'POST create/{id}/{idartigo}' => 'create',
+                       // 'POST create/<idperfil:\d+>/<idartigo:\d+>' => 'create',
                     ],
+
+                    /*'tokens' => [
+                        '{idperfil}' => '<idperfil:\\d+>',
+                        '{idartigo}' => '<idartigo:\\d+>',
+                    ],*/
                 ],
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
@@ -96,11 +104,8 @@ return [
                         'POST create/{id}' => 'create',
                         'DELETE remove/{id}' => 'remove',
                     ],
-
                 ],
             ],
         ],
-
     ],
-    'params' => $params,
 ];

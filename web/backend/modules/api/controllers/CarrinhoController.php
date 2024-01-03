@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use common\models\LinhaCarrinho;
+use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 
@@ -35,6 +36,7 @@ class CarrinhoController extends ActiveController
 
         // eliminar as function pre-definidas que possam haver
         unset($actions['index']);
+        unset($actions['create']);
 
 
         return $actions;
@@ -62,4 +64,33 @@ class CarrinhoController extends ActiveController
         return $response;
     }
 
+    public function actionCreate()
+    {
+        try {
+            $params = Yii::$app->getRequest()->getBodyParams();
+            // Verifica se todos os parâmetros necessários foram enviados
+            if (!isset($params['quantidade']) || !isset($params['artigo_id']) || !isset($params['perfil_id'])) {
+                throw new \Exception('Parâmetros inválidos');
+            }
+        } catch (\Exception $e) {
+            return ["error" => $e->getMessage()];
+        }
+
+        $carrinho = LinhaCarrinho::findOne(['perfil_id' => $params['perfil_id'], 'artigo_id' => $params['artigo_id']]);
+        if ($carrinho) {
+            $carrinho->quantidade += 1; // Se já existe, incrementa a quantidade
+            $carrinho->save();
+
+            return ["response" => "Artigo adicionado ao Carrinho"];
+
+        } else {
+            $linhaNova = new LinhaCarrinho();
+            $linhaNova->quantidade = $params['quantidade'];
+            $linhaNova->artigo_id = $params['artigo_id'];
+            $linhaNova->perfil_id = $params['perfil_id'];
+            $linhaNova->save();
+
+            return ["response" => "Artigo adicionado ao Carrinho"];
+        }
+    }
 }
