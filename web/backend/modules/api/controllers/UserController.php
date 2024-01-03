@@ -56,9 +56,6 @@ class UserController extends ActiveController
                 $responseArray = [
                     'id' => $user->id,
                     'username' => $user->username,
-                    'auth_key' => $user->auth_key,
-                    'password_hash' => $user->password_hash,
-                    'password_reset_token' => $user->password_reset_token,
                     'email' => $user->email,
                     'nome' =>$perfil->nome ,
                     'telefone' => $perfil->telefone ,

@@ -89,6 +89,15 @@ return [
                         'GET index/{id}' => 'index',
                     ],
                 ],
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/favorito',
+                    'extraPatterns' => [
+                        'GET index/{id}' => 'index',
+                        'POST create/{id}' => 'create',
+                        'DELETE remove/{id}' => 'remove',
+                    ],
+
+                ],
             ],
         ],
 
