@@ -84,6 +84,13 @@ return [
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/avaliacao',
+                    'extraPatterns' => [
+                        'GET ver/{id}' => 'ver',//ver todas as avaliacoes de um artigo
+                        'POST criar' => 'criar',
+                    ],
+                ],
+                ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
                         'GET index/{id}' => 'index',
