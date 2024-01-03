@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\api\controllers;
+use common\models\LoginForm;
 use common\models\Perfil;
 use common\models\User;
 use frontend\models\AlterarPasswordForm;
@@ -28,9 +29,21 @@ class UserController extends ActiveController
     {   //ppt8 slide 11
         $user = \common\models\User::findByUsername($username);
         if ($user && $user->validatePassword($password)) {
+
             return $user;
         }
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
+    }
+    public function actions()
+    {
+        $actions = parent::actions();
+        //sem utilização
+        unset($actions['index']);
+        unset($actions['update']);
+        unset($actions['delete']);
+        unset($actions['view']);
+        unset($actions['create']);
+        return $actions;
     }
     /*nao interessa apagar no fim, fica ai só pra servir de ideia para outro controlador
      * public function actionCount()
@@ -41,37 +54,33 @@ class UserController extends ActiveController
         return json_encode(['count' => count($count)]);
     }*/
 
-    public function actionLogin($username, $password){
+    public function actionLogin(){
         //http://brindeszorro-back.test/api/users/login?username=cliente&password=teste123
         //ver se o user existe e validar password
-        $user = \common\models\User::findByUsername($username);
-        if ($user && $user->validatePassword($password))
+        $form = new LoginForm();
+        $form->load(Yii::$app->request->post(),'');
+        $user = \common\models\User::findByUsername($form->username);
+        $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
+        if ($role != "Cliente")
         {
-           /* $role = AuthAssignment::findOne(['user_id' => user->id])->item_name;
-            if ($role != "Cliente") {
-                throw new \yii\web\ForbiddenHttpException("Acesso Negado, entre como cliente!");
-            }
-            else{*/
-            $perfil = Perfil::findOne($user->id);
-                $responseArray = [
-                    'id' => $user->id,
-                    'username' => $user->username,
-                    'email' => $user->email,
-                    'nome' =>$perfil->nome ,
-                    'telefone' => $perfil->telefone ,
-                    'nif'=> $perfil->nif,
-                    'morada'=>$perfil->morada,
-                    'codigo_postal'=>$perfil->codigo_postal,
-                    'localidade'=>$perfil->localidade,
-                    //'status' => $user->status,
-                    //'created_at' => $user->created_at,
-                    //'updated_at' => $user->updated_at,
-                    'verification_token' => $user->verification_token,
-                ];
-                return json_encode($responseArray);
-           // }
+            throw new \yii\web\ForbiddenHttpException("Acesso Negado");
+        }else
+        {
+                $perfil = Perfil::findOne($user->id);
+                 $responseArray = [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'nome' =>$perfil->nome ,
+                'telefone' => $perfil->telefone ,
+                'nif'=> $perfil->nif,
+                'morada'=>$perfil->morada,
+                'codigo_postal'=>$perfil->codigo_postal,
+                'localidade'=>$perfil->localidade,
+                'verification_token' => $user->verification_token,
+            ];
+            return json_encode($responseArray);
         }
-        //throw new \yii\web\ForbiddenHttpException('No authentication'); //403
         return ['response' => 'Username e/ou password incorreto.'];
 
     }
