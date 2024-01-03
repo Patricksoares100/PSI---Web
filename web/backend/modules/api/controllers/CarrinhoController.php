@@ -46,7 +46,16 @@ class CarrinhoController extends ActiveController
         $linhas = LinhaCarrinho::findAll(['perfil_id' => $id]);
         foreach ($linhas as $linha) {
             $data = [
-                'carrinho' => $linha,
+                'carrinho' => [
+                    'id' => $linha->id,
+                    'quantidade' => $linha->quantidade,
+                    'artigo' => [
+                        //'id' => $linha->artigo->id,
+                        'nome' => $linha->artigo->nome,
+                        //'descricao' => $linha->artigo->descricao,
+                        'preco' => $linha->artigo->preco,
+                    ],
+                ],
             ];
             $response[] = $data;
         }
