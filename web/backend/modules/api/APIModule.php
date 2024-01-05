@@ -21,5 +21,8 @@ class APIModule extends \yii\base\Module
         //PPT8 slide 5 e 6
         \Yii::$app->user->enableSession = false;
         // custom initialization code goes here
+
+        // Faz a conversão para JSON
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     }
 }
