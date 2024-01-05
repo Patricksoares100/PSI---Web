@@ -46,7 +46,7 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            //['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['nome', 'trim'], // da tabela perfil
             ['nome', 'required'],
@@ -58,6 +58,7 @@ class SignupForm extends Model
 
             ['nif', 'trim'],
             ['nif', 'required'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Perfil', 'message' => 'NIF já esta a ser utilizado.'],
             ['nif', 'match', 'pattern' => '^\d{9}?$^', 'message' => 'Invalid NIF'],
             ['nif', 'string', 'max' => 9, 'message' => 'Invalid NIF'],
 
@@ -90,8 +91,9 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
+        $user->status = 10;
 
-        $user->save() && $this->sendEmail($user);
+       // $user->save(); //&& $this->sendEmail($user);
 
         $perfil->nome = $this->nome;
         $perfil->telefone = $this->telefone;
@@ -99,7 +101,7 @@ class SignupForm extends Model
         $perfil->morada = $this->morada;
         $perfil->codigo_postal = $this->codigo_postal;
         $perfil->localidade = $this->localidade;
-        $perfil->save();
+        $user->save() && $perfil->save();
 
         //Guardar os novos utilizadores com o role de cliente
         //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin

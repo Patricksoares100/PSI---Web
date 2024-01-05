@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\api\controllers;
+
 use common\models\LoginForm;
 use common\models\Perfil;
 use common\models\User;
@@ -20,7 +21,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo'], //Excluir aos GETs
+            'except' => ['registo','index'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -34,7 +35,7 @@ class UserController extends ActiveController
         }
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
     }
-    public function actions()
+   /* public function actions()
     {
         $actions = parent::actions();
         //sem utilização
@@ -45,6 +46,8 @@ class UserController extends ActiveController
         unset($actions['create']);
         return $actions;
     }
+*/
+
     /*nao interessa apagar no fim, fica ai só pra servir de ideia para outro controlador
      * public function actionCount()
     {
@@ -90,12 +93,18 @@ class UserController extends ActiveController
         //se sucesso retorna sucesso senao retona erro
         $model = new SignupForm();
         $model->load(Yii::$app->request->post(),'');
+
+
+
         if ($model->signup()) {
             return ["response" => "Registo com sucesso!"];
         }
         else{
-            return ["response" => "Registo sem sucesso!"];
-
+            $errorMessages = [];
+            foreach ($model->errors as $error) {
+                $errorMessages[] = $error[0];
+            }
+            return ["response" => $errorMessages];
         }
 
     }
