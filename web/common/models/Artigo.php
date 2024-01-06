@@ -190,6 +190,10 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Imagem::class, ['artigo_id' => 'id']);
     }
+    public function getImg()
+    {
+        return Imagem::find()->where(['artigo_id'=> $this->id])->select('image_path')->one();
+    }
     public static function canDeleteArtigo($id)
     {
         // ver se existe algum artigo relacionado

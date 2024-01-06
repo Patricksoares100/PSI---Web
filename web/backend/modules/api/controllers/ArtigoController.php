@@ -22,7 +22,7 @@ class ArtigoController extends ActiveController
         return $behaviors;
     }
 
-   /* public function actions()
+    public function actions()
     {
         $actions = parent::actions();
 
@@ -37,7 +37,7 @@ class ArtigoController extends ActiveController
     }
 
 
-    public function actionIndex()
+    /*public function actionIndex()
     {
         $response = [];
         $artigos = Artigo::find()->all();
@@ -58,4 +58,29 @@ class ArtigoController extends ActiveController
         }
         return $response;
     }*/
+    public function actionIndex()
+    {
+        $response = [];
+        $artigos = Artigo::find()->all();
+        foreach ($artigos as $artigo) {
+            $imagem = $artigo->getImg();
+            $data = [
+                'id' => $artigo->id,
+                'nome' => $artigo->nome,
+                'descricao' => $artigo->descricao,
+                'referencia' => $artigo->referencia,
+                'preco' => $artigo->preco,
+                'stock_atual' => $artigo->stock_atual,
+                'iva_id' => $artigo->iva_id,
+                'fornecedor_id' => $artigo->fornecedor_id,
+                'categoria_id' => $artigo->categoria_id,
+                'perfil_id' => $artigo->perfil_id,
+                'imagem' => $imagem['image_path'],
+                //'imagem' =>  $artigo->getImg(),
+
+            ];
+            $response[] = $data;
+        }
+        return $response;
+    }
 }
