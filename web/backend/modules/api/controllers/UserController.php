@@ -30,7 +30,7 @@ class UserController extends ActiveController
     {   //ppt8 slide 11
         $user = \common\models\User::findByUsername($username);
         if ($user && $user->validatePassword($password)) {
-
+            $this->user = $user;
             return $user;
         }
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
@@ -58,33 +58,36 @@ class UserController extends ActiveController
     }*/
 
     public function actionLogin(){
+
+        //return Perfil::findOne(['id'=> $this->user->id]);
+
         //http://brindeszorro-back.test/api/users/login?username=cliente&password=teste123
         //ver se o user existe e validar password
         $form = new LoginForm();
         $form->load(Yii::$app->request->post(),'');
-        $user = \common\models\User::findByUsername($form->username);
-        $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
+       // $user = \common\models\User::findByUsername($form->username);
+        $role = AuthAssignment::findOne(['user_id' => $this->user->id])->item_name;
         if ($role != "Cliente")
         {
             throw new \yii\web\ForbiddenHttpException("Acesso Negado");
         }else
         {
-                $perfil = Perfil::findOne($user->id);
+                $perfil = Perfil::findOne($this->user->id);
                  $responseArray = [
-                'id' => $user->id,
-                'username' => $user->username,
-                'email' => $user->email,
+                'id' => $this->user->id,
+                //'username' => $user->username,
+                //'email' => $user->email,
                 'nome' =>$perfil->nome ,
                 'telefone' => $perfil->telefone ,
                 'nif'=> $perfil->nif,
                 'morada'=>$perfil->morada,
                 'codigo_postal'=>$perfil->codigo_postal,
                 'localidade'=>$perfil->localidade,
-                'verification_token' => $user->verification_token,
+                'token' => $this->user->verification_token,
             ];
-            return json_encode($responseArray);
+            return $responseArray;
         }
-        return ['response' => 'Username e/ou password incorreto.'];
+        return 'Username e/ou password incorreto.';
 
     }
     public function actionRegisto(){
