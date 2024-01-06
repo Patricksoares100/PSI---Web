@@ -22,7 +22,7 @@ class ArtigoController extends ActiveController
         return $behaviors;
     }
 
-    public function actions()
+   /* public function actions()
     {
         $actions = parent::actions();
 
@@ -57,5 +57,5 @@ class ArtigoController extends ActiveController
             $response[] = $data;
         }
         return $response;
-    }
+    }*/
 }
