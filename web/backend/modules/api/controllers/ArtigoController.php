@@ -75,7 +75,7 @@ class ArtigoController extends ActiveController
                 'fornecedor' => $artigo->fornecedor->nome,
                 'categoria' => $artigo->categoria->nome,
                 //'perfil' => $artigo->perfil->nome, não interessa saber isso na app
-                'imagem' => $imagem['image_path'],
+                'imagem' => "http://172.22.21.219:8080/" . $imagem['image_path'],
                 //'imagem' =>  $artigo->getImg(),
 
             ];
