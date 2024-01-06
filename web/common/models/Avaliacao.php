@@ -90,7 +90,7 @@ class Avaliacao extends \yii\db\ActiveRecord
             }
 
             if (count($avaliacoes) > 0) {
-                return number_format($somaTotal / count($avaliacoes), 1);
+                return ceil($somaTotal / count($avaliacoes));
             }
         return 0;
     }
