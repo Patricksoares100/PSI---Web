@@ -71,10 +71,10 @@ class ArtigoController extends ActiveController
                 'referencia' => $artigo->referencia,
                 'preco' => $artigo->preco,
                 'stock_atual' => $artigo->stock_atual,
-                'iva_id' => $artigo->iva_id,
-                'fornecedor_id' => $artigo->fornecedor_id,
-                'categoria_id' => $artigo->categoria_id,
-                'perfil_id' => $artigo->perfil_id,
+                'iva' => $artigo->iva->percentagem,
+                'fornecedor' => $artigo->fornecedor->nome,
+                'categoria' => $artigo->categoria->nome,
+                //'perfil' => $artigo->perfil->nome, não interessa saber isso na app
                 'imagem' => $imagem['image_path'],
                 //'imagem' =>  $artigo->getImg(),
 
