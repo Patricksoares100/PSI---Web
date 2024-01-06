@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use common\models\Artigo;
+use common\models\Avaliacao;
 use common\models\Imagem;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -74,8 +75,10 @@ class ArtigoController extends ActiveController
                 'iva' => $artigo->iva->percentagem,
                 'fornecedor' => $artigo->fornecedor->nome,
                 'categoria' => $artigo->categoria->nome,
+                'media_avaliacoes' => Avaliacao::getMediaAvaliacoes($artigo->id),
+                'num_avaliacoes' => Avaliacao::getNumAvaliacoes($artigo->id),
                 //'perfil' => $artigo->perfil->nome, não interessa saber isso na app
-                'imagem' => "http://172.22.21.219:8080/" . $imagem['image_path'],
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
                 //'imagem' =>  $artigo->getImg(),
 
             ];

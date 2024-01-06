@@ -81,4 +81,21 @@ class Avaliacao extends \yii\db\ActiveRecord
     {
         return static::find()->count();
     }
+
+    public static function getMediaAvaliacoes($id){
+        $avaliacoes = Avaliacao::find()->where(['artigo_id' => $id])->all();
+        $somaTotal = 0;
+            foreach ($avaliacoes as $avaliacao) {
+                $somaTotal += $avaliacao->classificacao;
+            }
+
+            if (count($avaliacoes) > 0) {
+                return number_format($somaTotal / count($avaliacoes), 1);
+            }
+        return 0;
+    }
+    public static function getNumAvaliacoes($id){
+        $avaliacoes = Avaliacao::find()->where(['artigo_id' => $id])->all();
+        return count($avaliacoes);
+    }
 }
