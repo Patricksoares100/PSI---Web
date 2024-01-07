@@ -69,7 +69,7 @@ class UserController extends ActiveController
         $role = AuthAssignment::findOne(['user_id' => $this->user->id])->item_name;
         if ($role != "Cliente")
         {
-            throw new \yii\web\ForbiddenHttpException("Acesso Negado");
+            return "Acesso Negado";
         }else
         {
                 $perfil = Perfil::findOne($this->user->id);
