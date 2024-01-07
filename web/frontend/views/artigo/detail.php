@@ -175,8 +175,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php endif; ?>
                             <?php $artigoId = $model->id;
                             $userId = Yii::$app->user->id;
-                            $faturaId = Fatura::find()->where(['perfil_id' => $userId])->one();
-                            $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_Id' => $faturaId])->exists();
+                            $faturas = Fatura::find()->where(['perfil_id' => $userId])->all();
+
+                            $comprouArtigo = false;
+                            foreach ($faturas as $fatura) {
+                                $comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_id' => $fatura->id])->exists();
+                                $comprouArtigo = true;
+                                break;
+                            }
+
+                            //$comprouArtigo = LinhaFatura::find()->where(['artigo_id' => $artigoId, 'fatura_Id' => $fatura->id])->exists();
                             ?>
                         </div>
                         <?php if (!Yii::$app->user->isGuest && $comprouArtigo) { ?>
