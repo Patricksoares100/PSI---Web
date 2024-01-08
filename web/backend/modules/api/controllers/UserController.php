@@ -21,7 +21,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo','index'], //Excluir aos GETs
+            'except' => ['registo','index', 'login'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -57,7 +57,7 @@ class UserController extends ActiveController
         return json_encode(['count' => count($count)]);
     }*/
 
-    public function actionLogin(){
+   /* public function actionLogin(){
 
         //return Perfil::findOne(['id'=> $this->user->id]);
 
@@ -65,16 +65,16 @@ class UserController extends ActiveController
         //ver se o user existe e validar password
         $form = new LoginForm();
         $form->load(Yii::$app->request->post(),'');
-       // $user = \common\models\User::findByUsername($form->username);
-        $role = AuthAssignment::findOne(['user_id' => $this->user->id])->item_name;
+        $user = \common\models\User::findByUsername($form->username);
+        $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
         if ($role != "Cliente")
         {
             return "Acesso Negado";
         }else
         {
-                $perfil = Perfil::findOne($this->user->id);
+                $perfil = Perfil::findOne($user->id);
                  $responseArray = [
-                'id' => $this->user->id,
+                'id' => $user->id,
                 //'username' => $user->username,
                 //'email' => $user->email,
                 'nome' =>$perfil->nome ,
@@ -83,13 +83,13 @@ class UserController extends ActiveController
                 'morada'=>$perfil->morada,
                 'codigo_postal'=>$perfil->codigo_postal,
                 'localidade'=>$perfil->localidade,
-                'token' => $this->user->verification_token,
+                'token' => $user->verification_token,
             ];
             return $responseArray;
         }
         return 'Username e/ou password incorreto.';
 
-    }
+    }*/
     public function actionRegisto(){
         //instanciar signupform
         //guardar os dados (os nomes na app tem q ser iguais ao do form
@@ -129,6 +129,18 @@ class UserController extends ActiveController
            return ["response" => "User não encontrado!"];
        }
         return ["response" => "Dados Incorretos!"];
+    }
+
+    public function actionLogin()
+    {
+        $perfil = Perfil::findOne($this->user->id);
+        $role = AuthAssignment::findOne(['user_id' => $this->user->id])->item_name;
+        if ($role != "Cliente") {
+            throw new \yii\web\ForbiddenHttpException("Acesso Negado");
+        }
+
+        $token = $this->user->auth_key;
+        return ["token" => $token];
     }
 
 }
