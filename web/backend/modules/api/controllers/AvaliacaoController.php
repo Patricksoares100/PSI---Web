@@ -16,7 +16,7 @@ class AvaliacaoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            //'except' => ['index', 'view','atualizar'], //Excluir aos GETs
+            'except' => ['index', 'view','atualizar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
