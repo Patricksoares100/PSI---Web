@@ -57,7 +57,7 @@ class UserController extends ActiveController
         return json_encode(['count' => count($count)]);
     }*/
 
-   /* public function actionLogin(){
+    public function actionLogin(){
 
         //return Perfil::findOne(['id'=> $this->user->id]);
 
@@ -89,7 +89,7 @@ class UserController extends ActiveController
         }
         return 'Username e/ou password incorreto.';
 
-    }*/
+    }
     public function actionRegisto(){
         //instanciar signupform
         //guardar os dados (os nomes na app tem q ser iguais ao do form
@@ -130,17 +130,4 @@ class UserController extends ActiveController
        }
         return ["response" => "Dados Incorretos!"];
     }
-
-    public function actionLogin()
-    {
-        $perfil = Perfil::findOne($this->user->id);
-        $role = AuthAssignment::findOne(['user_id' => $this->user->id])->item_name;
-        if ($role != "Cliente") {
-            throw new \yii\web\ForbiddenHttpException("Acesso Negado");
-        }
-
-        $token = $this->user->auth_key;
-        return ["token" => $token];
-    }
-
 }
