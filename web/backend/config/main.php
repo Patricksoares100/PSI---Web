@@ -55,7 +55,7 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/user',
                     'extraPatterns' => [
-                        'POST login' => 'login',
+                        'GET login' => 'login',
                         'POST registo' => 'registo',
                         'PUT atualizarpassword/{id}' => 'atualizarpassword',
 
