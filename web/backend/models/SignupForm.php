@@ -49,7 +49,7 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser usado!'],
 
             ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            //['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['nome', 'trim'], // da tabela perfil
             ['nome', 'required'],
@@ -109,7 +109,7 @@ class SignupForm extends Model
         }
         $user->status = $valor;
 
-        $user->save() && $this->sendEmail($user);
+        //$user->save(); //&& $this->sendEmail($user);
 
         $perfil->nome = $this->nome;
         $perfil->telefone = $this->telefone;
@@ -117,7 +117,7 @@ class SignupForm extends Model
         $perfil->morada = $this->morada;
         $perfil->codigo_postal = $this->codigo_postal;
         $perfil->localidade = $this->localidade;
-        $perfil->save();
+        $user->save() && $perfil->save();
 
         //Guardar os novos utilizadores com o role de cliente
         //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin
