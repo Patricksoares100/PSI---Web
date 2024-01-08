@@ -51,26 +51,18 @@ class FavoritoController extends ActiveController
         $favoritos = Favorito::findAll(['perfil_id' => $id]);
         foreach ($favoritos as $favorito) {
             /*$artigo = Artigo::find()->where(['id' => $favorito->artigo_id])->one();*/
-            $images = $favorito->artigo->imagens;
+
 
             // Adiciona os detalhes do artigo diretamente ao array de resposta
             $data = [
-                'favorito' => [
-                    'id' => $favorito->id,
-                    'artigo' => [
-                        'id' => $favorito->artigo->id,
-                        'nome' => $favorito->artigo->nome,
-                        'preco' => $favorito->artigo->preco,
-                        'referencia' => $favorito->artigo->referencia,
-                    ],
-                ],
+                        'id' => $favorito->id,
+                        'artigo_id' => $favorito->artigo_id,
+                        'perfil_id' => $favorito->perfil_id,
+                        'valorArtigo' => $favorito->artigo->preco,
+                        'nomeArtigo' => $favorito->artigo->nome,
             ];
-            foreach ($images as $image) {
-                $image_binary = file_get_contents($image->image_path);
+                $response[] = $data;
 
-                $data['imagens'] [] = base64_encode($image_binary);
-            }
-            $response[] = $data;
         }
         return $response;
     }
