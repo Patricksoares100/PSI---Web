@@ -66,27 +66,30 @@ class UserController extends ActiveController
         $form = new LoginForm();
         $form->load(Yii::$app->request->post(),'');
         $user = \common\models\User::findByUsername($form->username);
-        $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
-        if ($role != "Cliente")
-        {
-            return "Acesso Negado";
-        }else
-        {
+        if ($user && $user->validatePassword($form->password)) {
+            $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
+            if ($role != "Cliente")
+            {
+                return "Acesso Negado";
+            }else
+            {
                 $perfil = Perfil::findOne($user->id);
-                 $responseArray = [
-                'id' => $user->id,
-                //'username' => $user->username,
-                //'email' => $user->email,
-                'nome' =>$perfil->nome ,
-                'telefone' => $perfil->telefone ,
-                'nif'=> $perfil->nif,
-                'morada'=>$perfil->morada,
-                'codigo_postal'=>$perfil->codigo_postal,
-                'localidade'=>$perfil->localidade,
-                'token' => $user->verification_token,
-            ];
-            return $responseArray;
+                $responseArray = [
+                    'id' => $user->id,
+                    //'username' => $user->username,
+                    //'email' => $user->email,
+                    'nome' =>$perfil->nome ,
+                    'telefone' => $perfil->telefone ,
+                    'nif'=> $perfil->nif,
+                    'morada'=>$perfil->morada,
+                    'codigo_postal'=>$perfil->codigo_postal,
+                    'localidade'=>$perfil->localidade,
+                    'token' => $user->verification_token,
+                ];
+                return $responseArray;
+            }
         }
+
         return 'Username e/ou password incorreto.';
 
     }
