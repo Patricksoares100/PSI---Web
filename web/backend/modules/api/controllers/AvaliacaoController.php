@@ -31,7 +31,7 @@ class AvaliacaoController extends ActiveController
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
     }
 
-    public function actions()
+   /* public function actions()
     {
         $actions = parent::actions();
         //sem utilização
@@ -41,7 +41,7 @@ class AvaliacaoController extends ActiveController
         unset($actions['view']);
         unset($actions['create']);
         return $actions;
-    }
+    }*/
 
     public function actionVer(){
     //fica assim pra já pq nao temos nem ver nem editar avaliacao no android

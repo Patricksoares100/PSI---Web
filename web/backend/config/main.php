@@ -91,6 +91,7 @@ return [
                     'extraPatterns' => [
                         'GET ver/{id}' => 'ver',//ver todas as avaliacoes de um artigo
                         'POST criar' => 'criar',
+                        'GET index' => 'index'
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
