@@ -17,7 +17,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            //'except' => ['index', 'view', 'create', 'remove'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
