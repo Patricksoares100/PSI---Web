@@ -53,7 +53,7 @@ class SignupCest
             'SignupForm[password]' => 'tester_password',
             'SignupForm[nome]' => 'tester_nome',
             'SignupForm[telefone]' => 987564321,
-            'SignupForm[nif]' => 123456789,
+            'SignupForm[nif]' => 745896123,
             'SignupForm[morada]' => 'tester_morada',
             'SignupForm[localidade]' => 'tester_localidade',
             'SignupForm[codigo_postal]' => '2400-025',

@@ -91,9 +91,8 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-        $user->status = 10;
+        //$user->status = 10; era só pra testar android
 
-       // $user->save(); //&& $this->sendEmail($user);
 
         $perfil->nome = $this->nome;
         $perfil->telefone = $this->telefone;
@@ -101,7 +100,7 @@ class SignupForm extends Model
         $perfil->morada = $this->morada;
         $perfil->codigo_postal = $this->codigo_postal;
         $perfil->localidade = $this->localidade;
-        $user->save() && $perfil->save();
+        $user->save()&& $this->sendEmail($user) && $perfil->save();
 
         //Guardar os novos utilizadores com o role de cliente
         //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin
