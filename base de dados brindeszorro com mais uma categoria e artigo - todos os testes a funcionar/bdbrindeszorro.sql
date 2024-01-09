@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 09-Jan-2024 às 18:25
+-- Tempo de geração: 09-Jan-2024 às 18:40
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.2.10
 
@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `imagens` (
   `categoria_id` int DEFAULT NULL,
   `image_path` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `imagens`
@@ -376,7 +376,8 @@ INSERT INTO `imagens` (`id`, `artigo_id`, `categoria_id`, `image_path`) VALUES
 (8, 3, NULL, 'uploads/porta-chaves-hassu-em-aco-chapa-retangular-prateado_20231231021628.jpg'),
 (9, 4, NULL, 'uploads/LOSQXL_MI2_0826_STRAPPING_STAPLING_BUNDLING_ELASTIC_BAND_S19_TS_440735_00_20180910_20231231021654.jpg'),
 (10, NULL, 4, 'uploads/Velas-Advento_20240109180830.png'),
-(11, 5, NULL, 'uploads/Christmas-Candle-PNG-Clipart_20240109181907.png');
+(11, 5, NULL, 'uploads/Christmas-Candle-PNG-Clipart_20240109181907.png'),
+(12, 1, NULL, 'uploads/IMG_20220225_191925_20240109183930.png');
 
 -- --------------------------------------------------------
 
