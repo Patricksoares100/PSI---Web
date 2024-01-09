@@ -47,20 +47,20 @@ class VerifyEmailCest
 
     public function checkAlreadyActivatedToken(FunctionalTester $I)
     {
-        $I->amOnRoute('site/verify-email', ['token' => 'already_used_token_1548675330']);
+        $I->amOnRoute('site/verify-email', ['token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330']);
         $I->canSee('Bad Request', 'h1');
         $I->canSee('Wrong verify email token.');
     }
 
     public function checkSuccessVerification(FunctionalTester $I)
     {
-        $I->amOnRoute('site/verify-email', ['token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330']);
+        $I->amOnRoute('site/verify-email', ['token' => 'already_used_token_1548675330']);
         $I->canSee('Your email has been confirmed!');
-        $I->see('test.test');
+        $I->see('test2.test');
 
         $I->seeRecord('common\models\User', [
-           'username' => 'test.test',
-           'email' => 'test@mail.com',
+           'username' => 'test2.test',
+           'email' => 'test2@mail.com',
            'status' => \common\models\User::STATUS_ACTIVE
         ]);
     }

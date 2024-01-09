@@ -37,18 +37,18 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
     public function testAlreadyActivatedToken()
     {
         $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
-            new VerifyEmailForm('already_used_token_1548675330');
+            new VerifyEmailForm('4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330');
         });
     }
 
     public function testVerifyCorrectToken()
     {
-        $model = new VerifyEmailForm('4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330');
+        $model = new VerifyEmailForm('already_used_token_1548675330');
         $user = $model->verifyEmail();
         verify($user)->instanceOf('common\models\User');
 
-        verify($user->username)->equals('test.test');
-        verify($user->email)->equals('test@mail.com');
+        verify($user->username)->equals('test2.test');
+        verify($user->email)->equals('test2@mail.com');
         verify($user->status)->equals(\common\models\User::STATUS_ACTIVE);
         verify($user->validatePassword('Test1234'))->true();
     }
