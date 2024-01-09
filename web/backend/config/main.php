@@ -114,6 +114,7 @@ return [
                         'GET index/{id}' => 'index',
                         'POST create/{id}' => 'create',
                         'DELETE remove/{id}' => 'remove',
+                        'GET byuser' => 'byuser',
                     ],
                 ],
             ],

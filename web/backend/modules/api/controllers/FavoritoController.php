@@ -4,6 +4,7 @@ namespace backend\modules\api\controllers;
 
 use common\models\Artigo;
 use common\models\Favorito;
+use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -17,7 +18,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove','byuser'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -41,19 +42,19 @@ class FavoritoController extends ActiveController
         unset($actions['index']);
         unset($actions['create']);
         unset($actions['delete']);
+        unset($actions['user']);
 
         return $actions;
     }
 
-    public function actionIndex($id)
+    public function actionByuser()
     {
         $response = [];
-        $favoritos = Favorito::findAll(['perfil_id' => $id]);
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
         foreach ($favoritos as $favorito) {
-            /*$artigo = Artigo::find()->where(['id' => $favorito->artigo_id])->one();*/
 
-
-            // Adiciona os detalhes do artigo diretamente ao array de resposta
             $data = [
                         'id' => $favorito->id,
                         'artigo_id' => $favorito->artigo_id,
