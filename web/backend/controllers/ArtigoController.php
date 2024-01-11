@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use Bluerhinos\phpMQTT;
 use common\models\Artigo;
 use common\models\Categoria;
 use common\models\Fornecedor;
 use common\models\Iva;
+//use MqttServices;
 use yii\base\View;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -14,6 +16,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 use yii\web\UploadedFile;
+use \common\Services\MqttServices;
 
 
 /**
@@ -128,7 +131,7 @@ class ArtigoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-
+                self::FazPublishNoMosquitto("INSERT", "SOMETHING");
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
                 if ($model->upload() ) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -138,6 +141,8 @@ class ArtigoController extends Controller
             $model->loadDefaultValues();
         }
 
+        //MqttServices::FazPublishNoMosquitto("INSERT", "criado");
+
         return $this->render('create', [
             'model' => $model,
             'fornecedores' =>$fornecedores,
@@ -145,6 +150,8 @@ class ArtigoController extends Controller
             'categorias'=>$categorias,
 
         ]);
+
+
     }
 
     /**
@@ -188,6 +195,8 @@ class ArtigoController extends Controller
         if($podeApagar == false){// false= nao pode apagar
             \Yii::$app->session->setFlash('error',"Não pode remover o Artigo devido já estar relacionado com uma ou mais fatura(s)!");
         }else{
+            //$sms=`o artigo {$artigo->nome} foi apagado`
+            self::FazPublishNoMosquitto("INSERT", "apagou");
             $this->findModel($id)->delete();
         }
 
@@ -232,4 +241,64 @@ class ArtigoController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        //Obter dados do registo em causa
+        $id = $this->id;
+        $nome = $this->nome;
+        $descricao = $this->descricao;
+        $referencia = $this->referencia;
+        $preco = $this->preco;
+        $stock_atual = $this->stock_atual;
+        $iva_id = $this->iva_id;
+        $fornecedor_id = $this->fornecedor_id;
+        $categoria_id = $this->categoria_id;
+        $perfil_id = $this->perfil_id;
+
+        $myObj = new \stdClass();
+        $myObj->id = $id;
+        $myObj->nome = $nome;
+        $myObj->descricao = $descricao;
+        $myObj->referencia = $referencia;
+        $myObj->preco = $preco;
+        $myObj->stock_atual = $stock_atual;
+        $myObj->iva_id = $iva_id;
+        $myObj->fornecedor_id = $fornecedor_id;
+        $myObj->categoria_id = $categoria_id;
+        $myObj->perfil_id = $perfil_id;
+        $myJSON = json_encode($myObj);
+        if ($insert)
+            $this->FazPublishNoMosquitto("INSERT", $myJSON);
+        else
+            $this->FazPublishNoMosquitto("UPDATE", $myJSON);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $prod_id = $this->id;
+        $myObj = new \stdClass();
+        $myObj->id = $prod_id;
+        $myJSON = json_encode($myObj);
+        $this->FazPublishNoMosquitto("DELETE", $myJSON);
+    }
+
+    public static function FazPublishNoMosquitto($canal, $msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = ""; // set your username
+        $password = ""; // set your password
+        $client_id = "phpMQTT-publisher"; // unique!
+        $mqtt = new phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL, $username, $password)) {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        } else {
+            file_put_contents("debug.output", "Time out!");
+        }
+    }
+
 }

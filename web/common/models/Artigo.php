@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Bluerhinos\phpMQTT;
 use Yii;
 use yii\web\UploadedFile;
 use common\models\Imagem;
@@ -202,5 +203,6 @@ class Artigo extends \yii\db\ActiveRecord
         // Se existir, retorna false senao  true
         return $faturasRelacionadas ? false : true;
     }
+
 
 }
