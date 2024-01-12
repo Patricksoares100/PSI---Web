@@ -131,9 +131,10 @@ class ArtigoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                self::FazPublishNoMosquitto("INSERT", "SOMETHING");
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
                 if ($model->upload() ) {
+                    // Chame o método FazPublishNoMosquitto após salvar o modelo e nao antes como estava
+                    $this->publishArtigoMessage("INSERT", "Artigo criado", $model->id);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -152,6 +153,34 @@ class ArtigoController extends Controller
         ]);
 
 
+    }
+
+    protected function publishArtigoMessage($canal, $mensagem, $artigoId)
+    {
+        $model = Artigo::findOne($artigoId);
+
+        if ($model !== null) {
+            $artigoData = [
+                'id' => $model->id,
+                'nome' => $model->nome,
+                'descricao' => $model->descricao,
+                'referencia' => $model->referencia,
+                'preco' => $model->preco,
+                'stock_atual' => $model->stock_atual,
+                'iva_id' => $model->iva_id,
+                'fornecedor_id' => $model->fornecedor_id,
+                'categoria_id' => $model->categoria_id,
+                'perfil_id' => $model->perfil_id,
+            ];
+
+            $message = [
+                'canal' => $canal,
+                'mensagem' => $mensagem,
+                'artigoObjeto' => $artigoData,
+            ];
+
+            $this->FazPublishNoMosquitto($canal, json_encode($message));
+        }
     }
 
     /**
