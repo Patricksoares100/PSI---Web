@@ -18,7 +18,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','byuser'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -68,36 +68,27 @@ class FavoritoController extends ActiveController
         return $response;
     }
 
-    public function actionCreate()
+    public function actionAdicionar()
     {
-        try {
-            $params = Yii::$app->getRequest()->getBodyParams();
-
-            // Verifica se todos os parâmetros necessários foram enviados
-            if (!isset($params['artigo_id'])) {
-                throw new \Exception('Parâmetros inválidos');
-            }
-
-        } catch (\Exception $e) {
-            return ["response" => $e->getMessage()];
-        }
-
-        // Verifica se o artigo já está nos favoritos do cliente
-        $favorito = Favorito::findOne(['perfil_id' => $params['perfil_id'], 'artigo_id' => $params['artigo_id']]);
-        if ($favorito) {
-            throw new \Exception("Artigo já está nos favoritos");
-
-        } else {
-
-            // Cria uma nova instância de Favorito
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        
+        if ($user) {
             $favorito = new Favorito();
-            $favorito->perfil_id = $params['perfil_id'];
+
+            // verifica que existe antes de usar
+            $favorito->perfil_id = isset($params[$user->id]) ? $params[$user->id] : null;
+
             $favorito->artigo_id = $params['artigo_id'];
             $favorito->save();
 
             return ["response" => "Artigo adicionado aos favoritos"];
+        } else {
+            return ["error" => "User não encontrado"];
         }
     }
+
 
     public function actionRemove()
     {

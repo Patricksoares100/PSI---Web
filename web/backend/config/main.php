@@ -20,10 +20,10 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
-                'application/json' => 'yii\web\JsonParser',]/*,
+                'application/json' => 'yii\web\JsonParser',],
                 'acceptableContentTypes' => [
                     'application/json' => 1,
-                ],*/
+                ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -112,7 +112,7 @@ return [
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
                         'GET index/{id}' => 'index',
-                        'POST create/{id}' => 'create',
+                        'POST adicionar' => 'adicionar',
                         'DELETE remove/{id}' => 'remove',
                         'GET byuser' => 'byuser',
                     ],
