@@ -76,10 +76,8 @@ class FavoritoController extends ActiveController
         $id = $params['artigo_id'];
         $id = intval($id);
 
-
         $existeModel = Favorito::findOne(['artigo_id' => $id, 'perfil_id' => $user->id]);
-
-
+        $response = [];
         if (!$existeModel) {
             $favorito = new Favorito();
 
@@ -87,10 +85,38 @@ class FavoritoController extends ActiveController
             $favorito->artigo_id = $id;
             $favorito->save();
 
-            return ["response" => "Artigo adicionado aos favoritos"];
-        } else {
-            return ["error" => "Artigo já está nos favoritos!"];
+            $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
+            foreach ($favoritos as $favorito) {
+
+                $data = [
+                    'id' => $favorito->id,
+                    'artigo_id' => $favorito->artigo_id,
+                    'perfil_id' => $favorito->perfil_id,
+                    'valorArtigo' => $favorito->artigo->preco,
+                    'nomeArtigo' => $favorito->artigo->nome,
+                ];
+                $response[] = $data;
+            }
+            // var_dump($response);die;
+            return $response;
+
         }
+            //$response = [];
+            $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
+            foreach ($favoritos as $favorito) {
+
+                $data = [
+                    'id' => $favorito->id,
+                    'artigo_id' => $favorito->artigo_id,
+                    'perfil_id' => $favorito->perfil_id,
+                    'valorArtigo' => $favorito->artigo->preco,
+                    'nomeArtigo' => $favorito->artigo->nome,
+                ];
+                $response[] = $data;
+            }
+           // var_dump($response);die;
+            return $response;
+
     }
 
 

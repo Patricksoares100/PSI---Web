@@ -100,8 +100,6 @@ class UserController extends ActiveController
         $model = new SignupForm();
         $model->load(Yii::$app->request->post(),'');
 
-
-
         if ($model->signup()) {
             return ["response" => "Registo com sucesso!"];
         }
