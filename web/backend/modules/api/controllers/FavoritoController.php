@@ -84,6 +84,9 @@ class FavoritoController extends ActiveController
             $favorito->perfil_id = $user->id;
             $favorito->artigo_id = $id;
             $favorito->save();
+
+        }else{
+            
         }
             $response = [];
             $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
@@ -98,6 +101,7 @@ class FavoritoController extends ActiveController
                 ];
                 $response[] = $data;
             }
+           // var_dump($response);die;
             return $response;
 
     }
