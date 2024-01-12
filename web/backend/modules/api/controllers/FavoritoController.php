@@ -73,14 +73,15 @@ class FavoritoController extends ActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
-        
+
+
         if ($user) {
             $favorito = new Favorito();
 
             // verifica que existe antes de usar
-            $favorito->perfil_id = isset($params[$user->id]) ? $params[$user->id] : null;
-
-            $favorito->artigo_id = $params['artigo_id'];
+            $favorito->perfil_id = $user->id;
+            $id = $params['artigo_id'];
+            $favorito->artigo_id = intval($id);
             $favorito->save();
 
             return ["response" => "Artigo adicionado aos favoritos"];
