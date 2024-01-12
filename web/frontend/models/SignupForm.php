@@ -100,7 +100,7 @@ class SignupForm extends Model
         $perfil->morada = $this->morada;
         $perfil->codigo_postal = $this->codigo_postal;
         $perfil->localidade = $this->localidade;
-        $user->save()&& $this->sendEmail($user) && $perfil->save();
+        $user->save() && $perfil->save();   //&& $this->sendEmail($user)
 
         //Guardar os novos utilizadores com o role de cliente
         //Todos menos o primeiro, no rbac/migration esta definido que o 1º é admin
@@ -110,7 +110,7 @@ class SignupForm extends Model
             $authorRole = $auth->getRole('cliente');
             $auth->assign($authorRole, $user->getId());
         }
-        return $user;
+        //return $user;
     }
 
     /**
