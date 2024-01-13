@@ -252,6 +252,9 @@ class ArtigoController extends Controller
     public function actionAtualizarstock($id, $sinal){// em vez de apagar ele manda mensagem ...temos q passar isso para o modelo
         $model = $this->findModel($id);
         if($sinal == '+'){
+            if($model->stock_atual == 0){
+                //publicar artigo voltou a ter stock
+            }
             $model->stock_atual++;
         }
         else{
