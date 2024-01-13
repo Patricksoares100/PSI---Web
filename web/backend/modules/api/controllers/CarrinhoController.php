@@ -123,8 +123,19 @@ class CarrinhoController extends ActiveController
             return $data;
         }
         else{
+            $quantidade = $params['quantidade'];
+            $existeModel->quantidade += intval($quantidade);
+            $existeModel->save();
             Yii::$app->response->statusCode = 401;
-            return "Artigo já nos favoritos";
+            $imagem = $existeModel->artigo->getImg();
+            $data = [
+                'id' => $existeModel->id,
+                'quantidade' => $existeModel->quantidade,
+                'valorUnitario' => $existeModel->artigo->preco,
+                'nome' => $existeModel->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+            ];
+            return $data;
         }
     }
 }
