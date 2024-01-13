@@ -253,7 +253,7 @@ class ArtigoController extends Controller
         $model = $this->findModel($id);
         if($sinal == '+'){
             if($model->stock_atual == 0){
-                $this->publishArtigoMessage("ARRTIGOSTOCK", "Artigo voltou a estar em Stock", $model->id);
+                $this->publishArtigoMessage("ARTIGOSTOCK", "Artigo voltou a estar em Stock", $model->id);
             }
             $model->stock_atual++;
         }

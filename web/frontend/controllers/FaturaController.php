@@ -191,11 +191,22 @@ class FaturaController extends Controller
         if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model = $this->findModel($id);
             if ($model->perfil_id == Yii::$app->user->id) {
-                if ($model->canDeleteFatura()) {//se for emitida apaga
-
-                    $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
+                if ($model->canDeleteFatura()) {
+                    $mqtt = new phpMQTT('localhost', 1883, $model->id); // Certifique-se de ajustar os detalhes da conexão MQTT
                     if ($mqtt->connect()) {
-                        $mqtt->publish('FATURADELETE', 'Fatura excluída: ' . $id, 1);
+                        $message = [
+                            'action' => 'delete',
+                            'id' => $model->id,
+                            'data' => $model->data,
+                            'valor_fatura' => $model->valor_fatura,
+                            'estado' => $model->estado,
+                            'perfil_id' => $model->perfil_id,
+                            'message' => 'Fatura excluída: ' . $id,
+                        ];
+
+                        $jsonMessage = json_encode($message);
+
+                        $mqtt->publish('FATURADELETE', $jsonMessage, 1);
                         $mqtt->close();
                     } else {
                         Yii::error('Falha ao conectar ao servidor MQTT.');
@@ -205,7 +216,7 @@ class FaturaController extends Controller
                 } else {
                     Yii::$app->session->setFlash('error', 'Não pode remover uma fatura PAGA!');
                 }
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Não tem permissões!');
             }
         } else {
@@ -213,6 +224,7 @@ class FaturaController extends Controller
         }
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Fatura model based on its primary key value.

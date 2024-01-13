@@ -161,9 +161,12 @@ class FavoritoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+
         if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model->delete();
+
             $this->publishFavoritoMessage("DELETEFAV", "Artigo removido dos favoritos", $model->id);
+
             Yii::$app->session->setFlash('success', 'Artigo removido dos favoritos com sucesso.');
         } else {
             Yii::$app->session->setFlash('error', 'Você não tem permissão para remover este artigo dos favoritos.');
@@ -190,6 +193,7 @@ class FavoritoController extends Controller
                 'favoritoObjeto' => $favoritoData,
             ];
 
+            // Chama a função para publicar no MQTT
             $this->fazPublishNoMosquitto($canal, json_encode($message));
         }
     }
@@ -198,15 +202,17 @@ class FavoritoController extends Controller
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = ""; // set your username
-        $password = ""; // set your password
-        $client_id = "phpMQTT-publisher"; // unique!
+        $username = ""; // defina seu nome de usuário
+        $password = ""; // defina sua senha
+        $client_id = "phpMQTT-publisher"; // único!
+
         $mqtt = new phpMQTT($server, $port, $client_id);
+
         if ($mqtt->connect(true, NULL, $username, $password)) {
             $mqtt->publish($canal, $msg, 0);
             $mqtt->close();
         } else {
-            file_put_contents("debug.output", "Time out!");
+            file_put_contents("debug.output", "Timeout ao conectar ao servidor MQTT!");
         }
     }
 
