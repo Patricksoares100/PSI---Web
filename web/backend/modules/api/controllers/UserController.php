@@ -21,7 +21,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo','index', 'login'], //Excluir aos GETs
+            'except' => ['registo','index', 'login','logout'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -115,6 +115,14 @@ class UserController extends ActiveController
 
     }
 
+    public function actionLogout()
+    {
+        if (Yii::$app->user->logout()) {
+            return ["response" => "Logout realizado com sucesso!"];
+        } else {
+            return ["response" => "Erro ao fazer logout."];
+        }
+    }
     public function actionAtualizarpassword($id){
 
         $form = new AlterarPasswordForm();

@@ -17,7 +17,7 @@ class ArtigoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view'], //Excluir aos GETs
+            'except' => ['index', 'view','create'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
