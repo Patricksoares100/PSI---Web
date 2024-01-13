@@ -147,7 +147,6 @@ class CarrinhoController extends ActiveController
             $quantidade = $params['quantidade'];
             $existeModel->quantidade += intval($quantidade);
             $existeModel->save();
-            Yii::$app->response->statusCode = 401;
             $imagem = $existeModel->artigo->getImg();
             $data = [
                 'id' => $existeModel->id,
