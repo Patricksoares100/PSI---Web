@@ -16,7 +16,7 @@ class PerfilController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            //'except' => ['index', 'view','atualizar'], //Excluir aos GETs
+            'except' => ['index', 'view','atualizar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -33,10 +33,10 @@ class PerfilController extends ActiveController
     {
         $actions = parent::actions();
         //sem utilização
-        unset($actions['index']);
+       // unset($actions['index']);
         unset($actions['update']);
         unset($actions['delete']);
-        unset($actions['view']);
+        //unset($actions['view']);
         unset($actions['create']);
         return $actions;
     }

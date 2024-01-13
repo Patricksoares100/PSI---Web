@@ -66,6 +66,9 @@ return [
                     'controller' => 'api/perfil',
                     'extraPatterns' => [
                         'PUT atualizar/{id}' => 'atualizar',
+                        'GET index' => 'index',
+                        'GET view' => 'view',
+
                     ],
 
                 ],
