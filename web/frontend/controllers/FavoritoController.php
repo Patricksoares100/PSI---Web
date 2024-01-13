@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use Bluerhinos\phpMQTT;
 use common\models\Favorito;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -93,22 +94,22 @@ class FavoritoController extends Controller
     public function actionCreate($id)
     {
         $artigo_id = intval($id);
-        $perfil_id = \Yii::$app->user->id;
+        $perfil_id = Yii::$app->user->id;
 
-        // Verifica se já existe uma linha de favorito com o mesmo artigo_id e perfil_id
         $existeModel = Favorito::findOne(['artigo_id' => $artigo_id, 'perfil_id' => $perfil_id]);
 
-        if ($existeModel) { // se encontrar uma linha de favorito com o mesmo artigo_id com o perfil_id logado
-            $existeModel->delete(); // Se já existe, remove dos favoritos
+        if ($existeModel) {
+            $existeModel->delete();
             if ($existeModel->save()) {
+                $this->publishFavoritoMessage("DELETEFAV", "Artigo removido dos favoritos", $existeModel->id);
                 return $this->redirect(['index', 'id' => $existeModel->id]);
             }
         } else {
-
             $model = new Favorito();
-            $model->artigo_id = intval($id); // converte string to int em php
-            $model->perfil_id = \Yii::$app->user->id;
+            $model->artigo_id = intval($id);
+            $model->perfil_id = Yii::$app->user->id;
             if ($model->save()) {
+                $this->publishFavoritoMessage("INSERTFAV", "Artigo adicionado aos favoritos", $model->id);
                 return $this->redirect(['index', 'id' => $model->id]);
             }
 
@@ -162,12 +163,51 @@ class FavoritoController extends Controller
         $model = $this->findModel($id);
         if (Yii::$app->user->can('deleteProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model->delete();
+            $this->publishFavoritoMessage("DELETEFAV", "Artigo removido dos favoritos", $model->id);
             Yii::$app->session->setFlash('success', 'Artigo removido dos favoritos com sucesso.');
         } else {
             Yii::$app->session->setFlash('error', 'Você não tem permissão para remover este artigo dos favoritos.');
         }
 
         return $this->redirect(['index']);
+    }
+
+    protected function publishFavoritoMessage($canal, $mensagem, $favoritoId)
+    {
+        $model = Favorito::findOne($favoritoId);
+
+        if ($model !== null) {
+            $favoritoData = [
+                'id' => $model->id,
+                'artigo_id' => $model->artigo_id,
+                'perfil_id' => $model->perfil_id,
+                // add more fields as needed
+            ];
+
+            $message = [
+                'canal' => $canal,
+                'mensagem' => $mensagem,
+                'favoritoObjeto' => $favoritoData,
+            ];
+
+            $this->fazPublishNoMosquitto($canal, json_encode($message));
+        }
+    }
+
+    protected function fazPublishNoMosquitto($canal, $msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = ""; // set your username
+        $password = ""; // set your password
+        $client_id = "phpMQTT-publisher"; // unique!
+        $mqtt = new phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL, $username, $password)) {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        } else {
+            file_put_contents("debug.output", "Time out!");
+        }
     }
 
     public function actionEnviarcarrinho($id, $idFav){
