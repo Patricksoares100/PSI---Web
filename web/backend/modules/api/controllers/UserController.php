@@ -70,6 +70,7 @@ class UserController extends ActiveController
             $role = AuthAssignment::findOne(['user_id' => $user->id])->item_name;
             if ($role != "Cliente")
             {
+                Yii::$app->response->statusCode = 401;
                 return "Acesso Negado";
             }else
             {
@@ -90,6 +91,7 @@ class UserController extends ActiveController
             }
         }
 
+        Yii::$app->response->statusCode = 401;
         return 'Username e/ou password incorreto.';
 
     }

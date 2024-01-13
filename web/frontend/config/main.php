@@ -48,6 +48,6 @@ return [
     ],
     'params' => array_merge(
         $params,
-        ['caminhoBackend' => 'http://brindeszorro-back.test']
+        ['caminhoBackend' => 'http://172.22.21.219:8080/']
     ),
 ];
