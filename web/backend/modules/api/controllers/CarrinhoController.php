@@ -108,8 +108,11 @@ class CarrinhoController extends ActiveController
             $carrinho = new LinhaCarrinho();
             $carrinho->perfil_id = $user->id;
             $carrinho->artigo_id = $id;
+            $quantidade = $params['quantidade'];
+            $carrinho->quantidade = intval($quantidade);
             $carrinho->save();
             $imagem = $carrinho->artigo->getImg();
+            //var_dump($carrinho->quantidade);die;
             $data = [
                 'id' => $carrinho->id,
                 'quantidade' => $carrinho->quantidade,
