@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use common\models\LinhaCarrinho;
+use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -16,6 +17,7 @@ class CarrinhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
+            'except' => ['index', 'view', 'create', 'remove','adicionar'],
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -91,6 +93,35 @@ class CarrinhoController extends ActiveController
             $linhaNova->save();
 
             return ["response" => "Artigo adicionado ao Carrinho"];
+        }
+    }
+
+    public function actionAdicionar()
+    {
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $id = $params['artigo_id'];
+        $id = intval($id);
+        $existeModel = LinhaCarrinho::findOne(['artigo_id' => $id, 'perfil_id' => $user->id]);
+        if (!$existeModel) {
+            $carrinho = new LinhaCarrinho();
+            $carrinho->perfil_id = $user->id;
+            $carrinho->artigo_id = $id;
+            $carrinho->save();
+            $imagem = $carrinho->artigo->getImg();
+            $data = [
+                'id' => $carrinho->id,
+                'quantidade' => $carrinho->quantidade,
+                'valorUnitario' => $carrinho->artigo->preco,
+                'nome' => $carrinho->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+            ];
+            return $data;
+        }
+        else{
+            Yii::$app->response->statusCode = 401;
+            return "Artigo já nos favoritos";
         }
     }
 }

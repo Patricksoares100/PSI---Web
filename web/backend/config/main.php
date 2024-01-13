@@ -99,6 +99,7 @@ return [
                     'extraPatterns' => [
                         'GET index/{id}' => 'index',
                         'POST create' => 'create',
+                        'POST adicionar' => 'adicionar',
                        // 'POST create/{id}/{idartigo}' => 'create',
                        // 'POST create/<idperfil:\d+>/<idartigo:\d+>' => 'create',
                     ],
