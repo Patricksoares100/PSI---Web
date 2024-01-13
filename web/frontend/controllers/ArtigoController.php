@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use Bluerhinos\phpMQTT;
 use common\models\Artigo;
 use app\models\ArtigoSearch;
 use common\models\Avaliacao;
@@ -178,6 +179,25 @@ class ArtigoController extends Controller
     public function actionDetail($id, $quantidade = 1)
     {
         $model = $this->findModel($id);
+        $artigoDetalhes = [
+            'id' => $model->id,
+            'nome' => $model->nome,
+            'descricao' => $model->descricao,
+            'preco' => $model->preco,
+            'stock_atual' => $model->stock_atual,
+        ];
+
+        // Converter array associativo para JSON
+        $mensagemJSON = json_encode($artigoDetalhes, JSON_PRETTY_PRINT);
+
+        // MQTT Publish
+        $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
+        if ($mqtt->connect()) {
+            $mqtt->publish('ARTIGODETAIL', $mensagemJSON, 1);
+            $mqtt->close();
+        } else {
+            Yii::error('Falha ao conectar ao servidor MQTT.');
+        }
 
         return $this->render('detail', [
             'model' => $model,
