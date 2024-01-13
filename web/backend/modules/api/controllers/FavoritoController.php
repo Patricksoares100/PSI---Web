@@ -54,6 +54,7 @@ class FavoritoController extends ActiveController
         $user = User::findByVerificationToken($token);
         $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
         foreach ($favoritos as $favorito) {
+            $imagem = $favorito->artigo->getImg();
 
             $data = [
                         'id' => $favorito->id,
@@ -61,6 +62,7 @@ class FavoritoController extends ActiveController
                         'perfil_id' => $favorito->perfil_id,
                         'valorArtigo' => $favorito->artigo->preco,
                         'nomeArtigo' => $favorito->artigo->nome,
+                        'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
                 $response[] = $data;
 
@@ -81,17 +83,20 @@ class FavoritoController extends ActiveController
             $favorito->perfil_id = $user->id;
             $favorito->artigo_id = $id;
             $favorito->save();
+            $imagem = $favorito->artigo->getImg();
             $data = [
                 'id' => $favorito->id,
                 'artigo_id' => $favorito->artigo_id,
                 'perfil_id' => $favorito->perfil_id,
                 'valorArtigo' => $favorito->artigo->preco,
                 'nomeArtigo' => $favorito->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
             return $data;
         }
         else{
-            return ["response" => "Produto removido dos favoritos"];
+            Yii::$app->response->statusCode = 401;
+            return "Artigo já nos favoritos";
         }
     }
 
