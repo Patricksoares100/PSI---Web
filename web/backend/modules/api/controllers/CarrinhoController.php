@@ -17,7 +17,7 @@ class CarrinhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','adicionar'],
+            'except' => ['index', 'view', 'create', 'remove','adicionar','byuser'],
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -95,6 +95,27 @@ class CarrinhoController extends ActiveController
             return ["response" => "Artigo adicionado ao Carrinho"];
         }
     }
+    public function actionByuser()
+    {
+        $response = [];
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $carrinhos = LinhaCarrinho::findAll(['perfil_id' => $user->id]);
+        foreach ($carrinhos as $carrinho) {
+            $imagem = $carrinho->artigo->getImg();
+
+            $data = [
+                'id' => $carrinho->id,
+                'quantidade' => $carrinho->quantidade,
+                'valorUnitario' => $carrinho->artigo->preco,
+                'nome' => $carrinho->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+            ];
+            $response[] = $data;
+
+        }
+        return $response;
+    }
 
     public function actionAdicionar()
     {
@@ -126,7 +147,6 @@ class CarrinhoController extends ActiveController
             $quantidade = $params['quantidade'];
             $existeModel->quantidade += intval($quantidade);
             $existeModel->save();
-            Yii::$app->response->statusCode = 401;
             $imagem = $existeModel->artigo->getImg();
             $data = [
                 'id' => $existeModel->id,
