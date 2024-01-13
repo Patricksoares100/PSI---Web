@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use Bluerhinos\phpMQTT;
 use common\models\Empresa;
 use common\models\Fatura;
 use common\models\LinhaFatura;
@@ -74,6 +75,27 @@ class FaturaController extends Controller
         if (Yii::$app->user->can('updateProprioCliente', ['perfil' => Yii::$app->user->id])) {
             $model = $this->findModel($id);
             if ($model->perfil_id == Yii::$app->user->id) {
+                // Construir array associativo com os detalhes da fatura
+                $faturaDetalhes = [
+                    'id' => $model->id,
+                    'data' => $model->data,
+                    'valor_fatura' => $model->valor_fatura,
+                    'estado' => $model->estado,
+                    'perfil_id' => $model->perfil_id,
+                    // Adicione outros campos conforme necessário
+                ];
+
+                // Converter array associativo para JSON
+                $mensagemJSON = json_encode($faturaDetalhes, JSON_PRETTY_PRINT);
+
+                // MQTT Publish
+                $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
+                if ($mqtt->connect()) {
+                    $mqtt->publish('FATURAVIEW', $mensagemJSON, 1);
+                    $mqtt->close();
+                } else {
+                    Yii::error('Falha ao conectar ao servidor MQTT.');
+                }
                 return $this->render('view', [
                     'model' => $model,
                     'empresa' => Empresa::find()->one(),
@@ -170,6 +192,14 @@ class FaturaController extends Controller
             $model = $this->findModel($id);
             if ($model->perfil_id == Yii::$app->user->id) {
                 if ($model->canDeleteFatura()) {//se for emitida apaga
+
+                    $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
+                    if ($mqtt->connect()) {
+                        $mqtt->publish('FATURADELETE', 'Fatura excluída: ' . $id, 1);
+                        $mqtt->close();
+                    } else {
+                        Yii::error('Falha ao conectar ao servidor MQTT.');
+                    }
                     $model->delete();
                     Yii::$app->session->setFlash('success', 'Fatura removida com sucesso!');
                 } else {

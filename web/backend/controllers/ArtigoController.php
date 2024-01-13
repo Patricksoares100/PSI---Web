@@ -134,7 +134,7 @@ class ArtigoController extends Controller
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
                 if ($model->upload() ) {
                     // Chame o método FazPublishNoMosquitto após salvar o modelo e nao antes como estava
-                    $this->publishArtigoMessage("INSERT", "Artigo criado", $model->id);
+                    $this->publishArtigoMessage("ARTIGONOVO", "Artigo criado", $model->id);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -253,7 +253,7 @@ class ArtigoController extends Controller
         $model = $this->findModel($id);
         if($sinal == '+'){
             if($model->stock_atual == 0){
-                //publicar artigo voltou a ter stock
+                $this->publishArtigoMessage("ARRTIGOSTOCK", "Artigo voltou a estar em Stock", $model->id);
             }
             $model->stock_atual++;
         }
