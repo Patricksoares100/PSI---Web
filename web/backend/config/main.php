@@ -122,6 +122,7 @@ return [
                         'POST adicionar' => 'adicionar',
                         'DELETE remove/{id}' => 'remove',
                         'GET byuser' => 'byuser',
+                        'DELETE limparfavoritos' => 'limparfavoritos',
                     ],
                 ],
             ],
