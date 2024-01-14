@@ -20,10 +20,13 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
-                'application/json' => 'yii\web\JsonParser',],
+                'application/json' => 'yii\web\JsonParser',
+                'multipart/form-data' => 'yii\web\MultipartFormDataParser',
+                ],
                 'acceptableContentTypes' => [
                     'application/json' => 1,
                 ],
+
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -59,6 +62,7 @@ return [
                         'POST registo' => 'registo',
                         'PUT atualizarpassword/{id}' => 'atualizarpassword',
                         'GET data' => 'data',
+                        'PUT editar' => 'editar',
                     ],
 
                 ],

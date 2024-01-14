@@ -21,7 +21,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo','index', 'login','logout','data'], //Excluir aos GETs
+            'except' => ['registo','index', 'login','logout','data','editar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -134,6 +134,40 @@ class UserController extends ActiveController
         ];
         return $responseArray;
     }
+
+    public function actionEditar()
+    {
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $token = Yii::$app->request->get('token');
+
+        $user = User::findByVerificationToken($token);
+        $perfil = Perfil::findOne($user->id);
+
+        $perfil->nome = $params['nome'];
+        $perfil->telefone =intval($params['telefone']);
+        $perfil->morada = $params['morada'];
+        $perfil->nif =intval($params['nif']);
+        $perfil->codigo_postal = $params['codigo_postal'];
+        $perfil->localidade = $params['localidade'];
+
+
+        if ($perfil->validate() && $perfil->save()) {
+            $responseArray = [
+                'id' => $user->id,
+                'nome' => $perfil->nome,
+                'telefone' => $perfil->telefone,
+                'nif' => $perfil->nif,
+                'morada' => $perfil->morada,
+                'codigo_postal' => $perfil->codigo_postal,
+                'localidade' => $perfil->localidade,
+                'token' => $user->verification_token,
+            ];
+
+            return $responseArray;
+        }
+    }
+
+
 
     public function actionLogout()
     {
