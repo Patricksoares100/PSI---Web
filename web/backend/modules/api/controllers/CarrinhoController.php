@@ -17,7 +17,7 @@ class CarrinhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','adicionar','byuser'],
+            'except' => ['index', 'view', 'create', 'remove','adicionar','byuser','limparcarrinho'],
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -158,4 +158,17 @@ class CarrinhoController extends ActiveController
             return $data;
         }
     }
+    public function actionLimparcarrinho()
+    {
+
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $carrinhos = LinhaCarrinho::findAll(['perfil_id' => $user->id]);
+        foreach ($carrinhos as $carrinho) {
+            $carrinho->delete();
+        }
+        return "Carrinho limpo com sucesso";
+
+    }
+
 }
