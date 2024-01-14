@@ -129,14 +129,14 @@ class FaturaController extends ActiveController
             }
             //realizar fatura
             //return "Compra com sucesso!";//dar return só dos dados necessarios
-            return json_encode([
+            return [
                 'fatura_id' => $faturaId,
                 'data' => $fatura->data,
                 'valor_fatura' => $fatura->valor_fatura,
                 'estado' => $fatura->estado,
                 'perfil_id' => $fatura->perfil_id,
 
-            ]);
+            ];
 
         }else{
             Yii::$app->response->statusCode = 401;
