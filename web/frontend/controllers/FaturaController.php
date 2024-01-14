@@ -89,13 +89,13 @@ class FaturaController extends Controller
                 $mensagemJSON = json_encode($faturaDetalhes, JSON_PRETTY_PRINT);
 
                 // MQTT Publish
-                $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
+               /* $mqtt = new phpMQTT('localhost', 1883, 'ClientId'); // Certifique-se de ajustar os detalhes da conexão MQTT
                 if ($mqtt->connect()) {
                     $mqtt->publish('FATURAVIEW', $mensagemJSON, 1);
                     $mqtt->close();
                 } else {
                     Yii::error('Falha ao conectar ao servidor MQTT.');
-                }
+                }*/
                 return $this->render('view', [
                     'model' => $model,
                     'empresa' => Empresa::find()->one(),

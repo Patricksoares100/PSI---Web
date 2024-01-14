@@ -91,6 +91,7 @@ return [
                     'extraPatterns' => [
                         'GET find/{id}' => 'find',
                         'GET detalhes/{id}' => 'detalhes',
+                        'GET comprarcarrinho' => 'comprarcarrinho',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
@@ -125,6 +126,8 @@ return [
                         'POST adicionar' => 'adicionar',
                         'DELETE remove/{id}' => 'remove',
                         'GET byuser' => 'byuser',
+                        'DELETE limparfavoritos' => 'limparfavoritos',
+                        'GET passarfavoritoscarrinho' => 'passarfavoritoscarrinho',
                     ],
                 ],
             ],
