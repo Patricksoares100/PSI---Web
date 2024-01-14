@@ -18,7 +18,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar', 'limparfavoritos'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -121,6 +121,21 @@ class FavoritoController extends ActiveController
             return ["response" => "Produto removido dos favoritos"];
         } else {
             return ["response" => "Produto não existe nos favoritos"];
+        }
+    }
+
+    public function actionLimparfavoritos(){
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
+        if($favoritos){
+            foreach ($favoritos as $favorito) {
+                $favorito->delete();
+            }
+            return "Favoritos limpo com sucesso!";
+        }else{
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens nos favoritos para serem removidos!";
         }
     }
 }
