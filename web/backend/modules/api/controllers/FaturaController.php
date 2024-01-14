@@ -128,8 +128,16 @@ class FaturaController extends ActiveController
                 LinhaCarrinho::deleteAll(['perfil_id' => $user->id]);
             }
             //realizar fatura
+            //return "Compra com sucesso!";//dar return só dos dados necessarios
+            return [
+                'fatura_id' => $faturaId,
+                'data' => $fatura->data,
+                'valor_fatura' => $fatura->valor_fatura,
+                'estado' => $fatura->estado,
+                'perfil_id' => $fatura->perfil_id,
 
-            return "Compra com sucesso!";//dar return só dos dados necessarios
+            ];
+
         }else{
             Yii::$app->response->statusCode = 401;
             return "Não há itens no carrinho para efetuar compra!";
