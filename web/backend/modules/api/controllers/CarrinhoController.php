@@ -164,10 +164,16 @@ class CarrinhoController extends ActiveController
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
         $carrinhos = LinhaCarrinho::findAll(['perfil_id' => $user->id]);
-        foreach ($carrinhos as $carrinho) {
-            $carrinho->delete();
+        if($carrinhos){
+            foreach ($carrinhos as $carrinho) {
+                $carrinho->delete();
+            }
+            return "Carrinho limpo com sucesso!";
+        }else{
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens no carrinho para serem removidos!";
         }
-        return "Carrinho limpo com sucesso";
+
 
     }
 
