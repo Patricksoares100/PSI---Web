@@ -58,7 +58,7 @@ return [
                         'POST login' => 'login',
                         'POST registo' => 'registo',
                         'PUT atualizarpassword/{id}' => 'atualizarpassword',
-
+                        'GET data' => 'data',
                     ],
 
                 ],
