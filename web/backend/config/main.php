@@ -87,6 +87,7 @@ return [
                     'extraPatterns' => [
                         'GET find/{id}' => 'find',
                         'GET detalhes/{id}' => 'detalhes',
+                        'GET comprarcarrinho' => 'comprarcarrinho',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
