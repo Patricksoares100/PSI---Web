@@ -4,6 +4,7 @@ namespace backend\modules\api\controllers;
 
 use common\models\Artigo;
 use common\models\Favorito;
+use common\models\LinhaCarrinho;
 use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
@@ -18,7 +19,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar', 'limparfavoritos'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -136,6 +137,32 @@ class FavoritoController extends ActiveController
         }else{
             Yii::$app->response->statusCode = 401;
             return "Não há itens nos favoritos para serem removidos!";
+        }
+    }
+
+    public function actionPassarfavoritoscarrinho(){
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
+        if($favoritos){
+            foreach ($favoritos as $favorito) {
+
+                $linhacarrinho = new LinhaCarrinho();
+                $linhacarrinho->perfil_id = $user->id;
+                $linhacarrinho->artigo_id = $favorito->artigo_id;
+                $linhacarrinho->quantidade = 1;
+
+                if ($linhacarrinho->save()) {
+                    $favorito->delete();
+                } else {
+                    Yii::$app->response->statusCode = 401;
+                    return "Erro ao adicionar artigos ao carrinho: "/* . json_encode($linhacarrinho->errors)*/;
+                }
+            }
+            return "Favoritos adicionados ao carrinho com sucesso!";
+        }else{
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens nos favoritos para serem adicionados!";
         }
     }
 }
