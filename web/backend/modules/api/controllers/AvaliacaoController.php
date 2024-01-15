@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use common\models\Avaliacao;
+use common\models\User;
 use yii\filters\auth\HttpBasicAuth;
 use Yii;
 use yii\rest\ActiveController;
@@ -16,7 +17,7 @@ class AvaliacaoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view','atualizar','criar'], //Excluir aos GETs
+            'except' => ['index', 'view','atualizar','criar','byuser'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -29,6 +30,31 @@ class AvaliacaoController extends ActiveController
             return $user;
         }
         throw new \yii\web\ForbiddenHttpException('No authentication'); //403
+    }
+
+    public function actionByuser()
+    {
+        $response = [];
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $avaliacaos = Avaliacao::findAll(['perfil_id' => $user->id]);
+        foreach ($avaliacaos as $avaliacao) {
+            $imagem = $avaliacao->artigo->getImg();
+
+            $data = [
+                'id' => $avaliacao->id,
+                'artigo_id' => $avaliacao->artigo_id,
+                'perfil_id' => $avaliacao->perfil_id,
+               // 'valorArtigo' => $avaliacao->artigo->preco,
+                'comentario' => $avaliacao->comentario,
+                'classificacao' => $avaliacao->classificacao,
+                'nomeArtigo' => $avaliacao->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+            ];
+            $response[] = $data;
+
+        }
+        return $response;
     }
 
    /* public function actions()
