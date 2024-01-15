@@ -149,28 +149,25 @@ class FavoritoController extends ActiveController
             foreach ($favoritos as $favorito) {
 
                 $l = LinhaCarrinho::find()->where(['artigo_id' => $favorito->artigo_id])->one();
+
                 if ($l == null) {
                     $linhacarrinho = new LinhaCarrinho();
                     $linhacarrinho->perfil_id = $user->id;
                     $linhacarrinho->artigo_id = $favorito->artigo_id;
                     $linhacarrinho->quantidade = 1;
+                    $linhacarrinho->save();
                 } else {
                     $l->perfil_id = $user->id;
                     $l->artigo_id = $favorito->artigo_id;
                     $l->quantidade += 1;
+                    $l->save();
                 }
-                    if ($linhacarrinho->save()) {
-                        $favorito->delete();
-                    } else {
-                        Yii::$app->response->statusCode = 401;
-                        return "Erro ao adicionar artigos ao carrinho: "/* . json_encode($linhacarrinho->errors)*/ ;
-                    }
-                }
-                return "Favoritos adicionados ao carrinho com sucesso!";
+                $favorito->delete();
             }
-        else {
-                Yii::$app->response->statusCode = 401;
-                return "Não há itens nos favoritos para serem adicionados!";
-            }
+            return "Favoritos adicionados ao carrinho com sucesso!";
+        } else {
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens nos favoritos para serem adicionados!";
         }
     }
+}
