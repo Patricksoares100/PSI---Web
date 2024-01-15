@@ -111,6 +111,7 @@ return [
                         'POST adicionar' => 'adicionar',
                         'GET byuser' => 'byuser',
                         'DELETE limparcarrinho' => 'limparcarrinho',
+                        'PUT atualizar' => 'atualizar',
                        // 'POST create/{id}/{idartigo}' => 'create',
                        // 'POST create/<idperfil:\d+>/<idartigo:\d+>' => 'create',
                     ],

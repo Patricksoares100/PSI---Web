@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Artigo;
 use common\models\LinhaCarrinho;
 use common\models\User;
 use Yii;
@@ -17,7 +18,7 @@ class CarrinhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','adicionar','byuser','limparcarrinho'],
+            'except' => ['index', 'view', 'create', 'remove', 'adicionar', 'byuser', 'limparcarrinho', 'atualizar'],
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -39,7 +40,6 @@ class CarrinhoController extends ActiveController
         // eliminar as function pre-definidas que possam haver
         unset($actions['index']);
         unset($actions['create']);
-
 
         return $actions;
     }
@@ -95,6 +95,7 @@ class CarrinhoController extends ActiveController
             return ["response" => "Artigo adicionado ao Carrinho"];
         }
     }
+
     public function actionByuser()
     {
         $response = [];
@@ -142,8 +143,7 @@ class CarrinhoController extends ActiveController
                 'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
             return $data;
-        }
-        else{
+        } else {
             $quantidade = $params['quantidade'];
             $existeModel->quantidade += intval($quantidade);
             $existeModel->save();
@@ -158,23 +158,60 @@ class CarrinhoController extends ActiveController
             return $data;
         }
     }
+
     public function actionLimparcarrinho()
     {
 
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
         $carrinhos = LinhaCarrinho::findAll(['perfil_id' => $user->id]);
-        if($carrinhos){
+        if ($carrinhos) {
             foreach ($carrinhos as $carrinho) {
                 $carrinho->delete();
             }
             return "Carrinho limpo com sucesso!";
-        }else{
+        } else {
             Yii::$app->response->statusCode = 401;
             return "Não há itens no carrinho para serem removidos!";
         }
 
 
+    }
+
+    public function actionAtualizar()
+    {
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $id = $params['artigo_id']; //ID do carrinho
+        $sinal = $params['sinal'];
+        $id = intval($id);
+        $existeModel = LinhaCarrinho::findOne(['artigo_id' => $id, 'perfil_id' => $user->id]);
+        if ($existeModel) {
+            if ($sinal == '+') {
+                $artigo = Artigo::findOne(['id' => $id]);
+                if ($existeModel->quantidade < $artigo->stock_atual){
+                    $existeModel->quantidade += 1;
+                    $existeModel->save();
+                    return "Quantidade adicionada com sucesso!";
+                } else {
+                    return "Não há stock disponivel!";
+                }
+            } else {
+                $existeModel->quantidade--;
+                if ($existeModel->quantidade == 0){
+                    $existeModel->delete();
+                    return "Artigo removido com sucesso!";
+                }
+                else {
+                    $existeModel->save();
+                    return "Quantidade removida com sucesso!";
+                }
+            }
+        } else {
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens no carrinho para serem editados!";
+        }
     }
 
 }
