@@ -184,7 +184,7 @@ class UserController extends ActiveController
               if(Yii::$app->security->validatePassword($params['atualPassword'], $user->password_hash)){
                   $user->setPassword($params['novaPassword']);
                   $user->save();
-                  return "Alterada com sucesso!";
+                  return "Password alterada com sucesso!";
               }
               Yii::$app->response->statusCode = 401;
               return "Password errada!";
