@@ -63,6 +63,7 @@ return [
                         'PUT atualizarpassword/{id}' => 'atualizarpassword',
                         'GET data' => 'data',
                         'PUT editar' => 'editar',
+                        'PUT atualizarpassword' => 'atualizarpassword',
                     ],
 
                 ],
@@ -110,6 +111,7 @@ return [
                         'POST adicionar' => 'adicionar',
                         'GET byuser' => 'byuser',
                         'DELETE limparcarrinho' => 'limparcarrinho',
+                        'DELETE limparlinhacarrinho' => 'limparlinhacarrinho',
                        // 'POST create/{id}/{idartigo}' => 'create',
                        // 'POST create/<idperfil:\d+>/<idartigo:\d+>' => 'create',
                     ],

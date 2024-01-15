@@ -21,7 +21,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo','index', 'login','logout','data','editar'], //Excluir aos GETs
+            'except' => ['registo','index', 'login','logout','data','editar', 'atualizarpassword'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -177,22 +177,19 @@ class UserController extends ActiveController
             return ["response" => "Erro ao fazer logout."];
         }
     }
-    public function actionAtualizarpassword($id){
-
-        $form = new AlterarPasswordForm();
-        $form->load(Yii::$app->request->post(),'');
-       if($form->validate()) {
-          if( $user = User::findOne(['id' => $id])){
-
-              if(Yii::$app->security->validatePassword($form->atualPassword, $user->password_hash)){
-                  $user->setPassword($form->novaPassword);
+    public function actionAtualizarpassword(){
+        $token = Yii::$app->request->get('token');
+        $params = Yii::$app->getRequest()->getBodyParams();
+          if( $user = User::findByVerificationToken($token)){
+              if(Yii::$app->security->validatePassword($params['atualPassword'], $user->password_hash)){
+                  $user->setPassword($params['novaPassword']);
                   $user->save();
-                  return ["response" => "Alterada com sucesso!"];
+                  return "Alterada com sucesso!";
               }
-              return ["response" => "Password errada!"];
+              Yii::$app->response->statusCode = 401;
+              return "Password errada!";
           }
-           return ["response" => "User não encontrado!"];
-       }
-        return ["response" => "Dados Incorretos!"];
+            Yii::$app->response->statusCode = 401;
+            return "User não encontrado!";
     }
 }
