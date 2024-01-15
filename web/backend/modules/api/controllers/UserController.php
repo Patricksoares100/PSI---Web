@@ -186,10 +186,10 @@ class UserController extends ActiveController
                   $user->save();
                   return "Password alterada com sucesso!";
               }
-              Yii::$app->response->statusCode = 401;
+
               return "Password errada!";
           }
-            Yii::$app->response->statusCode = 401;
+            
             return "User não encontrado!";
     }
 }
