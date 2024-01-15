@@ -18,7 +18,7 @@ class CarrinhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove', 'adicionar', 'byuser', 'limparcarrinho', 'atualizar'],
+            'except' => ['index', 'view', 'create', 'remove', 'adicionar', 'byuser', 'limparcarrinho', 'atualizar', 'limparlinhacarrinho'],
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -174,8 +174,14 @@ class CarrinhoController extends ActiveController
             Yii::$app->response->statusCode = 401;
             return "Não há itens no carrinho para serem removidos!";
         }
-
-
+    }
+    public function actionLimparlinhacarrinho(){
+        $token = Yii::$app->request->get('token');
+        $id = Yii::$app->request->get('id');//id da linha do artigo
+        $user = User::findByVerificationToken($token);
+        $linha = LinhaCarrinho::findOne(['id' => $id, 'perfil_id' => $user->id]);
+        $linha->delete();
+        return "Artigo removido com sucesso!";
     }
 
     public function actionAtualizar()
