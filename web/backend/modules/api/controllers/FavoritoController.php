@@ -19,7 +19,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove','byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove', 'byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -58,14 +58,14 @@ class FavoritoController extends ActiveController
             $imagem = $favorito->artigo->getImg();
 
             $data = [
-                        'id' => $favorito->id,
-                        'artigo_id' => $favorito->artigo_id,
-                        'perfil_id' => $favorito->perfil_id,
-                        'valorArtigo' => $favorito->artigo->preco,
-                        'nomeArtigo' => $favorito->artigo->nome,
-                        'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+                'id' => $favorito->id,
+                'artigo_id' => $favorito->artigo_id,
+                'perfil_id' => $favorito->perfil_id,
+                'valorArtigo' => $favorito->artigo->preco,
+                'nomeArtigo' => $favorito->artigo->nome,
+                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
-                $response[] = $data;
+            $response[] = $data;
 
         }
         return $response;
@@ -94,8 +94,7 @@ class FavoritoController extends ActiveController
                 'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
             return $data;
-        }
-        else{
+        } else {
             Yii::$app->response->statusCode = 401;
             return "Artigo já nos favoritos";
         }
@@ -125,44 +124,53 @@ class FavoritoController extends ActiveController
         }
     }
 
-    public function actionLimparfavoritos(){
+    public function actionLimparfavoritos()
+    {
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
         $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
-        if($favoritos){
+        if ($favoritos) {
             foreach ($favoritos as $favorito) {
                 $favorito->delete();
             }
             return "Favoritos limpo com sucesso!";
-        }else{
+        } else {
             Yii::$app->response->statusCode = 401;
             return "Não há itens nos favoritos para serem removidos!";
         }
     }
 
-    public function actionPassarfavoritoscarrinho(){
+    public function actionPassarfavoritoscarrinho()
+    {
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
         $favoritos = Favorito::findAll(['perfil_id' => $user->id]);
-        if($favoritos){
+        if ($favoritos) {
             foreach ($favoritos as $favorito) {
 
-                $linhacarrinho = new LinhaCarrinho();
-                $linhacarrinho->perfil_id = $user->id;
-                $linhacarrinho->artigo_id = $favorito->artigo_id;
-                $linhacarrinho->quantidade = 1;
-
-                if ($linhacarrinho->save()) {
-                    $favorito->delete();
+                $l = LinhaCarrinho::find()->where(['artigo_id' => $favorito->artigo_id])->one();
+                if ($l == null) {
+                    $linhacarrinho = new LinhaCarrinho();
+                    $linhacarrinho->perfil_id = $user->id;
+                    $linhacarrinho->artigo_id = $favorito->artigo_id;
+                    $linhacarrinho->quantidade = 1;
                 } else {
-                    Yii::$app->response->statusCode = 401;
-                    return "Erro ao adicionar artigos ao carrinho: "/* . json_encode($linhacarrinho->errors)*/;
+                    $l->perfil_id = $user->id;
+                    $l->artigo_id = $favorito->artigo_id;
+                    $l->quantidade += 1;
                 }
+                    if ($linhacarrinho->save()) {
+                        $favorito->delete();
+                    } else {
+                        Yii::$app->response->statusCode = 401;
+                        return "Erro ao adicionar artigos ao carrinho: "/* . json_encode($linhacarrinho->errors)*/ ;
+                    }
+                }
+                return "Favoritos adicionados ao carrinho com sucesso!";
             }
-            return "Favoritos adicionados ao carrinho com sucesso!";
-        }else{
-            Yii::$app->response->statusCode = 401;
-            return "Não há itens nos favoritos para serem adicionados!";
+        else {
+                Yii::$app->response->statusCode = 401;
+                return "Não há itens nos favoritos para serem adicionados!";
+            }
         }
     }
-}
