@@ -133,33 +133,15 @@ class CarrinhoController extends ActiveController
             $quantidade = $params['quantidade'];
             $carrinho->quantidade = intval($quantidade);
             $carrinho->save();
-            $imagem = $carrinho->artigo->getImg();
-            //var_dump($carrinho->quantidade);die;
-            $data = [
-                'id' => $carrinho->id,
-                'quantidade' => $carrinho->quantidade,
-                'valorUnitario' => $carrinho->artigo->preco,
-                'nome' => $carrinho->artigo->nome,
-                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
-            ];
-            return $data;
+            return "Artigo adicionado ao carrinho";
         } else {
             $artigo = Artigo::findOne(['id' => $id]);
-           // if (($existeModel->quantidade + 1/*intval($params['quantidade'])*/) < $artigo->stock_atual) {
             if ($artigo->stock_atual > $existeModel->quantidade){
                 $existeModel->quantidade += 1;
                 $existeModel->save();
-                $imagem = $existeModel->artigo->getImg();
-                $data = [
-                    'id' => $existeModel->id,
-                    'quantidade' => $existeModel->quantidade,
-                    'valorUnitario' => $existeModel->artigo->preco,
-                    'nome' => $existeModel->artigo->nome,
-                    'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
-                ];
-                return $data;
+                return "Artigo somado ao carrinho";
             } else {
-                return ['erro' => 'Stock insuficiente para adicionar à quantidade desejada.'];
+                return "Stock insuficiente para adicionar à quantidade desejada";
             }
         }
     }
