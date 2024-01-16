@@ -189,13 +189,13 @@ class CarrinhoController extends ActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
-        $id = $params['artigo_id']; //ID do carrinho
+        $id = $params['id']; //ID do carrinho
         $sinal = $params['sinal'];
         $id = intval($id);
-        $existeModel = LinhaCarrinho::findOne(['artigo_id' => $id, 'perfil_id' => $user->id]);
+        $existeModel = LinhaCarrinho::findOne(['id' => $id, 'perfil_id' => $user->id]);
         if ($existeModel) {
             if ($sinal == '+') {
-                $artigo = Artigo::findOne(['id' => $id]);
+                $artigo = Artigo::findOne(['id' => $existeModel->artigo_id]);
                 if ($existeModel->quantidade < $artigo->stock_atual){
                     $existeModel->quantidade += 1;
                     $existeModel->save();
