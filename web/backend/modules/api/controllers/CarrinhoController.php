@@ -123,8 +123,8 @@ class CarrinhoController extends ActiveController
         $params = Yii::$app->getRequest()->getBodyParams();
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
-        $id = $params['artigo_id'];
-        $id = intval($id);
+        $artigo_id = $params['artigo_id'];
+        $id = intval($artigo_id);
         $existeModel = LinhaCarrinho::findOne(['artigo_id' => $id, 'perfil_id' => $user->id]);
         if (!$existeModel) {
             $carrinho = new LinhaCarrinho();
@@ -144,18 +144,23 @@ class CarrinhoController extends ActiveController
             ];
             return $data;
         } else {
-            $quantidade = $params['quantidade'];
-            $existeModel->quantidade += intval($quantidade);
-            $existeModel->save();
-            $imagem = $existeModel->artigo->getImg();
-            $data = [
-                'id' => $existeModel->id,
-                'quantidade' => $existeModel->quantidade,
-                'valorUnitario' => $existeModel->artigo->preco,
-                'nome' => $existeModel->artigo->nome,
-                'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
-            ];
-            return $data;
+            $artigo = Artigo::findOne(['id' => $id]);
+           // if (($existeModel->quantidade + 1/*intval($params['quantidade'])*/) < $artigo->stock_atual) {
+            if ($artigo->stock_atual > $existeModel->quantidade){
+                $existeModel->quantidade += 1;
+                $existeModel->save();
+                $imagem = $existeModel->artigo->getImg();
+                $data = [
+                    'id' => $existeModel->id,
+                    'quantidade' => $existeModel->quantidade,
+                    'valorUnitario' => $existeModel->artigo->preco,
+                    'nome' => $existeModel->artigo->nome,
+                    'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
+                ];
+                return $data;
+            } else {
+                return ['erro' => 'Stock insuficiente para adicionar à quantidade desejada.'];
+            }
         }
     }
 
