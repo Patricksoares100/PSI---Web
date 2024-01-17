@@ -19,7 +19,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove', 'byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove', 'byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho', 'adicionafavoritocarrinho'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -168,6 +168,39 @@ class FavoritoController extends ActiveController
         } else {
             Yii::$app->response->statusCode = 401;
             return "Não há itens nos favoritos para serem adicionados!";
+        }
+    }
+
+    public function actionAdicionafavoritocarrinho()
+    {
+        $params = Yii::$app->getRequest()->getBodyParams();
+        $id = $params['id']; //ID do favorito
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $id = intval($id);
+        $favorito = Favorito::findOne(['id' => $id, 'perfil_id' => $user->id]);
+
+        if ($favorito != null) {
+
+                $l = LinhaCarrinho::find()->where(['artigo_id' => $favorito->artigo_id, 'perfil_id' => $user->id])->one();
+                if ($l == null) {
+                    $linhacarrinho = new LinhaCarrinho();
+                    $linhacarrinho->perfil_id = $user->id;
+                    $linhacarrinho->artigo_id = $favorito->artigo_id;
+                    $linhacarrinho->quantidade = 1;
+                    $linhacarrinho->save();
+                } else {
+                    $l->perfil_id = $user->id;
+                    $l->artigo_id = $favorito->artigo_id;
+                    $l->quantidade += 1;
+                    $l->save();
+                }
+                $favorito->delete();
+
+            return "Favorito adicionado ao carrinho com sucesso!";
+        } else {
+            Yii::$app->response->statusCode = 401;
+            return "Erro ao ser adicionado!";
         }
     }
 }

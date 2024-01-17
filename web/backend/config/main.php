@@ -132,6 +132,7 @@ return [
                         'GET byuser' => 'byuser',
                         'DELETE limparfavoritos' => 'limparfavoritos',
                         'GET passarfavoritoscarrinho' => 'passarfavoritoscarrinho',
+                        'GET adicionafavoritocarrinho' => 'adicionafavoritocarrinho',
                     ],
                 ],
             ],
