@@ -54,7 +54,11 @@ class FaturaController extends ActiveController
         $faturas = Fatura::findAll(['perfil_id' => $user->id]);
         foreach ($faturas as $fatura) {
             $data = [
-                $fatura,
+                'id' => $fatura->id,
+                'data' => $fatura->data,
+                'valor_fatura' => $fatura->valor_fatura,
+                'estado' => $fatura->estado,
+                'perfil_id' => $fatura->perfil_id,
             ];
             $response[] = $data;
         }
