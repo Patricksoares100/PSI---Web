@@ -18,7 +18,7 @@ class AvaliacaoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view','atualizar','criar','byuser'], //Excluir aos GETs
+            'except' => ['index', 'view','atualizar','criar','byuser', 'remover'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -90,6 +90,19 @@ class AvaliacaoController extends ActiveController
             $avaliacao->save();
             return "Avaliação registada com sucesso!";
 
+    }
+
+    public function actionRemover(){
+
+        $id = Yii::$app->request->get('id');
+        $avaliacao = Avaliacao::findOne(['id' => $id]);
+
+        if ($avaliacao) {
+            $avaliacao->delete();
+            return "Avaliação removida com sucesso!";
+        } else {
+            return "Erro ao remover avaliação!";
+        }
     }
 
 }

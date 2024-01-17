@@ -103,6 +103,7 @@ return [
                         'POST criar' => 'criar',
                         'GET index' => 'index',
                         'GET byuser' => 'byuser',
+                        'DELETE remover' => 'remover',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
