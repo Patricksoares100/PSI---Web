@@ -46,10 +46,12 @@ class FaturaController extends ActiveController
         return $actions;
     }
 
-    public function actionFind($id)
+    public function actionFind()
     {
         $response = [];
-        $faturas = Fatura::findAll(['perfil_id' => $id]);
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $faturas = Fatura::findAll(['perfil_id' => $user->id]);
         foreach ($faturas as $fatura) {
             $data = [
                 'fatura' => $fatura,
