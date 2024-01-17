@@ -104,6 +104,7 @@ return [
                         'GET index' => 'index',
                         'GET byuser' => 'byuser',
                         'DELETE remover' => 'remover',
+                        'PUT editar' => 'editar',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',
