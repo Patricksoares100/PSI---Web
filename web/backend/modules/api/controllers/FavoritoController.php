@@ -174,7 +174,7 @@ class FavoritoController extends ActiveController
     public function actionAdicionafavoritocarrinho()
     {
         $params = Yii::$app->getRequest()->getBodyParams();
-        $id = $params['id']; //ID do favorito
+        $id = $params['favorito_id']; //ID do favorito
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
         $id = intval($id);
