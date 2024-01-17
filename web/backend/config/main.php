@@ -90,7 +90,7 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/fatura',
                     'extraPatterns' => [
-                        'GET find/{id}' => 'find',
+                        'GET find' => 'find',
                         'GET detalhes/{id}' => 'detalhes',
                         'GET comprarcarrinho' => 'comprarcarrinho',
                     ],
