@@ -93,6 +93,7 @@ return [
                         'GET find' => 'find',
                         'GET detalhes/{id}' => 'detalhes',
                         'GET comprarcarrinho' => 'comprarcarrinho',
+                        'PUT pagar/{id}' => 'pagar',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule',

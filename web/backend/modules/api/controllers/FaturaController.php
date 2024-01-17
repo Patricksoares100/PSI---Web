@@ -20,7 +20,7 @@ class FaturaController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view','find','detalhes','comprarcarrinho'], //Excluir aos GETs
+            'except' => ['index', 'view','find','detalhes','comprarcarrinho','pagar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -64,6 +64,26 @@ class FaturaController extends ActiveController
         }
         return $response;
     }
+
+    public function actionPagar($id)
+    {
+        $fatura = Fatura::findOne($id);
+        if (!$fatura) {
+            return "Fatura não encontrada.";
+        }
+
+        $fatura->estado = "Paga";
+        if ($fatura->save()) {
+            return [
+                'id' => $fatura->id,
+                'data' => $fatura->data,
+                'valor_fatura' => $fatura->valor_fatura,
+                'estado' => $fatura->estado,
+                'perfil_id' => $fatura->perfil_id,
+            ];
+        }
+    }
+
 
     public function actionDetalhes($id)
     {
