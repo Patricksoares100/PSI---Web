@@ -134,6 +134,7 @@ return [
                         'DELETE limparfavoritos' => 'limparfavoritos',
                         'GET passarfavoritoscarrinho' => 'passarfavoritoscarrinho',
                         'GET adicionafavoritocarrinho' => 'adicionafavoritocarrinho',
+                        'DELETE limparfavorito' => 'limparfavorito',
                     ],
                 ],
             ],
