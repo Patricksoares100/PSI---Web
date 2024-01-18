@@ -19,7 +19,7 @@ class FavoritoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view', 'create', 'remove', 'byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho', 'adicionafavoritocarrinho'], //Excluir aos GETs
+            'except' => ['index', 'view', 'create', 'remove', 'byuser', 'adicionar', 'limparfavoritos', 'passarfavoritoscarrinho', 'adicionafavoritocarrinho', 'limparfavorito'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -140,6 +140,24 @@ class FavoritoController extends ActiveController
         }
     }
 
+    public function actionLimparfavorito()
+    {
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+        $id = Yii::$app->request->get('id');
+        $id = intval($id);
+        $favorito = Favorito::findOne(['id' => $id, 'perfil_id' => $user->id]);
+        if ($favorito != null) {
+
+                $favorito->delete();
+
+            return "Favorito removido com sucesso!";
+        } else {
+            Yii::$app->response->statusCode = 401;
+            return "Não há itens nos favoritos para serem removidos!";
+        }
+    }
+
     public function actionPassarfavoritoscarrinho()
     {
         $token = Yii::$app->request->get('token');
@@ -173,10 +191,11 @@ class FavoritoController extends ActiveController
 
     public function actionAdicionafavoritocarrinho()
     {
-        $params = Yii::$app->getRequest()->getBodyParams();
-        $id = $params['id']; //ID do favorito
+        //$params = Yii::$app->getRequest()->getBodyParams();
+        //$id = $params['favorito_id']; //ID do favorito
         $token = Yii::$app->request->get('token');
         $user = User::findByVerificationToken($token);
+        $id = Yii::$app->request->get('id');
         $id = intval($id);
         $favorito = Favorito::findOne(['id' => $id, 'perfil_id' => $user->id]);
 

@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Artigo;
 use common\models\Avaliacao;
 use common\models\User;
 use yii\filters\auth\HttpBasicAuth;
@@ -17,7 +18,7 @@ class AvaliacaoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['index', 'view','atualizar','criar','byuser'], //Excluir aos GETs
+            'except' => ['index', 'view','atualizar','criar','byuser', 'remover', 'editar'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -75,16 +76,47 @@ class AvaliacaoController extends ActiveController
     }
 
     public function actionCriar(){
-        $model = new Avaliacao();
-        $model->load(Yii::$app->request->post(),'');
-        if($model->validate()){
-            $model->save();
-            return ["response" => "Avaliação registada com sucesso!"];
-        }else{
-            return ["response" => "Preencha todos os campos!"];
 
+        $token = Yii::$app->request->get('token');
+        $user = User::findByVerificationToken($token);
+
+            $avaliacao = new Avaliacao();
+            $avaliacao->load(Yii::$app->request->post(), '');
+            /*$avaliacao->comentario = $params['comentario'];
+            $avaliacao->classificacao = intval($params['classificacao']);
+            $avaliacao->artigo_id = intval($params['artigo_id']);*/
+            $avaliacao->perfil_id = $user->id;
+
+            $avaliacao->save();
+            return "Avaliação registada com sucesso!";
+
+    }
+
+    public function actionRemover(){
+
+        $id = Yii::$app->request->get('id');
+        $avaliacao = Avaliacao::findOne(['id' => $id]);
+
+        if ($avaliacao) {
+            $avaliacao->delete();
+            return "Avaliação removida com sucesso!";
+        } else {
+            return "Erro ao remover avaliação!";
         }
+    }
 
+    public function actionEditar(){
+
+        $id = Yii::$app->request->get('id');
+        $avaliacao = Avaliacao::findOne(['id' => $id]);
+
+        if ($avaliacao != null){
+            $avaliacao->load(Yii::$app->request->post(), '');
+            $avaliacao->save();
+
+            return "Avaliação editada com sucesso!";
+        }
+            return "Avaliação não pode ser editada!";
     }
 
 }
