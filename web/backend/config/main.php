@@ -136,6 +136,12 @@ return [
                         'GET adicionafavoritocarrinho' => 'adicionafavoritocarrinho',
                     ],
                 ],
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/empresa',
+                    'extraPatterns' => [
+                        'GET find' => 'find',
+                    ],
+                ],
             ],
         ],
     ],
