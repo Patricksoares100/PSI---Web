@@ -59,6 +59,7 @@ class LinhafaturaController extends ActiveController
                     'valor_iva' => $linha->valor_iva,
                     'nome' => $linha->artigo->nome,
                     'precoUnitario' => $linha->artigo->preco,
+                    'artigo_id' => $linha->artigo->id,
                     'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
             $response[] = $data;
