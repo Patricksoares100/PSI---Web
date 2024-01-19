@@ -43,22 +43,21 @@ class LinhafaturaController extends ActiveController
         return $actions;
     }
 
-    public function actionIndex($id)
+    public function actionIndex()
     {
+        $fatura_id = Yii::$app->request->get('id');
         $response = [];
-        $linhas = LinhaFatura::findAll(['fatura_id' => $id]);
+        $linhas = LinhaFatura::findAll(['fatura_id' => $fatura_id]);
         foreach ($linhas as $linha) {
             $data = [
                 'linhafatura' => [
                     'id' => $linha->id,
                     'quantidade' => $linha->quantidade,
-                    'valor' => $linha->valor,
+                    'valorTotal' => $linha->valor,
                     'valor_iva' => $linha->valor_iva,
-                    'artigo' => [
-                        'nome' => $linha->artigo->nome,
-                        'preco' => $linha->artigo->preco,
-                    ],
-                    'fatura' => $linha->fatura_id,
+                    'nome' => $linha->artigo->nome,
+                    'precoUnitario' => $linha->artigo->preco,
+                    //'fatura' => $linha->fatura_id,
                 ],
             ];
             $response[] = $data;
