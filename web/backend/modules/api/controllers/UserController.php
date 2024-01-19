@@ -6,6 +6,7 @@ use common\models\LoginForm;
 use common\models\Perfil;
 use common\models\User;
 use frontend\models\AlterarPasswordForm;
+use frontend\models\PasswordResetRequestForm;
 use frontend\models\SignupForm;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBasicAuth;
@@ -21,7 +22,7 @@ class UserController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'except' => ['registo','index', 'login','logout','data','editar', 'atualizarpassword'], //Excluir aos GETs
+            'except' => ['registo','index', 'login','logout','data','editar', 'atualizarpassword', 'passwordreset'], //Excluir aos GETs
             'auth' => [$this, 'auth']
         ];
         return $behaviors;
@@ -191,5 +192,15 @@ class UserController extends ActiveController
           }
             
             return "User não encontrado!";
+    }
+    public  function actionPasswordreset(){
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                return 'Email de recuperação enviado com sucesso!';
+            }
+            Yii::$app->response->statusCode = 401;
+            return 'Dados invalidos!';
+        }
     }
 }
