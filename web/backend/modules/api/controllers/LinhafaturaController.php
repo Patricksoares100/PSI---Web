@@ -10,7 +10,7 @@ use yii\rest\ActiveController;
 
 class LinhafaturaController extends ActiveController
 {
-    public $modelClass = 'common\models\LinhaCarrinho';
+    public $modelClass = 'common\models\LinhaFatura';
 
     public function behaviors()
     {
@@ -50,7 +50,6 @@ class LinhafaturaController extends ActiveController
         $linhas = LinhaFatura::findAll(['fatura_id' => $fatura_id]);
         foreach ($linhas as $linha) {
             $data = [
-                'linhafatura' => [
                     'id' => $linha->id,
                     'quantidade' => $linha->quantidade,
                     'valorTotal' => $linha->valor,
@@ -58,7 +57,7 @@ class LinhafaturaController extends ActiveController
                     'nome' => $linha->artigo->nome,
                     'precoUnitario' => $linha->artigo->preco,
                     //'fatura' => $linha->fatura_id,
-                ],
+
             ];
             $response[] = $data;
         }
