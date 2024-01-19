@@ -77,18 +77,17 @@ class AvaliacaoController extends ActiveController
 
     public function actionCriar(){
 
-        $token = Yii::$app->request->get('token');
-        $user = User::findByVerificationToken($token);
-
+             $params = Yii::$app->getRequest()->getBodyParams();
             $avaliacao = new Avaliacao();
-            $avaliacao->load(Yii::$app->request->post(), '');
-            /*$avaliacao->comentario = $params['comentario'];
-            $avaliacao->classificacao = intval($params['classificacao']);
-            $avaliacao->artigo_id = intval($params['artigo_id']);*/
-            $avaliacao->perfil_id = $user->id;
+
+            $avaliacao->comentario = $params['comentario'];
+            $avaliacao->classificacao = $params['classificacao'];
+            $avaliacao->artigo_id = intval($params['artigo_id']);
+            $avaliacao->perfil_id = intval($params['perfil_id']);
+
 
             $avaliacao->save();
-            return "Avaliação registada com sucesso!";
+            return $avaliacao;
 
     }
 
