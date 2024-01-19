@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Artigo;
 use common\models\LinhaFatura;
 use common\models\User;
 use Yii;
@@ -49,6 +50,8 @@ class LinhafaturaController extends ActiveController
         $response = [];
         $linhas = LinhaFatura::findAll(['fatura_id' => $fatura_id]);
         foreach ($linhas as $linha) {
+            $artigo = Artigo::findOne($linha->artigo_id);
+            $imagem = $artigo->getImg();
             $data = [
                     'id' => $linha->id,
                     'quantidade' => $linha->quantidade,
@@ -56,8 +59,7 @@ class LinhafaturaController extends ActiveController
                     'valor_iva' => $linha->valor_iva,
                     'nome' => $linha->artigo->nome,
                     'precoUnitario' => $linha->artigo->preco,
-                    //'fatura' => $linha->fatura_id,
-
+                    'imagem' => 'http:172.22.21.219:8080/' . $imagem['image_path'],
             ];
             $response[] = $data;
         }
