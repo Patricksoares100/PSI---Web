@@ -87,7 +87,7 @@ class AvaliacaoController extends ActiveController
 
 
             $avaliacao->save();
-            return $avaliacao;
+            return 'Avaliação submetida com sucesso!';
 
     }
 
