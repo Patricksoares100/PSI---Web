@@ -39,7 +39,18 @@ class EmpresaController extends ActiveController
 
     public function actionFind()
     {
-        $faturas = Empresa::find()->one();
-        return $faturas;
+        $empresa = Empresa::find()->one();
+        $data=[];
+        $data = [
+            'id' => $empresa->id,
+            'nome' => $empresa->nome,
+            'telefone' => $empresa->telefone,
+            'email' => $empresa->email,
+            'morada' => $empresa->morada,
+
+
+        ];
+
+        return $data;
     }
 }
