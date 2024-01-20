@@ -64,7 +64,7 @@ return [
                         'GET data' => 'data',
                         'PUT editar' => 'editar',
                         'PUT atualizarpassword' => 'atualizarpassword',
-                        'GET passwordreset' => 'passwordreset',
+                        'POST passwordreset' => 'passwordreset',
                     ],
 
                 ],
