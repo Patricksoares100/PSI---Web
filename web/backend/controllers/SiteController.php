@@ -30,6 +30,9 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'denyCallback' => function ($rule, $action) {
+                    return $this->redirect(['login']);
+                },
                 // como n esta o only aqui , quer dizer q tudo é proibido
                 'rules' => [
                     [
@@ -139,7 +142,8 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['login']);
+        //return $this->goHome();
     }
     public function actionEmpresa()
     {
