@@ -5,6 +5,7 @@
 
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+use common\models\Categoria;
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
@@ -51,21 +52,68 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-lg-4">
             <div class="product-offer mb-30" style="height: 300px;">
-                <img class="img-fluid" src="img/mochila.jpg" alt="">
-                <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Mochilas</h6>
-                    <h3 class="text-white mb-3">Aproveite as ofertas</h3>
-                    <a href="" class="btn btn-primary">Compra Agora</a>
-                </div>
+                <?php
+                $categorias = Categoria::find()->all();?>
+                <?php if (count($categorias) > 0) : ?>
+                <?php foreach ($categorias as $categoria) : ?>
+                    <div class="carousel-item position-relative <?= $categoria->id === $categorias[0]->id ? 'active' : '' ?>" style="height: 250px;">
+                        <img class="position-absolute w-100 h-100"
+                             src="<?= Yii::$app->params['caminhoBackend'] . '/' . $categoria->imagens[0]->image_path ?>"
+                             style="width: 5cm; height: 5cm;" alt="Imagem do <?= $categoria->nome ?>"
+                             style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria->nome ?> </h1>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                                   href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>">Compra
+                                    Agora</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                    <div class="col-lg-4">
+                        <div class="product-offer mb-30" style="height: 300px;">
+                            <img class="img-fluid" src="img/mochila.jpg" alt="">
+                            <div class="offer-text">
+                                <h6 class="text-white text-uppercase">Mochilas</h6>
+                                <h3 class="text-white mb-3">Aproveite as ofertas</h3>
+                                <a href="" class="btn btn-primary">Compra Agora</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="product-offer mb-30" style="height: 300px;">
-                <img class="img-fluid" src="img/canecaIndex.jpg" alt="">
-                <div class="offer-text">
-                    <h6 class="text-white text-uppercase">Canecas</h6>
-                    <h3 class="text-white mb-3">Adicione ao carrinho</h3>
-                    <a href="" class="btn btn-primary">Compra Agora</a>
-                </div>
-            </div>
+                <?php if (count($categorias) > 1) : ?>
+                <?php foreach ($categorias as $categoria) : ?>
+                    <div class="carousel-item position-relative <?= $categoria->id === $categorias[1]->id ? 'active' : '' ?>" style="height: 250px;">
+                        <img class="position-absolute w-100 h-100"
+                             src="<?= Yii::$app->params['caminhoBackend'] . '/' . $categoria->imagens[0]->image_path ?>"
+                             style="width: 5cm; height: 5cm;" alt="Imagem do <?= $categoria->nome ?>"
+                             style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><?= $categoria->nome ?> </h1>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                                   href="<?= Url::to(['artigo/categorias', 'id' => $categoria->id]) ?>">Compra
+                                    Agora</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                    <div class="col-lg-4">
+                        <div class="product-offer mb-30" style="height: 300px;">
+                            <img class="img-fluid" src="img/mochila.jpg" alt="">
+                            <div class="offer-text">
+                                <h6 class="text-white text-uppercase">Mochilas</h6>
+                                <h3 class="text-white mb-3">Aproveite as ofertas</h3>
+                                <a href="" class="btn btn-primary">Compra Agora</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
         </div>
     </div>
     <!-- Cart End -->
